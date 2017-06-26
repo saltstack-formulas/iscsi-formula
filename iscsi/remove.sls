@@ -6,11 +6,6 @@ iscsid:
     - enable: False
     - sig: iscsid
 
-iscsictl_flags:
-  sysrc.absent:
-    - require:
-      - service: iscsid
-
 /etc/iscsi.conf:
   file.absent:
     - require:
