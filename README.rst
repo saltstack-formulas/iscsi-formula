@@ -40,7 +40,7 @@ Pillar-data::
 
 iscsi.initiator
 ---------------
-The state ``iscsi.initiator`` states configures the iSCSI
+The state ``iscsi.initiator`` configures the iSCSI
 initiator and enables the service ``iscsid(8)``.
 
 Pillar-structure::
