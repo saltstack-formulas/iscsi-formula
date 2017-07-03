@@ -55,3 +55,11 @@ Pillar-structure::
                 chapIName: user
                 chapSecret: secretsecret
             ...
+
+
+iscsi.remove
+------------
+The state ``iscsi.remove`` disables the services and
+removes the packages of both initiator and target.
+
+No pillar data is needed.
