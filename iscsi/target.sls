@@ -10,7 +10,7 @@
 
 ctld:
     service.running:
-      - enabled: {{ salt['pillar.get']('iscsi-targets:enabled',
+      - enable: {{ salt['pillar.get']('iscsi-targets:enabled',
                         target_defaults.enabled) }}
       - require:
             - file: /etc/ctl.conf

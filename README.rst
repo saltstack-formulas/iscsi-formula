@@ -40,7 +40,7 @@ Pillar-data::
 
 iscsi.initiator
 ---------------
-The state ``iscsi.initiator`` states configures the iSCSI
+The state ``iscsi.initiator`` configures the iSCSI
 initiator and enables the service ``iscsid(8)``.
 
 Pillar-structure::
@@ -55,3 +55,11 @@ Pillar-structure::
                 chapIName: user
                 chapSecret: secretsecret
             ...
+
+
+iscsi.remove
+------------
+The state ``iscsi.remove`` disables the services and
+removes the configuration of both initiator and target.
+
+No pillar data is needed.
