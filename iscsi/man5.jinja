@@ -9,11 +9,11 @@
 
 {%- macro man5(outdict, format, spaces=0) -%}
   {%- for key, value in outdict.items() -%}
-{{ man5conf(key, value, format, spaces, loop.first, loop.last) }}
+{{ man5conf(key, value, format, spaces, loop.last) }}
   {%- endfor %}
 {%- endmacro -%}
 
-{%- macro man5conf(key, value, f, spaces=0, first=False, last=False) -%}
+{%- macro man5conf(key, value, f, spaces=0, last=False) -%}
   {%- set shift = spaces * ' ' -%}
 {%- if value is mapping %}
 {{shift}}{{ f.quote }}{{ key }}{{ f.quote }}{{ ": [" if (json and not ucl) and key|lower != 'attributes' else ':' if (json and not ucl) else '' }}

@@ -57,10 +57,7 @@ Remove iSCSI initiator software (`iscsdi` or `open-iscsi`).
 
 OS families
 ============
-Verified on FreeBSD, RedHat, Debian, Arch, and Suse os families. Linux (LIO target) requires the `target_core_mod` kernel module.
-
-Archlinux leverages AUR packages - I used `users-formula` to create `makeguy` user (git 0) before executing `iscsi-formula`.
-
+Works on FreeBSD, RedHat, Debian, Arch, and Suse os families. Linux (LIO target) requires the `target_core_mod` kernel module which some vagrant, and most container images, lack.  Archlinux needs AUR packages: use `users-formula` to create required `makeguy` user (git 0) before executing `iscsi-formula`.
 
 Arch(linux) additional Pillar-data::
 
@@ -167,14 +164,6 @@ Pillar-data::
                        tag: 1 
                      wwn: "iqn.2003-01.org.linux-iscsi.storage:mptarget4"
            
-             server:
-               # package management
-               pkgs:
-                 wanted:
-                   - istgt               #iSCSI userspace target daemon for Unix-like OS
-                   # lsscsi              #list SCSI devices (or hosts) and attributes
-                   # libhbalinux2        #FC-HBAAPI impl. using scsi_transport_fc interfaces
-
 
 FreeBSD sample pillar
 ======================
