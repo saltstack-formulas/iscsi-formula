@@ -57,20 +57,20 @@ Remove iSCSI initiator software (`iscsdi` or `open-iscsi`).
 
 OS families
 ============
-Works on FreeBSD, RedHat, Debian, Arch, and Suse os families. Linux (LIO target) requires the `target_core_mod` kernel module which some vagrant, and most container images, lack.  Archlinux needs AUR packages: use `users-formula` to create required `makeguy` user (git 0) before executing `iscsi-formula`.
+Works on FreeBSD, RedHat, Debian, Arch, and Suse os families. The ``iscis.target`` state for Linux (``LIO target``) requires the ``target_core_mod`` kernel module, which some vagrant, and most container images, lack.  Archlinux needs AUR packages - you could use the ``users-formula`` to create required ``iscsimake`` (gid 0) user defined in ``osfamilymap.yaml`` for "Arch" - before executing the ``iscsi-formula``.
 
 Arch(linux) additional Pillar-data::
 
         iscsi:
         {% if grains.os == 'Arch' %}
-          user: makeguy
+          user: iscsimake
 
         users:
-          makeguy:
+          iscsimake:
             sudouser: True
             shell: /bin/bash
             empty_password: True
-            home: /home/makeguy
+            home: /home/iscsimake
             createhome: True
             optional_groups:
               - wheel
