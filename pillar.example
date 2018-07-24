@@ -163,8 +163,3 @@ iscsi:
           chapIName: 'iqn.2018-07.com.example.iscsi:trustedguy'
           chapSecret: secretsecret
 
-#Linux targets
-
-    tgt:
-      myconf:
-
