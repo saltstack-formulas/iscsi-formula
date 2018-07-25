@@ -43,7 +43,7 @@ Install and configure the iSCSI initiator service. Supported vendor implementati
 ----------
 Meta-state to remove iSNS and iSCSI solution.
 
-``isns.remove``
+``iscsi.isns.remove``
 ---------------------
 Remove iSNS software (`open-isns`).
 
