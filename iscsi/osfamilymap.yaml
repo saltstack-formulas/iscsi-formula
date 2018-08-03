@@ -38,10 +38,9 @@ Debian:
     provider: lio
     pkgs:
       wanted:
-        - linux-image-extra-virtual
-        - linux-image-generic
         - tgt
         - istgt
+        - thin-provisioning-tools
       unwanted:
         - iscsitarget
         - iscsitarget-dkms
