@@ -112,7 +112,7 @@ iscsi_initiator_service:
       - file: iscsi_initiator_service_config
         {% endif %}
     - name: {{ data.man5.svcname }}
-{% if iscsi.kernel.mess_with_kernel and data.man5.kmodule %}
-    - unless: {{ "%s %s".format(iscsi.kernel.modquery, data.man5.kmodule) }}
-{% endif %}
+  {% if data.man5.kmodule %}
+    - unless: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
+  {% endif %}
 

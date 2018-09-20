@@ -107,8 +107,8 @@ iscsi:
         manpage:
         vendor: Kernel.org
         svcname: target
-        kmodule: target_core
-        modloadtext: target_core
+        kmodule: target_core_mod
+        modloadtext: target_core_mod
         svcloadfile:
         svcloadtext:
         config: /etc/target/saveconfig.json
