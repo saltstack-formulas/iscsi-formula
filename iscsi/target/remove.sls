@@ -2,24 +2,28 @@
 # vim: ft=sls
 {% from "iscsi/map.jinja" import iscsi with context %}
 
+  {%- set provider = iscsi.server.provider -%}
+  {%- set data = iscsi.target[provider|string] -%}
+
 iscsi_target_service_dead:
   file.line:
-    - name: {{ man5.svcloadfile }}
-    - content: {{ man5.svcloadtext }}
+    - name: {{ data.man5.svcloadfile }}
+    - content: {{ data.man5.svcloadtext }}
     - backup: True
     - mode: delete
   service.dead:
     - enable: False
-{% if iscsi.kernel.mess_with_kernel and man5.kmodule %}
-    - onlyif: {{ "%s %s".format(iscsi.kernel.modquery, man5.kmodule) }}
-{% endif %}
+  {% if data.man5.kmodule %}
+    - onlyif: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
+  {% endif %}
 
 {% set kmodule = iscsi.server['provider']['man5']['kmodule'] %}
-{% if iscsi.kernel.mess_with_kernel and man5.kmodule and man5.kloadtext %}
-iscsi_target_kernel_module_{{ man5.kmodule }}_removed:
+
+{% if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kloadtext %}
+iscsi_target_kernel_module_{{ data.man5.kmodule }}_removed:
   file.line:
     - name: {{ iscsi.kernel.modloadfile }}
-    - content: {{ man5.kloadtext }}
+    - content: {{ data.man5.kloadtext }}
     - backup: True
     - mode: delete
   cmd.run:
