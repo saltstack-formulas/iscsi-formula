@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-
-{% from "iscsi/map.jinja" import iscsi with context %}
+{%- from "iscsi/map.jinja" import iscsi with context %}
 
 iscsi_isns_service_name_stop:
   service.dead:
@@ -22,7 +21,7 @@ iscsi_isns_service_config_removed:
       - service: iscsi_isns_service_name_stop
       - file: iscsi_isns_service_config_backup
 
-  {% for pkg in [iscsi.isns.pkgs.wanted, iscsi.isns.pkgs.unwanted,] %}
+  {%- for pkg in [iscsi.isns.pkgs.wanted, iscsi.isns.pkgs.unwanted] %}
 iscsi_isns_remove_{{ pkg }}_pkg:
   pkg.purged:
     - pkg: {{ pkg }}

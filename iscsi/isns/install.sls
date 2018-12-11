@@ -1,22 +1,22 @@
 #-*- coding: utf-8 -*-
 # vim: ft=sls
-{% from "iscsi/map.jinja" import iscsi with context %}
+{%- from "iscsi/map.jinja" import iscsi with context %}
 
-  {%- set provider = iscsi.isns.provider -%}
-  {%- set data = iscsi.isns[provider|string] -%}
+  {%- set provider = iscsi.isns.provider %}
+  {%- set data = iscsi.isns[provider|string] %}
 
-  {% for pkg in iscsi.isns.pkgs.unwanted %}
-    {% if pkg %}
+  {%- if iscsi.isns.pkgs.unwanted %}
+    {%- for pkg in iscsi.isns.pkgs.unwanted %}
 iscsi_isnsd_remove_{{ pkg }}_pkg:
   pkg.purged:
     - name: {{ pkg }}
     - require_in:
       - file: iscsi_isnsd_service_config
-    {% endif %}
-  {% endfor %}
+    {% endfor %}
+  {%- endif %}
 
-  {% for pkg in iscsi.isns.pkgs.wanted %}
-    {% if pkg %}
+  {%- if iscsi.isns.pkgs.wanted %}
+    {%- for pkg in iscsi.isns.pkgs.wanted %}
 iscsi_isnsd_install_{{ pkg }}_pkg:
   pkg.installed:
     - name: {{ pkg }}
@@ -24,31 +24,35 @@ iscsi_isnsd_install_{{ pkg }}_pkg:
     - reload: True
     - require_in:
       - file: iscsi_isnsd_service_config
-    {% endif %}
-  {% endfor %}
+    {% endfor %}
+  {%- endif %}
 
-{% if iscsi.isns.make.wanted and salt['cmd.run']("id iscsi.user", output_loglevel='quiet') %}
-  {% for pkg in iscsi.isns.make.wanted %}
+{%-if iscsi.isns.make.wanted and salt['cmd.run']("id iscsi.user", output_loglevel='quiet') %}
+  {%- for pkg in iscsi.isns.make.wanted %}
 iscsi_isns_make_pkg_{{ pkg }}:
   file.directory:
     - name: /home/{{ iscsi.user }}
     - makedirs: True
     - user: {{ iscsi.user }}
     - dir_mode: '0755'
-    {% if iscsi.isns.make.gitrepo %}
+    {%- if iscsi.isns.make.gitrepo %}
   git.latest:
     - name: {{ iscsi.isns.make.gitrepo }}/{{ pkg }}.git
     - target: /home/{{ iscsi.user }}/{{ pkg }}
     - user: {{ iscsi.user }}
+    - force_clone: True
+    - force_fetch: True
+    - force_reset: True
+    - force_checkout: True
     - require:
       - file: iscsi_isns_make_pkg_{{ pkg }}
-    {% endif %}
+    {%- endif %}
   cmd.run:
     - cwd: /home/{{ iscsi.user }}/{{ pkg }}
     - name: {{ iscsi.isns.make.cmd }}
     - runas: {{ iscsi.user }}
   {% endfor %}
-{% endif %}
+{%- endif %}
 
 iscsi_isnsd_service_config:
   file.managed:
@@ -69,15 +73,15 @@ iscsi_isnsd_service_config:
       json: {{ data['man5']['format']['json'] }}
 
 iscsi_isnsd_service:
-       {% if iscsi.isns.enabled %}
+       {%- if iscsi.isns.enabled %}
   service.running:
     - name: {{ data.man5.svcname }}
     - enable: True
     - watch:
       - file: iscsi_isnsd_service_config
-      {% else %}
+      {%- else %}
   service.disabled:
     - name: {{ data.man5.svcname }}
     - enable: False
-      {% endif %}
+      {%- endif %}
 

@@ -104,13 +104,13 @@ RedHat:
   server:
     pkgs:
       wanted:
-        # scsi-target-utils
-        # fcoe-target-utils
         - libvirt-daemon-driver-storage-iscsi
         - netbsd-iscsi
         - udisks2-iscsi
         - yum-plugin-versionlock
         - targetcli
+        # scsi-target-utils
+        # fcoe-target-utils
 
 Suse:
   isns:
