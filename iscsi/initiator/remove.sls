@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
-{% from "iscsi/map.jinja" import iscsi with context %}
+{%- from "iscsi/map.jinja" import iscsi with context %}
 
-  {%- set provider = iscsi.client.provider -%}
-  {%- set data = iscsi.initiator[provider|string] -%}
+  {%- set provider = iscsi.client.provider %}
+  {%- set data = iscsi.initiator[provider|string] %}
 
 iscsi_initiator_service_dead:
   file.line:
@@ -13,12 +13,12 @@ iscsi_initiator_service_dead:
     - mode: delete
   service.dead:
     - enable: False
-  {% if data.man5.kmodule %}
+  {%- if data.man5.kmodule %}
     - onlyif: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
-  {%- endif -%}
+  {%- endif %}
 
-{%- set kmodule = iscsi.client['provider']['man5']['kmodule'] -%}
-{% if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kloadtext %}
+  {%- set kmodule = iscsi.client['provider']['man5']['kmodule'] %}
+  {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kloadtext %}
 iscsi_initiator_kernel_module_{{ data.man5.kmodule }}_removed:
   file.line:
     - name: {{ iscsi.kernel.modloadfile }}
@@ -32,16 +32,14 @@ iscsi_initiator_kernel_module_{{ data.man5.kmodule }}_removed:
       - iscsi_initiator_service_dead
     - require_in:
       - iscsi_initiator_service_config_removed
-{% endif %}
+  {%- endif %}
 
-  {% for pkg in [iscsi.client.pkgs.unwanted, iscsi.client.pkgs.unwanted] %}
-    {% if pkg %}
+  {%- for pkg in [iscsi.client.pkgs.unwanted, iscsi.client.pkgs.unwanted,] %}
 iscsi_initiator_wanted_pkgs_{{ pkg }}_removed:
   pkg.purged:
     - name: {{ pkg }}
     - require_in:
       - file: iscsi_initiator_service_config_removed
-    {% endif %}
   {% endfor %}
 
 iscsi_initiator_service_config_removed:
