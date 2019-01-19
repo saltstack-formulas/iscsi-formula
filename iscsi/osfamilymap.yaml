@@ -30,6 +30,7 @@ Debian:
       man5:
         svcname: isns
   client:
+    enabled: False  #see https://github.com/saltstack-formulas/iscsi-formula/issues/10
     pkgs:
       wanted:
         - open-iscsi
