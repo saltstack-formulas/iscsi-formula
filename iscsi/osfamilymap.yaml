@@ -109,6 +109,7 @@ RedHat:
         - udisks2-iscsi
         - yum-plugin-versionlock
         - targetcli
+        - device-mapper-persistent-data
         # scsi-target-utils
         # fcoe-target-utils
 
