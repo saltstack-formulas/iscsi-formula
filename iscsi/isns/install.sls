@@ -44,6 +44,13 @@ iscsi_isns_make_pkg_{{ pkg }}:
     - force_fetch: True
     - force_reset: True
     - force_checkout: True
+    {% if grains['saltversioninfo'] >= [2017, 7, 0] %}
+    - retry:
+        attempts: 3
+        until: True
+        interval: 60
+        splay: 10
+    {%- endif %}
     - require:
       - file: iscsi_isns_make_pkg_{{ pkg }}
     {%- endif %}
