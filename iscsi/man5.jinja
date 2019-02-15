@@ -1,11 +1,4 @@
 {%- if data and component and provider -%}
-{%- if grains.os_family not in ('RedHat','Suse',) -%}
-{#- see https://github.com/instabot-py/instabot.py/issues/438 -#}
-#############################################################
-# File managed by Salt. Changes risk being overwritten.
-# Implements configuration for  {{ data.man5.manpage }} {{ data.man5.vendor }}
-#############################################################
-{% endif -%}
 
 {%- macro man5(outdict, format, spaces=0) -%}
   {%- for key, value in outdict.items() -%}
