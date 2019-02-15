@@ -1,5 +1,5 @@
 {%- if data and component and provider -%}
-{%- if grains.os_family not in ('RedHat',) -%}
+{%- if grains.os_family not in ('RedHat','Suse',) -%}
 {#- see https://github.com/instabot-py/instabot.py/issues/438 -#}
 #############################################################
 # File managed by Salt. Changes risk being overwritten.
