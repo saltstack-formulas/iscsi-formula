@@ -125,8 +125,12 @@ Suse:
   client:
     pkgs:
       wanted:
+        - libopeniscsiusr0_2_0
         - open-iscsi
+        - libiscsi8
+        - librdmacm1
         - qemu-block-iscsi
+        - iscsiuio
         - yast2-iscsi-client
   server:
     pkgs:
