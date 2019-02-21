@@ -20,7 +20,9 @@ iscsi_target_unwanted_pkgs_{{ pkg }}:
 iscsi_target_wanted_pkgs_{{ pkg }}:
   pkg.installed:
     - name: {{ pkg }}
+        {%- if iscsi.server.pkghold %}
     - hold: {{ iscsi.server.pkghold }}
+        {%- endif %}
     - reload: True
     - require_in:
       - file: iscsi_target_service_config

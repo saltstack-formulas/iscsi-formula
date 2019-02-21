@@ -20,7 +20,9 @@ iscsi_isnsd_remove_{{ pkg }}_pkg:
 iscsi_isnsd_install_{{ pkg }}_pkg:
   pkg.installed:
     - name: {{ pkg }}
+        {%- if iscsi.isns.pkghold %}
     - hold: {{ iscsi.isns.pkghold }}
+        {%- endif %}
     - reload: True
     - require_in:
       - file: iscsi_isnsd_service_config

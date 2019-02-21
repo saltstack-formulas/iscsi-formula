@@ -135,8 +135,14 @@ Suse:
   server:
     pkgs:
       wanted:
-        - yast2-iscsi-lio-server
-        - iscsiuio
+        - python3-configshell-fb
+        - python3-pyudev
+        - python3-rtslib-fb
+        - python3-targetcli-fb
+        - python3-urwid
+        - targetcli-fb-common
         - libiscsi-utils
+        - iscsiuio
+        - yast2-iscsi-lio-server
         - qemu-block-iscsi
 
