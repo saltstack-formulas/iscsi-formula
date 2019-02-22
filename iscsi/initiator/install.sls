@@ -20,7 +20,9 @@ iscsi_initiator_unwanted_pkgs_{{ pkg }}:
 iscsi_initiator_wanted_pkgs_{{ pkg }}:
   pkg.installed:
     - name: {{ pkg }}
+        {%- if iscsi.client.pkghold %}
     - hold: {{ iscsi.client.pkghold }}
+        {%- endif %}
     - reload: True
     - require_in:
       - file: iscsi_initiator_service_config
