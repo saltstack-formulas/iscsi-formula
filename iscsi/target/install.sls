@@ -76,25 +76,25 @@ iscsi_target_service_config:
         data: {{ data|json }}
         component: 'target'
         provider: {{ provider }}
-        json: {{ data['man5']['format']['json']|json }}
+        json: {{ data.man5.format.json|json }}
 
-  {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kloadtext %}
+  {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kmoduletext %}
 iscsi_target_kernel_module:
   file.line:
     - name: {{ iscsi.kernel.modloadfile }}
-    - content: {{ data.man5.kloadtext }}
+    - content: {{ data.man5.kmoduletext }}
     - backup: True
         {%- if not data.enabled %}
     - mode: delete
   cmd.run:
-    - name: {{ data.kernel.modunload }}
-    - onlyif: {{ data.kernel.modquery }}
+    - name: {{ iscsi.kernel.modunload }} {{ data.man5.kmodule }}
+    - onlyif: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
         {%- else %}
     - mode: ensure
     - after: 'autoboot_delay.*'
   cmd.run:
-    - name: {{ data.kernel.modload }}
-    - unless: {{ data.kernel.modquery }}
+    - name: {{ iscsi.kernel.modload }} {{ data.man5.kmodule }}
+    - unless: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
     - require:
       - file: iscsi_target_kernel_module
         {%- endif %}
@@ -132,4 +132,3 @@ iscsi_target_service_running:
   {%- if data.man5.kmodule %}
     - unless: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
   {%- endif %}
-

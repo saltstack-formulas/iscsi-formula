@@ -28,4 +28,3 @@ iscsi_isns_remove_{{ pkg }}_pkg:
     - require:
       - service: iscsi_isns_service_config_removed
   {% endfor %}
-
