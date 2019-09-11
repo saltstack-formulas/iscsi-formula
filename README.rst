@@ -65,7 +65,7 @@ AUR iscsi packages are supported. Run `users` state (users-formula) to create re
 
         iscsi:
         {% if grains.os == 'Arch' %}
-          user: iscsimake
+          user: iscsimake  #already defined in initiator/defaults.yaml
 
         users:
           iscsimake:
