@@ -1,7 +1,7 @@
 # vim: sts=2 ts=2 sw= et ai
 #
 iscsi:
-  user: iscsiuser      #not used unless archlinux
+  user: iscsimake      #archlinux only
   initiator:
     iscsid:                           #FreeBSD Foundation
       man5:
