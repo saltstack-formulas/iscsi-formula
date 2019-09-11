@@ -76,7 +76,7 @@ iscsi_target_service_config:
         data: {{ data|json }}
         component: 'target'
         provider: {{ provider }}
-        json: {{ data['man5']['format']['json'] }}
+        json: {{ data['man5']['format']['json']|json }}
 
   {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kloadtext %}
 iscsi_target_kernel_module:

@@ -76,7 +76,7 @@ iscsi_initiator_service_config:
         data: {{ data|json }}
         component: 'initiator'
         provider: {{ provider }}
-        json: {{ data['man5']['format']['json'] }}
+        json: {{ data['man5']['format']['json']|json }}
 
   {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kloadtext %}
 iscsi_initiator_kernel_module:
@@ -122,7 +122,11 @@ iscsi_initiator_service:
     - watch:
       - file: iscsi_initiator_service_config
         {%- endif %}
+        {%- if data.man5.svcname is iterable and data.man5.svcname is not string %}
+    - names: {{ data.man5.svcname|json }}
+        {%- else %}
     - name: {{ data.man5.svcname }}
+        {%- endif %}
         {%- if data.man5.kmodule %}
     - unless: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
         {%- endif %}
