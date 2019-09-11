@@ -130,3 +130,14 @@ iscsi_initiator_service:
         {%- if data.man5.kmodule %}
     - unless: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
         {%- endif %}
+
+iscsi_initiator_service_running_failure_explanation:
+  test.show_notification:
+    - text: |
+        In certain circumstances the iscsi initiator service will not start.
+        One reason is your kernel version was upgraded and reboot is needed.
+        If that's the case then run command:
+            'systemctl enable {{ data.man5.svcname }}' && reboot
+    - onfail:
+      - service: iscsi_initiator_service
+    - unless: {{ grains.os_family in ('MacOS', 'Windows') }}   #maybe not needed but no harm
