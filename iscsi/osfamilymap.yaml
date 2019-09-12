@@ -58,6 +58,12 @@ Gentoo:
         kmodule: iscsi_tcp
 
 Arch:
+  initiator:
+    open-iscsi:
+      man5:
+        svcname:   ##open-iscsi on archlinux uses non-standard service names
+         - iscsi
+         - iscsid
   user: iscsimake
   client:
     make:

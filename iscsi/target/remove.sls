@@ -17,18 +17,16 @@ iscsi_target_service_dead:
     - onlyif: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
   {%- endif %}
 
-
-  {%- set kmodule = iscsi.server['provider']['man5']['kmodule'] %}
-  {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kloadtext %}
+  {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kmoduletext %}
 iscsi_target_kernel_module_{{ data.man5.kmodule }}_removed:
   file.line:
     - name: {{ iscsi.kernel.modloadfile }}
-    - content: {{ data.man5.kloadtext }}
+    - content: {{ data.man5.kmoduletext }}
     - backup: True
     - mode: delete
   cmd.run:
-    - name: {{ iscsi.target.kernel.modunload }}
-    - onlyif: {{ iscsi.target.kernel.modquery }}
+    - name: {{ iscsi.kernel.modunload }} {{ data.man5.kmodule }}
+    - onlyif: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
     - require:
       - iscsi_target_service_dead
     - require_in:
@@ -45,6 +43,5 @@ iscsi_target_wanted_pkgs_{{ pkg }}_removed:
 
 iscsi_target_service_config_removed:
   file.absent:
-    - name: {{ iscsi.target.man5.config }}
-    - onlyif: test -f {{ iscsi.target.man5.config }}
-
+    - name: {{ data.man5.config }}
+    - onlyif: test -f {{ data.man5.config }}

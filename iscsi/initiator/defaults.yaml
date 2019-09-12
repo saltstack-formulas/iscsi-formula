@@ -1,7 +1,7 @@
 # vim: sts=2 ts=2 sw= et ai
 #
 iscsi:
-  user: iscsiuser      #not used unless archlinux
+  user: iscsimake      #archlinux only
   initiator:
     iscsid:                           #FreeBSD Foundation
       man5:
@@ -9,7 +9,7 @@ iscsi:
         vendor: FreeBSD Foundation
         svcname: iscsid
         kmodule: iscsi_initiator
-        modloadtext: iscsi_initiator_load="YES"
+        kmoduletext: iscsi_initiator_load="YES"
         svcloadfile: /etc/rc.conf
         svcloadtext: iscsictl_enable="YES"
         config: /etc/iscsi.conf
@@ -28,7 +28,7 @@ iscsi:
         vendor: Open-iSCSI
         svcname: open-iscsi
         kmodule: None
-        modloadtext: xxxxxxxxx="YES"
+        kmoduletext: xxxxxxxxx="YES"
         svcloadfile:
         svcloadtext:
         config: /etc/iscsi/iscsid.conf
@@ -72,7 +72,7 @@ iscsi:
         vendor:
         svcname: ['fcoe', 'lldpad',]
         kmodule: None
-        modloadtext: xxxxxxxxx="YES"
+        kmoduletext: xxxxxxxxx="YES"
         svcloadfile:
         svcloadtext:
         targetconf: /etc/fcoe/cfg-ethx

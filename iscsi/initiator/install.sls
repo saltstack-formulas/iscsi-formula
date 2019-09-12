@@ -76,25 +76,25 @@ iscsi_initiator_service_config:
         data: {{ data|json }}
         component: 'initiator'
         provider: {{ provider }}
-        json: {{ data['man5']['format']['json'] }}
+        json: {{ data.man5.format.json|json }}
 
-  {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kloadtext %}
+  {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kmoduletext %}
 iscsi_initiator_kernel_module:
   file.line:
     - name: {{ iscsi.kernel.modloadfile }}
-    - content: {{ data.man5.kloadtext }}
+    - content: {{ data.man5.kmoduletext }}
     - backup: True
         {%- if not iscsi.client.enabled %}
     - mode: delete
   cmd.run:
-    - name: {{ iscsi.initiator.kernel.modunload }}
-    - onlyif: {{ iscsi.initiator.kernel.modquery }}
+    - name: {{ iscsi.kernel.modunload }} {{ data.man5.kmodule }}
+    - onlyif: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
         {%- else %}
     - mode: ensure
     - after: autoboot_delay.*$
   cmd.run:
-    - name: {{ iscsi.initiator.kernel.modload }}
-    - unless: {{ iscsi.initiator.kernel.modquery }}
+    - name: {{ iscsi.kernel.modload }} {{ data.man5.kmodule }}
+    - unless: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
     - require:
       - file: iscsi_initiator_kernel_module
         {%- endif %}
@@ -122,8 +122,22 @@ iscsi_initiator_service:
     - watch:
       - file: iscsi_initiator_service_config
         {%- endif %}
+        {%- if data.man5.svcname is iterable and data.man5.svcname is not string %}
+    - names: {{ data.man5.svcname|json }}
+        {%- else %}
     - name: {{ data.man5.svcname }}
+        {%- endif %}
         {%- if data.man5.kmodule %}
     - unless: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
         {%- endif %}
 
+iscsi_initiator_service_running_failure_explanation:
+  test.show_notification:
+    - text: |
+        In certain circumstances the iscsi initiator service will not start.
+        One reason is your kernel version was upgraded and reboot is needed.
+        If that's the case then run command:
+            'systemctl enable {{ data.man5.svcname }}' && reboot
+    - onfail:
+      - service: iscsi_initiator_service
+    - unless: {{ grains.os_family in ('MacOS', 'Windows') }}   #maybe not needed but no harm

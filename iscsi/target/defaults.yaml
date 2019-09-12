@@ -9,7 +9,7 @@ iscsi:
         vendor: tgt project
         svcname: tgtd
         kmodule: None
-        modloadtext: xxxxxxxxx="YES"
+        kmoduletext: xxxxxxxxx="YES"
         svcloadfile:
         svcloadtext: 
         config: /etc/tgt/conf.d/targets.conf
@@ -36,7 +36,7 @@ iscsi:
         vendor: FreeBSD Foundation
         svcname: ctld            #CAM Target Layer/iSCSI target daemon
         kmodule: cfiscsi
-        modloadtext: cfiscsi_load="YES"
+        kmoduletext: cfiscsi_load="YES"
         svcloadfile: /etc/rc.conf
         svcloadtext: 'iscsid_enable="YES"'
         allowconf:
@@ -68,7 +68,7 @@ iscsi:
         vendor: IET project
         svcname: iscsitarget
         kmodule: iscsi_trgt
-        modloadtext: iscsi_trgt
+        kmoduletext: iscsi_trgt
         svcloadfile:
         svcloadtext:
         config: /etc/ietd.conf
@@ -108,7 +108,7 @@ iscsi:
         vendor: Kernel.org
         svcname: target
         kmodule: target_core_mod
-        modloadtext: target_core_mod
+        kmoduletext: target_core_mod
         svcloadfile:
         svcloadtext:
         config: /etc/target/saveconfig.json
@@ -133,7 +133,7 @@ iscsi:
         vendor:
         svcname: fcoe-target
         kmodule: fcoe_target
-        modloadtext: fcoe_target
+        kmoduletext: fcoe_target
         svcloadfile:
         svcloadtext:
         config: ....

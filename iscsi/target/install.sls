@@ -76,25 +76,25 @@ iscsi_target_service_config:
         data: {{ data|json }}
         component: 'target'
         provider: {{ provider }}
-        json: {{ data['man5']['format']['json'] }}
+        json: {{ data.man5.format.json|json }}
 
-  {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kloadtext %}
+  {%- if iscsi.kernel.mess_with_kernel and data.man5.kmodule and data.man5.kmoduletext %}
 iscsi_target_kernel_module:
   file.line:
     - name: {{ iscsi.kernel.modloadfile }}
-    - content: {{ data.man5.kloadtext }}
+    - content: {{ data.man5.kmoduletext }}
     - backup: True
         {%- if not data.enabled %}
     - mode: delete
   cmd.run:
-    - name: {{ data.kernel.modunload }}
-    - onlyif: {{ data.kernel.modquery }}
+    - name: {{ iscsi.kernel.modunload }} {{ data.man5.kmodule }}
+    - onlyif: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
         {%- else %}
     - mode: ensure
     - after: 'autoboot_delay.*'
   cmd.run:
-    - name: {{ data.kernel.modload }}
-    - unless: {{ data.kernel.modquery }}
+    - name: {{ iscsi.kernel.modload }} {{ data.man5.kmodule }}
+    - unless: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
     - require:
       - file: iscsi_target_kernel_module
         {%- endif %}
@@ -133,3 +133,13 @@ iscsi_target_service_running:
     - unless: {{ iscsi.kernel.modquery }} {{ data.man5.kmodule }}
   {%- endif %}
 
+iscsi_target_service_running_failure_explanation:
+  test.show_notification:
+    - text: |
+        In certain circumstances the iscsi target service will not start.
+        One reason is your kernel version was upgraded but host not rebooted.
+        If that's the case then run command:
+            'systemctl enable {{ data.man5.svcname }}' && reboot
+    - onfail:
+      - service: iscsi_target_service_running
+    - unless: {{ grains.os_family in ('MacOS', 'Windows') }}   #maybe not needed but no harm
