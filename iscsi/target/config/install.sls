@@ -29,4 +29,3 @@ iscsi-target-config-install-file-managed:
     - context:
       data: {{ iscsi.config.data[iscsi.target.provider|string]|json }}
       component: target
-      provider: {{ iscsi.target.provider|string }}

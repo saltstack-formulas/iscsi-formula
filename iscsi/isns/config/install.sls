@@ -31,7 +31,6 @@ iscsi-isns-config-install-file-managed-isnsd:
     - context:
       data: {{ iscsi.config.data[iscsi.isns.provider|string]|json }}
       component: isns
-      provider: {{ iscsi.isns.provider|string }}
 
     {%- if 'isnsadm' in iscsi.config.name and iscsi.config.name['isnsadm'] %}
 iscsi-isns-config-install-file-managed-isnsadm:
@@ -54,7 +53,6 @@ iscsi-isns-config-install-file-managed-isnsadm:
     - context:
       data: {{ iscsi.config.data[iscsi.isns.provider|string]|json }}
       component: isns
-      provider: {{ iscsi.isns.provider|string }}
     {%- endif %}
 
     {%- if 'isnsdd' in iscsi.config.name and iscsi.config.name['isnsdd'] %}
@@ -79,5 +77,4 @@ iscsi-isns-config-install-file-managed-isnsdd:
     - context:
       data: {{ iscsi.config.data[iscsi.isns.provider|string]|json }}
       component: isns
-      provider: {{ iscsi.isns.provider|string }}
     {%- endif %}

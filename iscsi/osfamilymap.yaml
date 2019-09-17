@@ -21,7 +21,7 @@ Debian:
         - open-iscsi
         - libiscsi-bin
   target:
-    provider: lio
+    provider: tgtd
     pkgs:
       wanted:
         - tgt

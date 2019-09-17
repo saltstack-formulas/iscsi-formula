@@ -29,4 +29,3 @@ iscsi-initiator-config-install-file-managed:
     - context:
       data: {{ iscsi.config.data[iscsi.initiator.provider|string]|json }}
       component: initiator
-      provider: {{ iscsi.initiator.provider|string }}

@@ -135,6 +135,8 @@ iscsi:
 
       lio:
         ##https://www.systutorials.com/docs/linux/man/5-saveconfig.json
+        ##https://bugzilla.redhat.com/show_bug.cgi?id=1643673
+        ##https://github.com/open-iscsi/rtslib-fb/issues/5
         ##----------------------------------------------------------------------
         ## The sample below is complex because its used for verification.
         ## You should only use the minimal pillar data for your needs.

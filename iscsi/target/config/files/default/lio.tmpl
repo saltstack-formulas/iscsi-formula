@@ -6,7 +6,7 @@
 
 {% set arrays = ('fabric_modules', 'storage_objects', 'alua_tpgs', 'targets', 'node_acls', 'luns', 'mapped_luns', 'portals')%} 
 
-{%- if data and component and provider -%}
+{%- if data and component -%}
 
 {%- macro lio(outdict, spaces=0, parent=False) -%}
   {%- for key, value in outdict.items() -%}
