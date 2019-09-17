@@ -3,14 +3,15 @@
 ---
 iscsi:
 
-    {%- if grains.os_family in ('Debian',) %}
+    {%- if grains.os_family in ('Debian', 'Suse',) %}
   target:
     pkgs:
       wanted:
         - infiniband-diags
         - ibutils
         - ibverbs-utils
-        - rdmacm-utils perftest
+        - rdmacm-utils
+        - perftest
     {%- endif %}
 
   config:
