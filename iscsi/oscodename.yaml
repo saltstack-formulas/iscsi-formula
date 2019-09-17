@@ -21,7 +21,7 @@
           {%- elif name in ('jessie',) %}
       wanted: ['tgt-glusterfs', 'tgt-rbd',]
           {%- else %}
-      wanted: ['python-configshell-fb', 'python-rtslib-fb', 'targetcli-fb', 'iscsiuio']
+      wanted: ['python-configshell-fb', 'tgt', 'tgt-rbd', 'python-rtslib-fb', 'targetcli-fb', 'iscsiuio']
           {%- endif %}
 {% endmacro %}
 
