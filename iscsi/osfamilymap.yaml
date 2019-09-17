@@ -1,41 +1,26 @@
-# vim: sts=2 ts=2 sw=2 et ai
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
 #
-FreeBSD:
-  group: wheel
-  isns:
-    pkgs:
-      wanted:
-        - net/open-isns
-      unwanted: []
-  server:
-    provider: ctld
-    pkgs:
-      wanted:
-        - net/istgt
-      unwanted: []
-  client:
-    provider: iscsid
-    pkgs:
-      wanted: []
-      unwanted: []
-  kernel:
-    modconfig: /boot/loader.conf
-    modload: kldload
-    modunload: kldunload
-    modquery: kldstat -q -m
-
+# Setup variables using grains['os_family'] based logic.
+# You just need to add the key:values for an `os_family` that differ
+# from `defaults.yaml` + `osarch.yaml`.
+# Only add an `os_family` which is/will be supported by the formula.
+#
+# If you do not need to provide defaults via the `os_family` grain,
+# you will need to provide at least an empty dict in this file, e.g.
+# osfamilymap: {}
+---
 Debian:
-  isns:
-    isnsd:
-      man5:
-        svcname: isns
-  client:
+  config:
+    servicename:
+      isns: isnsd
+  initiator:
     enabled: False  #see https://github.com/saltstack-formulas/iscsi-formula/issues/10
     pkgs:
       wanted:
         - open-iscsi
         - libiscsi-bin
-  server:
+  target:
     provider: lio
     pkgs:
       wanted:
@@ -46,68 +31,24 @@ Debian:
         - iscsitarget
         - iscsitarget-dkms
 
-Gentoo:
-  server:
-    pkgs:
-      wanted:
-        # sys-block/tgt
-        - sys-block/targetcli-fb
-  target:
-    lio:
-      man5:
-        kmodule: iscsi_tcp
-
-Arch:
-  initiator:
-    open-iscsi:
-      man5:
-        svcname:   ##open-iscsi on archlinux uses non-standard service names
-         - iscsi
-         - iscsid
-  user: iscsimake
-  client:
-    make:
-      gitrepo: https://aur.archlinux.org
-      cmd: makepkg -si --noconfirm -f 
-      wanted: []
-  server:
-    pkgs:
-      wanted:
-        - python-pip               # makepkg states needs 'gitpython'.
-        - thin-provisioning-tools
-        - linux-lts                # For kernel scsi modules
-    make:
-      gitrepo: https://aur.archlinux.org
-      cmd: makepkg -si --noconfirm -f 
-      wanted:
-        # rdma-core
-        # tgt-rdma
-        - python-rtslib-fb
-        - python-configshell-fb
-        - targetcli-fb
-  target:
-    lio:
-      man5:
-        kmodule: target-core-mod
-  
 RedHat:
+  config:
+    servicename:
+      open-iscsi: iscsi
+      isns: isnsd
   isns:
     pkgs:
       wanted:
         - isns-utils
         - yum-plugin-versionlock
   initiator:
-    open-iscsi:
-      man5:
-        svcname: iscsid
-  client:
     pkgs:
       wanted:
         - iscsi-initiator-utils
         - iscsi-initiator-utils-iscsiuio
         - libiscsi
         - libiscsi-utils
-  server:
+  target:
     pkgs:
       wanted:
         - libvirt-daemon-driver-storage-iscsi
@@ -120,25 +61,24 @@ RedHat:
         # fcoe-target-utils
 
 Suse:
+  config:
+    servicename: 
+      open-iscsi: iscsid
   isns:
     pkgs:
       wanted:
         - open-isns
   initiator:
-    open-iscsi:
-      man5:
-        svcname: iscsid
-  client:
     pkgs:
       wanted:
-        - libopeniscsiusr0_2_0
+        - libopen-iscsiusr0_2_0
         - open-iscsi
         - libiscsi8
         - librdmacm1
         - qemu-block-iscsi
         - iscsiuio
         - yast2-iscsi-client
-  server:
+  target:
     pkgs:
       wanted:
         - python3-configshell-fb
@@ -152,3 +92,73 @@ Suse:
         - yast2-iscsi-lio-server
         - qemu-block-iscsi
 
+Gentoo:
+  target:
+    pkgs:
+      wanted:
+        - sys-block/targetcli-fb
+        # sys-block/tgt
+  config:
+    kmodule:
+      lio: iscsi_tcp
+
+Arch:
+  config:
+    servicename:
+      open-iscsi:   ##open-iscsi on archlinux uses non-standard service names
+       - iscsi
+       - iscsid
+  initiator:
+    make:
+      gitrepo: https://aur.archlinux.org
+      cmd: makepkg -si --noconfirm -f
+      wanted: []
+  target:
+    pkgs:
+      wanted:
+        - python-pip               # makepkg states needs 'gitpython'.
+        - thin-provisioning-tools
+        - linux-lts                # For kernel scsi modules
+    make:
+      gitrepo: https://aur.archlinux.org
+      cmd: makepkg -si --noconfirm -f
+      wanted:
+        # rdma-core
+        # tgt-rdma
+        - python-rtslib-fb
+        - python-configshell-fb
+        - targetcli-fb
+
+Alpine: {}
+
+FreeBSD:
+  rootgroup: wheel
+  isns:
+    pkgs:
+      wanted:
+        - net/open-isns
+  target:
+    provider: ctld
+    pkgs:
+      wanted:
+        - net/istgt
+  initiator:
+    provider: iscsi
+    pkgs:
+      wanted: []
+  config:
+    name:
+      modprobe: /boot/loader.conf
+  kernel:
+    modload: kldload
+    modunload: kldunload
+    modquery: kldstat -q -m
+
+OpenBSD:
+  rootgroup: wheel
+
+Solaris: {}
+
+Windows: {}
+
+MacOS: {}

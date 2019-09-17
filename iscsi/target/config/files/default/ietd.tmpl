@@ -1,0 +1,26 @@
+########################################################################
+# File managed by Salt at <{{ source }}>.
+# Your changes will be overwritten.
+########################################################################
+
+{% if data and component and provider -%}
+
+{%- macro readconf(outdict, spaces=0) -%}
+  {%- for key, value in outdict.items() -%}
+{{ ietd(key, value, spaces, loop.last) }}
+  {%- endfor %}
+{%- endmacro -%}
+
+{%- macro ietd(key, value, spaces=0, last=False) -%}
+  {%- set shift = spaces * ' ' -%}
+{%- if value is mapping %}
+{{shift}}{{ key }}
+{{ readconf(value, spaces|int+4) }}
+{%- elif value is string or value is number %}
+{{shift}}{{ key }} {{ "'" if value is not string else ''}}{{ value }}{{"'" if value is not string else ''}}
+{%- endif %}
+{%- endmacro -%}
+
+{{ readconf(data,  0) }}
+
+{% endif %}

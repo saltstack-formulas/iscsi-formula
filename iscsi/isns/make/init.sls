@@ -2,7 +2,4 @@
 # vim: ft=sls
 
 include:
-  - .package
-  - .make
-  - .config
-  - .service
+  - .install

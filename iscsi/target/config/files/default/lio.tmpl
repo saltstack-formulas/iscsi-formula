@@ -1,0 +1,38 @@
+########################################################################
+# File managed by Salt at <{{ source }}>.
+# Your changes will be overwritten.
+########################################################################
+
+{% set arrays = ('fabric_modules', 'storage_objects', 'alua_tpgs', 'targets', 'node_acls', 'luns', 'mapped_luns', 'portals')%} 
+
+{%- if data and component and provider -%}
+
+{%- macro lio(outdict, spaces=0, parent=False) -%}
+  {%- for key, value in outdict.items() -%}
+{{ readconf(key, value, spaces, parent, loop.last) }}
+  {%- endfor %}
+{%- endmacro -%}
+
+{%- macro readconf(key, value, spaces=0, parent=None, last=False) -%}
+    {%- set shift = spaces * ' ' -%}
+    {%- if value is mapping and not value -%}
+{{ shift ~ '{}\n' if last else shift ~ '{},\n' }}
+    {%- elif value is mapping and value and parent|lower not in arrays %}
+{{ shift ~ '"' ~ key ~ '": ' }}{{ '{' if key|lower in ('parameters', 'attributes') else '[\n' ~ shift ~ ' {' if key|lower in ('tpgs',) else '[' }}
+{{ lio(value, spaces+4, key) }}
+{{ shift ~ '}' if last and key in ('tpgs', 'parameters', 'attributes') else shift ~ '},' if key in ('parameters', 'attributes') else ''  -}}
+{{ shift ~ ']' if last and key not in ('parameters', 'attributes') else shift ~ '],' if  key not in ('parameters', 'attributes') else '' -}}
+    {%- elif value is mapping and value -%}
+{{ shift ~ ' {' if key|lower not in ('parameters', 'attributes') else '' -}}
+{{ lio(value, spaces|int+4, key) }}
+{{ shift ~ ' }' if last else shift ~ ' },\n' }}
+    {%- elif value is string or value is number %}
+{{ shift }}"{{ key }}": {{ '' if value is number else '"' }}{{ value }}{{ '' if value is number else '"' }}{{ '' if last else ',' -}}
+{{ '\n' ~ shift ~ '}' if last and parent|lower in ('tpgs',) else '' -}} 
+    {%- endif %}
+{%- endmacro -%}
+
+{{- '{' -}}
+{{ lio(data, 4) }}
+{{ '}' -}}
+{%- endif -%}

@@ -1,0 +1,21 @@
+########################################################################
+# File managed by Salt at <{{ source }}>.
+# Your changes will be overwritten.
+########################################################################
+
+{% if data and component and provider -%}
+
+{%- macro readconf(outdict, spaces=0) -%}
+  {%- for key, value in outdict.items() -%}
+{{ isns(key, value, spaces) }}
+  {%- endfor %}
+{%- endmacro -%}
+
+{%- macro isns(key, value, spaces=0, last=False) -%}
+    {%- set shift = spaces * ' ' -%}
+{{shift}}{{ key }} = {{ value }}
+{%- endmacro -%}
+
+{{ readconf(data['isns'], 0) }}
+
+{% endif -%}
