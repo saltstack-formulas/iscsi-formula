@@ -22,7 +22,7 @@ iscsi-target-make-file-directory:
 
 iscsi-target-make-{{ pkg }}-git-latest:
   git.latest:
-    - onlyif: {{ iscsi.target.make.gitrepo }}
+    - onlyif: {{ iscsi.target.make.gitrepo != None }}
     - name: {{ iscsi.target.make.gitrepo }}/{{ pkg }}.git
     - target: /home/{{ iscsi.user }}/{{ pkg }}
     - user: {{ iscsi.user }}
@@ -45,6 +45,8 @@ iscsi-target-make-{{ pkg }}-cmd-run:
     - cwd: /home/{{ iscsi.user }}/{{ pkg }}
     - name: {{ iscsi.target.make.cmd }}
     - runas: {{ iscsi.user }}
+    - onchanges:
+      - git: iscsi-target-make-{{ pkg }}-git-latest
     - require:
       - git: iscsi-target-make-{{ pkg }}-git-latest
     - require_in:

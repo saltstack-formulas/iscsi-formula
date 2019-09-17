@@ -22,7 +22,7 @@ iscsi-initiator-make-file-directory:
 
 iscsi-initiator-make-{{ pkg }}-git-latest:
   git.latest:
-    - onlyif: {{ iscsi.initiator.make.gitrepo }}
+    - onlyif: {{ iscsi.initiator.make.gitrepo != None }}
     - name: {{ iscsi.initiator.make.gitrepo }}/{{ pkg }}.git
     - initiator: /home/{{ iscsi.user }}/{{ pkg }}
     - user: {{ iscsi.user }}
@@ -45,6 +45,8 @@ iscsi-initiator-make-{{ pkg }}-cmd-run:
     - cwd: /home/{{ iscsi.user }}/{{ pkg }}
     - name: {{ iscsi.initiator.make.cmd }}
     - runas: {{ iscsi.user }}
+    - onchanges:
+      - git: iscsi-initiator-make-{{ pkg }}-git-latest
     - require:
       - git: iscsi-initiator-make-{{ pkg }}-git-latest
     - require_in:
