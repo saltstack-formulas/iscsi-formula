@@ -35,7 +35,7 @@ iscsi:
         - fcoe
         - lldpad
         - fcoe-target
-      tgtd: tgtd              #TGT Project (userspace) RedHat/Debian/Arch/Gentoo
+      tgtd: tgt               #TGT Project (userspace) RedHat/Debian/Arch/Gentoo
       ctld: ctld              #CAM Target Layer/iSCSI target daemon, FreeBSD.
       ietd: iscsitarget       #iSCSI Enterprise Target (IET) project
       isns: isnsd             #Open-iSNS implements iSNS protocol (RFC4171)
