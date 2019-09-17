@@ -71,7 +71,7 @@ Suse:
   initiator:
     pkgs:
       wanted:
-        - libopen-iscsiusr0_2_0
+        # libopen-iscsiusr0_2_0
         - open-iscsi
         - libiscsi8
         - librdmacm1
@@ -105,7 +105,7 @@ Gentoo:
 Arch:
   config:
     servicename:
-      open-iscsi:   ##open-iscsi on archlinux uses non-standard service names
+      open-iscsi:
        - iscsi
        - iscsid
   initiator:

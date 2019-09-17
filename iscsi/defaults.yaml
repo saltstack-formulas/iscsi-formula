@@ -69,6 +69,9 @@ iscsi:
       fcoe:
         name: fcoe_target
         text: fcoe_target
+      iser:
+        name: ('ib_iser', 'ib_isert', 'rdma_ucm', 'rdma_cm', 'ib_cm',)
+        text: null
     data:
       iscsi: {}
       fcoe: {}

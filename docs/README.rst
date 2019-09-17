@@ -14,8 +14,14 @@ iscsi-formula
    :scale: 100%
    :target: https://github.com/semantic-release/semantic-release
 
-A SaltStack formula that is empty. It has dummy content to help with a quick
-start on a new formula and it serves as a style guide.
+Configure iSCSI targets and initiator on GNU/Linux and FreeBSD.
+
+Technology
+----------
+.. image:: docs/link-transport-storage-protocols.png
+   :target: https://github.com/saltstack-formulas/iscsi-formula
+   :scale: 25 %
+   :alt: Link/Transport and Storage protocol infographic
 
 .. contents:: **Table of Contents**
 
@@ -59,10 +65,19 @@ starts the associated iscsi services.
 ---------------------
 Install and configure the iSCSI Target service. Supported vendor implementations include-
 
-- ``/etc/ctl.conf`` for ``ctld(8)`` on FreeBSD 
-- ``/etc/target/saveconfig.json` for ``LIOkernel target`` on GNU/Linux
-- ``/etc/targets.conf`` for ``tgt(8)`` on GNU/Linux (largely obsolete)
-- ``/etc/ietd.conf`` for `ietd(8)`` on GNU/Linux (largely obsolete)
+- ``/etc/ctl.conf`` for ``ctld(8)`` on FreeBSD
+- ``/etc/target/saveconfig.json` for ``LIO`` on GNU/Linux
+- ``/etc/targets.conf`` for ``tgt(8)`` on GNU/Linux
+- ``/etc/ietd.conf`` for `ietd(8)`` on GNU/Linux
+
+The defaults targets are-
+
+- ctld on FreeBSD
+- LIO on CentOS, OpenSUSE, Arch
+- tgt on Debian
+
+The default choice is modifable via the `iscsi.target.provider` pillar value.
+New providers can be introduced via pull request.
 
 ``iscsi.initiator``
 ------------------

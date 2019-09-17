@@ -18,7 +18,7 @@
 {{ readconf(value, spaces|int+4) }}
 {{shift}}{{ '</' ~ key.split(" ")[0] ~ '>' }}
 
-    {%- elif value is string or value is number %}
+    {% elif value is string or value is number %}
 {{shift}}{{ key }} {{ value }}
     {%- endif %}
 {%- endmacro -%}

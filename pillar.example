@@ -2,6 +2,17 @@
 # vim: ft=yaml
 ---
 iscsi:
+
+    {%- if grains.os_family in ('Debian',) %}
+  target:
+    pkgs:
+      wanted:
+        - infiniband-diags
+        - ibutils
+        - ibverbs-utils
+        - rdmacm-utils perftest
+    {%- endif %}
+
   config:
     data:
       open-iscsi:
