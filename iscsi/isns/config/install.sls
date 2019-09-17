@@ -12,7 +12,7 @@ include:
 
 iscsi-isns-config-install-file-managed-isnsd:
   file.managed:
-    - onlyif: {{ iscsi.config.data[iscsi.isns.provider|string] }}
+    - onlyif: {{ iscsi.config.data[iscsi.isns.provider|string]|json }}
     - name: {{ iscsi.config.name['isns'] }}
     - source: {{ files_switch([iscsi.isns.provider ~ '.tmpl'],
                               lookup='iscsi-isns-config-install-file-managed',
