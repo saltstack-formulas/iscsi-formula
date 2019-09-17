@@ -12,6 +12,7 @@ include:
 
 iscsi-initiator-config-install-file-managed:
   file.managed:
+    - onlyif: {{ iscsi.config.data[iscsi.initiator.provider|string] }}
     - name: {{ iscsi.config.name[iscsi.initiator.provider] }}
     - source: {{ files_switch([iscsi.initiator.provider ~ '.tmpl'],
                               lookup='iscsi-initiator-config-install-file-managed',
