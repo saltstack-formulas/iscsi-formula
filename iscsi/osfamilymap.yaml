@@ -64,6 +64,7 @@ Suse:
   config:
     servicename: 
       open-iscsi: iscsid
+      lio: targetcli   ### might need to add suse to oscodename.yaml if SLES support is needed
   isns:
     pkgs:
       wanted:
