@@ -3,7 +3,7 @@
 # Your changes will be overwritten.
 ########################################################################
 
-{% if data and component and provider -%}
+{% if data and component -%}
 
 {%- macro readconf(outdict, spaces=0) -%}
   {%- for key, value in outdict.items() -%}
@@ -16,6 +16,6 @@
 {{shift}}{{ key }} = {{ value }}
 {%- endmacro -%}
 
-{{ readconf(data['isns'], 0) }}
+{{ readconf(data, 0) }}
 
 {% endif -%}
