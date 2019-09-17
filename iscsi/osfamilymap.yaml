@@ -117,15 +117,13 @@ Arch:
   target:
     pkgs:
       wanted:
+        - linux-lts                # For kernel scsi modules
         - python-pip               # makepkg states needs 'gitpython'.
         - thin-provisioning-tools
-        - linux-lts                # For kernel scsi modules
     make:
       gitrepo: https://aur.archlinux.org
       cmd: makepkg -si --noconfirm -f
       wanted:
-        # rdma-core
-        # tgt-rdma
         - python-rtslib-fb
         - python-configshell-fb
         - targetcli-fb
