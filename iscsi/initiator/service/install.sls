@@ -9,19 +9,18 @@
 include:
   - {{ sls_config_install }}
 
-    {%- if grains.os == 'FreeBSD' %}
+    {%- if grains.os_family == 'FreeBSD' %}
 
 iscsi-initiator-service-install-file-line-freebsd:
   file.line:
     - name: {{ iscsi.config.name.modprobe }}
     - content: 'ctld_env="-u"'
     - backup: True
-        {%- if not iscsi.initiator.enabled %}
-    - mode: delete
-        {%- else %}
+        {%- if iscsi.initiator.enabled %}
     - mode: ensure
-    - after: 'sshd_enable.*'
-    - create: True
+    - after: 'autoboot_delay.*'
+        {%- else %}
+    - mode: delete
         {%- endif %}
     {%- endif %}
 

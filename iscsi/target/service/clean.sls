@@ -18,7 +18,7 @@ iscsi-target-service-clean-service-dead
 
 iscsi-target-service-install-file-line-freebsd:
   file.line:
-    - onlyif: {{ grains.os == 'FreeBSD' }}
+    - onlyif: {{ grains.os_family == 'FreeBSD' }}
     - name: {{ iscsi.config.name.modprobe }}
     - content: 'ctld_env="-u"'
     - mode: delete

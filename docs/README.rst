@@ -16,13 +16,6 @@ iscsi-formula
 
 Configure iSCSI targets and initiator on GNU/Linux and FreeBSD.
 
-Technology
-----------
-.. image:: docs/link-transport-storage-protocols.png
-   :target: https://github.com/saltstack-formulas/iscsi-formula
-   :scale: 25 %
-   :alt: Link/Transport and Storage protocol infographic
-
 .. contents:: **Table of Contents**
 
 General notes
@@ -45,6 +38,13 @@ Contributing to this repo
 **Commit message formatting is significant!!**
 
 Please see :ref:`How to contribute <CONTRIBUTING>` for more details.
+
+Scope
+-----
+.. image:: docs/link-transport-storage-protocols.png
+   :target: https://github.com/saltstack-formulas/iscsi-formula
+   :scale: 25 %
+   :alt: Link/Transport and Storage protocol infographic
 
 Available states
 ----------------
