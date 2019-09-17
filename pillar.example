@@ -1,16 +1,30 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 ---
-iscsi:
+    {% if grains.os_family in ('Arch',) %}
+users:
+  iscsimake:
+    sudouser: True
+    shell: /bin/bash
+    empty_password: True
+    home: /home/iscsimake
+    createhome: True
+    optional_groups:
+      - wheel
+      - root
+    sudo_rules:
+     - 'ALL=(ALL) ALL'
+    {% endif %}
 
+iscsi:
     {%- if grains.os_family in ('Debian', 'Suse',) %}
   target:
     pkgs:
       wanted:
         - infiniband-diags
         - ibutils
-        - ibverbs-utils
-        - rdmacm-utils
+        # ibverbs-utils #not suse
+        # rdmacm-utils  #not suse
         - perftest
     {%- endif %}
 
