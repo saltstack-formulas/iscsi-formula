@@ -53,7 +53,7 @@ RedHat:
     pkgs:
       wanted:
         - iscsi-initiator-utils
-           {%- if 'osmajorrrelease' in grains and grains.osmajorrelease >= 7 %}
+           {%- if 'osmajorrrelease' in grains and grains.osmajorrelease|int >= 7 %}
         - iscsi-initiator-utils-iscsiuio
         - libiscsi
         - libiscsi-utils
@@ -62,11 +62,11 @@ RedHat:
     pkgs:
       wanted:
         - device-mapper-persistent-data
-           {%- if 'osmajorrrelease' in grains and grains.osmajorrelease == 6 %}
+           {%- if 'osmajorrrelease' in grains and grains.osmajorrelease|int == 6 %}
         - scsi-target-utils
         - fcoe-utils
         - fcoe-target-utils
-           {%- elif 'osmajorrrelease' in grains and grains.osmajorrelease >= 7 %}
+           {%- elif 'osmajorrrelease' in grains and grains.osmajorrelease|int >= 7 %}
         - yum-plugin-versionlock
         - targetcli
         - libvirt-daemon-driver-storage-iscsi
