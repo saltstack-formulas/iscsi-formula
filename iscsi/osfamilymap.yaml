@@ -30,7 +30,11 @@ Debian:
       unwanted:
         - iscsitarget
         - iscsitarget-dkms
-
+        - infiniband-diags
+        - ibutils
+        - ibverbs-utils #not suse
+        - rdmacm-utils  #not suse
+        - perftest
 RedHat:
   config:
     name:
@@ -103,6 +107,9 @@ Suse:
         - iscsiuio
         - yast2-iscsi-lio-server
         - qemu-block-iscsi
+        - infiniband-diags
+        - ibutils
+        - perftest
 
 Gentoo:
   target:

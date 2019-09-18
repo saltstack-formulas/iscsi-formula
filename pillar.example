@@ -16,18 +16,53 @@ users:
      - 'ALL=(ALL) ALL'
     {% endif %}
 
-iscsi:
-    {%- if grains.os_family in ('Debian', 'Suse',) %}
-  target:
-    pkgs:
-      wanted:
-        - infiniband-diags
-        - ibutils
-        # ibverbs-utils #not suse
-        # rdmacm-utils  #not suse
-        - perftest
-    {%- endif %}
+lvm:
+  files:
+    remove:
+      - /tmp/loopdevs/testfile0.img
+      - /tmp/loopdevs/testfile1.img
+      - /tmp/loopdevs/testfile2.img
+      - /tmp/loopdevs/testfile3.img
+    create:
+      dd:
+        /tmp/loopdevs/testfile0.img:
+          options:
+            if: /dev/urandom
+            bs: 1024
+            count: 204800
+        /tmp/loopdevs/testfile1.img:
+          options:
+            if: /dev/urandom
+            bs: 1024
+            count: 204800
+        /tmp/loopdevs/testfile2.img:
+          options:
+            if: /dev/urandom
+            bs: 1024
+            count: 204800
+        /tmp/loopdevs/testfile3.img:
+          options:
+            if: /dev/urandom
+            bs: 1024
+            count: 204800
+      losetup:
+        /tmp/loopdevs/testfile0.img: {}
+        /tmp/loopdevs/testfile1.img: {}
+        /tmp/loopdevs/testfile2.img: {}
+        /tmp/loopdevs/testfile3.img: {}
+  pv:
+    create:
+      /dev/loop0: {}
+      /dev/loop1: {}
+      /dev/loop2: {}
+      /dev/loop3: {}
+    delete:
+      /dev/loop0: {}
+      /dev/loop1: {}
+      /dev/loop2: {}
+      /dev/loop3: {}
 
+iscsi:
   config:
     data:
       open-iscsi:
@@ -144,17 +179,17 @@ iscsi:
         iSNSAccessControl: Off
         iSNS: Off
         'target iqn.2008-09.com.example:server.target1':
-          backing-store: /dev/LVM/somedevice
+          backing-store: /dev/loop0
         'target iqn.2008-09.com.example:server.target5':
-          'direct-store /dev/sdd':
+          'direct-store /dev/loop1':
             vendor_id: VENDOR1
             removable: 1
             device-type: cd
             lun: 1
-          'direct-store /dev/sda':
+          'direct-store /dev/loop2':
             vendor_id: VENDOR2
             lun: 2
-        'backing-store /dev/sdb1':
+        'backing-store /dev/loop3':
             vendor_id: back1
             scsi_sn: SERIAL
             write-cache: on
