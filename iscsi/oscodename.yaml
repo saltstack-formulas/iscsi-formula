@@ -7,6 +7,8 @@
     pkgs:
           {%- if name in ('wheezy', 'trusty',) %}
       wanted: ['isns', 'isns-client']
+          {%- elif name in ('stretch',) %}
+      wanted: ['libisns0',]
           {%- elif name in ('xenial', 'jessie') %}
       wanted: []
           {%- else %}
@@ -16,10 +18,10 @@
     pkgs:
           {%- if name in ('wheezy', 'trusty',) %}
       wanted: ['python-configshell', 'python-rtslib', 'targetcli', 'tgt-glusterfs', 'tgt-rbd']
-          {%- elif name in ('xenial',) %}
-      wanted: ['python-configshell', 'python-rtslib', 'targetcli']
           {%- elif name in ('jessie',) %}
       wanted: ['tgt-glusterfs', 'tgt-rbd',]
+          {%- elif name in ('xenial',) %}
+      wanted: ['python-configshell', 'tgt', 'python-rtslib', 'targetcli']
           {%- else %}
       wanted: ['python-configshell-fb', 'tgt', 'tgt-rbd', 'python-rtslib-fb', 'targetcli-fb', 'iscsiuio']
           {%- endif %}
@@ -27,18 +29,32 @@
 
 {% macro fedora_codename(name, release, codename) %}
 {{ codename|default(name, true) }}:
-      {%- if release in (26, 27,) %}
+      {%- if release > 26 %}
   isns:
     pkgs:
       wanted:
         - isns-utils
         - isns-utils-libs
         - target-isns
+  initiator:
+    pkgs:
+      wanted:
+        - iscsi-initiator-utils               #cent6/cent7/fedora/amazon
+        - iscsi-initiator-utils-iscsiuio      #cent7/fedora
+        - libiscsi                            #cent7/fedora
+        - libiscsi-utils                      #cent7/fedora
   target:
     pkgs:
       wanted:
-        - targetcli
-        - fcoe-utils
+        - device-mapper-persistent-data                #cent6/cent7/fedora/amazon
+        - netbsd-iscsi                                 #cent6/cent7/fedora
+        - yum-plugin-versionlock                       #cent6/cent7/fedora
+        - targetcli                                    #cent7/fedora
+        - libvirt-daemon-driver-storage-iscsi          #cent7/fedora
+        - udisks2-iscsi                                #cent7/fedora
+        - scsi-target-utils                            #cent6/fedora
+        - fcoe-utils                                   #cent6/fedora
+        - libvirt-daemon-driver-storage-iscsi-direct   #fedora
       {%- endif %}
 {% endmacro %}
 
@@ -65,6 +81,8 @@
 
 ## Fedora
 # `oscodename` grain has long distro name
+{{ fedora_codename('Fedora-30', 30, 'Fedora 30 (Thirty)') }}
+{{ fedora_codename('Fedora-29', 29, 'Fedora 29 (Twenty Nine)') }}
 {{ fedora_codename('Fedora-28', 28, 'Fedora 28 (Twenty Eight)') }}
 {{ fedora_codename('Fedora-27', 27, 'Fedora 27 (Twenty Seven)') }}
 {{ fedora_codename('Fedora-26', 26, 'Fedora 26 (Twenty Six)') }}
