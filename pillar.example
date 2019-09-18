@@ -174,10 +174,10 @@ iscsi:
         ##https://github.com/fujita/tgt/blob/master/conf/examples/targets.conf.example
         include: '/etc/tgt/salt/*.conf'
         default-driver: iscsi
-        iSNSServerIP: 127.0.0.1
-        iSNSServerPort: 3205
-        iSNSAccessControl: Off
-        iSNS: Off
+        #iSNSServerIP: 127.0.0.1
+        #iSNSServerPort: 3205
+        #iSNSAccessControl: Off
+        #iSNS: Off
         'target iqn.2008-09.com.example:server.target1':
           backing-store: /dev/loop0
         'target iqn.2008-09.com.example:server.target5':
