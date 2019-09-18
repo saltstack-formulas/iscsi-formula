@@ -34,43 +34,41 @@ Debian:
 RedHat:
   config:
     name:
-     tgtd: /etc/tgt/targets.conf     #cent6
+      tgtd: /etc/tgt/targets.conf     #cent6
     servicename:
       open-iscsi: iscsi
       isns: isnsd
-      tgtd: tgtd                     #cent6
+      tgtd: tgtd                      #cent6
   isns:
     pkgs:
       wanted:
         - isns-utils
         - yum-plugin-versionlock
-        # target-isns                #fedora29
+        # target-isns
   initiator:
     pkgs:
       wanted:
-        - iscsi-initiator-utils               #cent6/cent7/fedora/amazon
-           {%- if grains.osmajorrelease >= 7 %}
-        - iscsi-initiator-utils-iscsiuio      #cent7/fedora
-        - libiscsi                            #cent7/fedora
-        - libiscsi-utils                      #cent7/fedora
+        - iscsi-initiator-utils
+           {%- if 'osmajorrrelease' in grains and grains.osmajorrelease >= 7 %}
+        - iscsi-initiator-utils-iscsiuio
+        - libiscsi
+        - libiscsi-utils
            {%- endif %}
   target:
     pkgs:
       wanted:
-	- device-mapper-persistent-data                #cent6/cent7/fedora/amazon
-           {%- if grains.osmajorrelease == 6 %}
-        - scsi-target-utils                            #cent6/fedora
-        - fcoe-utils                                   #cent6/fedora
-        - fcoe-target-utils                            #cent6
-
-           {%- elif grains.osmajorrelease >= 7 %}
-        - yum-plugin-versionlock                       #cent6/cent7/fedora
-        - targetcli                                    #cent7/fedora
-        - libvirt-daemon-driver-storage-iscsi          #cent7/fedora
-
-               {%- if grains.os not in ('Amazon',) %}
-        - netbsd-iscsi                                 #cent6/cent7/fedora
-        - udisks2-iscsi                                #cent7/fedora
+        - device-mapper-persistent-data
+           {%- if 'osmajorrrelease' in grains and grains.osmajorrelease == 6 %}
+        - scsi-target-utils
+        - fcoe-utils
+        - fcoe-target-utils
+           {%- elif 'osmajorrrelease' in grains and grains.osmajorrelease >= 7 %}
+        - yum-plugin-versionlock
+        - targetcli
+        - libvirt-daemon-driver-storage-iscsi
+               {%- if 'os' in grains and grains.os not in ('Amazon',) %}
+        - netbsd-iscsi
+        - udisks2-iscsi
                {%- endif %}
            {%- endif %}
 
@@ -78,11 +76,7 @@ Suse:
   config:
     servicename: 
       open-iscsi: iscsid
-           {%- if grains.osmajorrelease >= 15  %}
       lio: targetcli
-           {%- else %}
-      lio: target
-           {%- endif %}
   isns:
     pkgs:
       wanted:
