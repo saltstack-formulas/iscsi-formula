@@ -66,7 +66,7 @@ RedHat:
         - scsi-target-utils
         - fcoe-utils
         - fcoe-target-utils
-           {%- elif 'osmajorrrelease' in grains and grains.osmajorrelease|int >= 7 %}
+           {%- else %}
         - yum-plugin-versionlock
         - targetcli
         - libvirt-daemon-driver-storage-iscsi
