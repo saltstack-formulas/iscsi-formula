@@ -1,0 +1,83 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+#
+# Setup variables using grains['os'] based logic.
+# You just need to add the key:values for an `os` that differ
+# from `defaults.yaml` + `osarch.yaml` + `os_family.yaml`.
+# Only add an `os` which is/will be supported by the formula.
+#
+# If you do not need to provide defaults via the `os` grain,
+# you will need to provide at least an empty dict in this file, e.g.
+# osmap: {}
+---
+Amazon:
+  initiator:
+    pkgs:
+      wanted:
+        - iscsi-initiator-utils
+        - libiscsi
+        - libiscsi-utils
+  target:
+    pkgs:
+      wanted:
+        - yum-plugin-versionlock
+        - targetcli
+        - libvirt-daemon-driver-storage-iscsi
+
+# os_family: Debian
+Ubuntu: {}
+
+Raspbian: {}
+
+# os_family: RedHat
+Fedora:
+  isns:
+    pkgs:
+      wanted:
+        - isns-utils
+        - isns-utils-libs
+        - target-isns
+  initiator:
+    pkgs:
+      wanted:
+        - iscsi-initiator-utils
+        - iscsi-initiator-utils-iscsiuio
+        - libiscsi
+        - libiscsi-utils
+  target:
+    pkgs:
+      wanted:
+        - device-mapper-persistent-data
+        - netbsd-iscsi
+        - yum-plugin-versionlock
+        - targetcli
+        - libvirt-daemon-driver-storage-iscsi
+        - udisks2-iscsi
+        - scsi-target-utils
+        - fcoe-utils
+        - libvirt-daemon-driver-storage-iscsi-direct
+
+CentOS:
+  target:
+    pkgs:
+      wanted:
+        - device-mapper-persistent-data
+        - netbsd-iscsi
+        - yum-plugin-versionlock
+        - targetcli
+        - libvirt-daemon-driver-storage-iscsi
+        - udisks2-iscsi
+        - scsi-target-utils
+        - fcoe-utils
+
+# os_family: Suse
+openSUSE: {}
+
+# os_family: Gentoo
+Funtoo: {}
+
+# os_family: Arch
+Manjaro: {}
+
+# os_family: Solaris
+SmartOS: {}

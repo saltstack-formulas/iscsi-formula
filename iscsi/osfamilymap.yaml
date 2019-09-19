@@ -37,44 +37,22 @@ Debian:
         - perftest
 RedHat:
   config:
-    name:
-      tgtd: /etc/tgt/targets.conf     #cent6
     servicename:
       open-iscsi: iscsi
       isns: isnsd
-      tgtd: tgtd                      #cent6
   isns:
     pkgs:
       wanted:
         - isns-utils
         - yum-plugin-versionlock
-        # target-isns
   initiator:
     pkgs:
       wanted:
         - iscsi-initiator-utils
-           {%- if 'osmajorrrelease' in grains and grains.osmajorrelease|int >= 7 %}
-        - iscsi-initiator-utils-iscsiuio
-        - libiscsi
-        - libiscsi-utils
-           {%- endif %}
   target:
     pkgs:
       wanted:
         - device-mapper-persistent-data
-           {%- if 'osmajorrrelease' in grains and grains.osmajorrelease|int == 6 %}
-        - scsi-target-utils
-        - fcoe-utils
-        - fcoe-target-utils
-           {%- else %}
-        - yum-plugin-versionlock
-        - targetcli
-        - libvirt-daemon-driver-storage-iscsi
-               {%- if 'os' in grains and grains.os not in ('Amazon',) %}
-        - netbsd-iscsi
-        - udisks2-iscsi
-               {%- endif %}
-           {%- endif %}
 
 Suse:
   config:

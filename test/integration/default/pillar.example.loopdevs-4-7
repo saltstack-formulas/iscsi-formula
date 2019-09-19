@@ -20,8 +20,6 @@ lvm:
   pkgs:
     - lvm2
     - cryptsetup
-    - device-mapper-persistent-data
-    - thin-provisioning-tools
   files:
     remove:
       - /tmp/loopdevs/testfile0.img

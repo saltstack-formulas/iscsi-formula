@@ -150,37 +150,6 @@ verifier:
 
 suites:
   - name: default
-    excludes:
-      - amazonlinux-2-2017-7-py2
-      - centos-6-2017-7-py2
-      - debian-8-2017-7-py2
-      - fedora-29-2017-7-py2
-      - opensuse-leap-15-2017-7-py2
-      - ubuntu-1604-2017-7-py2
-    provisioner:
-      dependencies:
-        - name: lvm
-          repo: git
-          source: https://github.com/saltstack-formulas/lvm-formula.git
-      state_top:
-        base:
-          '*':
-            - lvm.install
-            - lvm.files.create
-            - lvm.pv.create
-            - iscsi
-      pillars:
-        top.sls:
-          base:
-            '*':
-              - iscsi
-      pillars_from_files:
-        iscsi.sls: pillar.example
-    verifier:
-      inspec_tests:
-        - path: test/integration/default
-
-  - name: loopdevs-4-7
     provisioner:
       dependencies:
         - name: lvm
