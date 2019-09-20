@@ -32,22 +32,22 @@ lvm:
           options:
             if: /dev/urandom
             bs: 1024
-            count: 204800
+            count: 307200
         /tmp/loopdevs/testfile1.img:
           options:
             if: /dev/urandom
             bs: 1024
-            count: 204800
+            count: 307200
         /tmp/loopdevs/testfile2.img:
           options:
             if: /dev/urandom
             bs: 1024
-            count: 204800
+            count: 307200
         /tmp/loopdevs/testfile3.img:
           options:
             if: /dev/urandom
             bs: 1024
-            count: 204800
+            count: 307200
       losetup:
         /tmp/loopdevs/testfile0.img: {}
         /tmp/loopdevs/testfile1.img: {}

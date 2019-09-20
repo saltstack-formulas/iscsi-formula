@@ -23,7 +23,7 @@ iscsi-target-kernel-clean-file-line:
   file.line:
     - onlyif: {{ iscsi.config.name.modprobe and 'text' in iscsi.config.kmodule[provider] }}
     - name: {{ iscsi.config.name.modprobe }}
-    - content: {{ data.config.kmodule[provider]['text'] }}
+    - content: {{ iscsi.config.kmodule[provider]['text'] }}
     - backup: True
     - mode: delete
 

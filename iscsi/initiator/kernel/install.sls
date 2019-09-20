@@ -8,7 +8,7 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
     {%- set provider = iscsi.initiator.provider %}
-    {%- if iscsi.kernel.mess_with_kernel and provider in iscsi.config.kmodule %}
+    {%- if iscsi.kernel.mess_with_kernel %}
 include:
   - {{ sls_service_install }}
 
@@ -16,7 +16,7 @@ iscsi-initiator-kernel-install-file-line:
   file.line:
     - onlyif: iscsi.config.name.modprobe and 'text' in iscsi.config.kmodule[provider] }}
     - name: {{ iscsi.config.name.modprobe }}
-    - content: {{ data.config.kmodule[provider]['text'] }}
+    - content: {{ iscsi.config.kmodule[provider]['text'] }}
     - backup: True
         {%- if not iscsi.initiator.enabled %}
     - mode: delete

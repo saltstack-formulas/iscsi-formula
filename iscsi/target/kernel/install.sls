@@ -8,7 +8,7 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
     {%- set provider = iscsi.target.provider %}
-    {%- if iscsi.kernel.mess_with_kernel and provider in iscsi.config.kmodule %}
+    {%- if iscsi.kernel.mess_with_kernel %}
 include:
   - {{ sls_service_install }}
 
@@ -16,27 +16,30 @@ iscsi-target-kernel-install-file-line:
   file.line:
     - onlyif: {{ iscsi.config.name.modprobe and 'text' in iscsi.config.kmodule[provider] }}
     - name: {{ iscsi.config.name.modprobe }}
-    - content: {{ data.config.kmodule[provider]['text'] }}
+    - content: {{ iscsi.config.kmodule[provider]['text'] }}
     - require_in:
       - cmd: iscsi-target-kernel-install-file-line
     - backup: True
-
-iscsi-target-kernel-install-cmd-run:
-        {%- if not iscsi.target.enabled %}
-  cmd.run:
-    - name: {{ iscsi.kernel.modunload }} {{ iscsi.config.kmodule[provider]['name'] }}
-    - onlyif: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
-    - mode: delete
-        {%- else %}
+        {%- if iscsi.target.enabled %}
+    - create: True
     - mode: ensure
     - after: autoboot_delay.*$
   cmd.run:
     - name: {{ iscsi.kernel.modload }} {{ iscsi.config.kmodule[provider]['name'] }}
     - unless: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
+        {%- else %}
+  cmd.run:
+    - name: {{ iscsi.kernel.modunload }} {{ iscsi.config.kmodule[provider]['name'] }}
+    - onlyif: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
+    - mode: delete
         {%- endif %}
     - require:
       - file: iscsi-target-kernel-install-file-line
     - require_in:
       - sls: {{ sls_service_install }}
 
+    {%- else %}
+bob:
+  cmd.run:
+    - name: echo hi
     {%- endif %}
