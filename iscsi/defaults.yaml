@@ -10,6 +10,7 @@ iscsi:
   # Just here for testing
   added_in_defaults: defaults_value
   winner: defaults
+  loadkernelmodule: False
 
   config:
     acl:
@@ -85,7 +86,6 @@ iscsi:
       open-iscsi: {}
 
   kernel:
-    mess_with_kernel: False
     modload: modprobe
     modunload: modprobe -r
     modquery: modinfo

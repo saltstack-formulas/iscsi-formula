@@ -8,7 +8,7 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
     {%- set provider = iscsi.initiator.provider %}
-    {%- if iscsi.kernel.mess_with_kernel and provider in iscsi.config.kmodule %}
+    {%- if provider in iscsi.config.kmodule %}
 include:
   - {{ sls_service_clean }}
 

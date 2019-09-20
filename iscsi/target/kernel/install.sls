@@ -8,7 +8,7 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
     {%- set provider = iscsi.target.provider %}
-    {%- if iscsi.kernel.mess_with_kernel %}
+    {%- if provider in iscsi.config.kmodule %}
 include:
   - {{ sls_service_install }}
 
@@ -38,8 +38,4 @@ iscsi-target-kernel-install-file-line:
     - require_in:
       - sls: {{ sls_service_install }}
 
-    {%- else %}
-bob:
-  cmd.run:
-    - name: echo hi
     {%- endif %}

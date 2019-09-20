@@ -32,7 +32,7 @@ iscsi-isns-service-install-service-running:
         {%- else %}
     - name: {{ servicename }}
         {%- endif %}
-        {%- if iscsi.kernel.mess_with_kernel and provider in iscsi.config.kmodule %}
+        {%- if provider in iscsi.config.kmodule %}
             {%- if 'name' in iscsi.config.kmodule[provider] %}
     - onlyif: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
             {%- endif %}

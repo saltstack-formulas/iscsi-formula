@@ -26,8 +26,6 @@ CentOS-6:
       tgtd: tgtd
 
 CentOS-7:
-  kernel:
-    mess_with_kernel: True
   initiator:
     pkgs:
       wanted:
@@ -43,8 +41,6 @@ CentOS-7:
         - udisks2-iscsi
 
 CentOS-8:
-  kernel:
-    mess_with_kernel: True
   isns:
     pkgs:
       wanted:
