@@ -14,20 +14,27 @@ include:
 
 iscsi-initiator-kernel-install-file-line:
   file.line:
-    - onlyif: iscsi.config.name.modprobe and 'text' in iscsi.config.kmodule[provider] }}
+    - onlyif: {{ iscsi.config.name.modprobe and 'text' in iscsi.config.kmodule[provider] }}
     - name: {{ iscsi.config.name.modprobe }}
     - content: {{ iscsi.config.kmodule[provider]['text'] }}
     - backup: True
         {%- if not iscsi.initiator.enabled %}
     - mode: delete
   cmd.run:
+    - onlyif: {{ iscsi.config.name.modprobe and iscsi.config.kmodule[provider]['name'] }}
     - name: {{ iscsi.kernel.modunload }} {{ iscsi.config.kmodule[provider]['name'] }}
     - onlyif: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
         {%- else %}
-    - create: True
+             {%- if grains.os_family in ('FreeBSD',) %}
     - mode: ensure
+    - after: 'autoboot_delay.*'
+             {%- else %}
+    - mode: ensure
+    - create: True
     - match: None
+             {%- endif %}
   cmd.run:
+    - onlyif: {{ iscsi.config.name.modprobe and iscsi.config.kmodule[provider]['name'] }}
     - name: {{ iscsi.kernel.modload }} {{ iscsi.config.kmodule[provider]['name'] }}
     - unless: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
         {%- endif %}

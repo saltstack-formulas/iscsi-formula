@@ -59,7 +59,7 @@ iscsi:
         name: iscsi_initiator
         text: 'iscsi_initiator_load="YES"'
       ctld:
-        name: ctld
+        name:
         text: 'cfiscsi_load="YES"'
       ietd:
         name: iscsi_trgt

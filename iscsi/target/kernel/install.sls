@@ -21,14 +21,21 @@ iscsi-target-kernel-install-file-line:
       - cmd: iscsi-target-kernel-install-file-line
     - backup: True
         {%- if iscsi.target.enabled %}
-    - create: True
+            {%- if grains.os_family in ('FreeBSD',) %}
+    - mode: replace
+    - after: 'autoboot_delay.*'
+            {%- else %}
     - mode: ensure
+    - create: True
     - match: None
+            {%- endif %}
   cmd.run:
+    - onlyif: {{ iscsi.config.name.modprobe and iscsi.config.kmodule[provider]['name'] }}
     - name: {{ iscsi.kernel.modload }} {{ iscsi.config.kmodule[provider]['name'] }}
     - unless: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
         {%- else %}
   cmd.run:
+    - onlyif: {{ iscsi.config.name.modprobe and iscsi.config.kmodule[provider]['name'] }}
     - name: {{ iscsi.kernel.modunload }} {{ iscsi.config.kmodule[provider]['name'] }}
     - onlyif: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
     - mode: delete
