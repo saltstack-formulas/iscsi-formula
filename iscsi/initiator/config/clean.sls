@@ -3,14 +3,14 @@
 
 {#- Get the `tplroot` from `tpldir` #}
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- set sls_service_clean = tplroot ~ '.initator.service.clean' %}
+{%- set sls_package_clean = tplroot ~ '.initiator.package.clean' %}
 {%- from tplroot ~ "/map.jinja" import iscsi with context %}
 
 include:
-  - {{ sls_service_clean }}
+  - {{ sls_package_clean }}
 
 iscsi-initiator-config-clean-file-absent:
   file.absent:
-    - name: {{ iscsi.config.name['initiator'] }}
+    - name: {{ iscsi.config.name[iscsi.initiator.provider|string] }}
     - watch_in:
-        - sls: {{ sls_service_clean }}
+        - sls: {{ sls_package_clean }}

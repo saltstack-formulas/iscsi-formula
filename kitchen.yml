@@ -177,12 +177,14 @@ suites:
       inspec_tests:
         - path: test/integration/default
 
-  - name: centos
+  - name: centos7
     excludes:
     - default-debian-10-develop-py3
     - default-ubuntu-1804-2019-2-py3
     - default-opensuse-leap-15-2018-3-py2
     - default-amazonlinux-2-2018-3-py2
+    - default-centos-6-2017-7-py2
+    - default-fedora-30-develop-py3
     provisioner:
       dependencies:
         - name: lvm
@@ -196,7 +198,41 @@ suites:
             - lvm.pv.create
             - iscsi.initiator.clean
             - iscsi.target.clean
-            # iscsi.isns   #Travis fails with "Service isns is enabled, and is dead"
+            - iscsi.isns
+            - iscsi.target
+            - iscsi.initiator
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - iscsi
+      pillars_from_files:
+        iscsi.sls: test/integration/default/pillar.example.loopdevs-4-7
+    verifier:
+      inspec_tests:
+        - path: test/integration/default
+
+  - name: centos6
+    excludes:
+    - default-debian-10-develop-py3
+    - default-ubuntu-1804-2019-2-py3
+    - default-opensuse-leap-15-2018-3-py2
+    - default-amazonlinux-2-2018-3-py2
+    - default-centos-7-2019-2-py3
+    - default-fedora-30-develop-py3
+    provisioner:
+      dependencies:
+        - name: lvm
+          repo: git
+          source: https://github.com/saltstack-formulas/lvm-formula.git
+      state_top:
+        base:
+          '*':
+            - lvm.install
+            - lvm.files.create
+            - lvm.pv.create
+            - iscsi.initiator.clean
+            - iscsi.target.clean
             - iscsi.target
             - iscsi.initiator
       pillars:

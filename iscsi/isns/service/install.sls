@@ -46,3 +46,8 @@ iscsi-isns-service-install-failure-explanation:
         * your kernel was upgraded but not activated by reboot
             'systemctl enable {{ servicename }}' && reboot
     - unless: {{ grains.os_family in ('MacOS', 'Windows') }}   #maybe not needed but no harm
+  cmd.run:
+    - names:
+      - journalctl -xe -u {{ servicename }} || true
+      - systemctl status {{ servicename }} -l || true
+    - onlyif: test -x /usr/bin/systemctl || test -x /bin/systemctl || test -x /sbin/systemctl

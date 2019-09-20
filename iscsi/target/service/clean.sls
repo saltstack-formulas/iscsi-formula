@@ -9,7 +9,7 @@
 include:
   - {{ sls_config_clean }}
 
-iscsi-target-service-clean-service-dead
+iscsi-target-service-clean-service-dead:
   service.dead:
     - unless: {{ grains.os in ('Amazon', 'MacOS') }}
     - name: {{ iscsi.config.servicename[iscsi.target.provider] }}
@@ -17,10 +17,13 @@ iscsi-target-service-clean-service-dead
     - require_in:
       - sls: {{ sls_config_clean }}
 
-iscsi-target-service-install-file-line-freebsd:
+    {%- if grains.os_family == 'FreeBSD' %}
+
+iscsi-target-service-clean-file-line-freebsd:
   file.line:
-    - onlyif: {{ grains.os_family == 'FreeBSD' }}
     - name: {{ iscsi.config.name.modprobe }}
     - content: 'ctld_env="-u"'
     - mode: delete
     - backup: True
+
+    {%- endif %}

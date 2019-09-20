@@ -9,7 +9,7 @@
 include:
   - {{ sls_config_clean }}
 
-iscsi-isns-service-clean-service-dead
+iscsi-isns-service-clean-service-dead:
   service.dead:
     - name: {{ iscsi.config.servicename[iscsi.isns.provider] }}
     - enable: False

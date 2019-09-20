@@ -16,6 +16,7 @@ iscsi-target-service-install-file-line-freebsd:
     - content: 'ctld_env="-u"'
     - backup: True
         {%- if iscsi.target.enabled %}
+    - create: True
     - mode: ensure
     - after: 'autoboot_delay.*'
         {%- else %}
@@ -55,3 +56,9 @@ iscsi-target-service-install-failure-explanation:
         * your kernel was upgraded but not activated by reboot
             'systemctl enable {{ servicename }}' && reboot
     - unless: {{ grains.os_family in ('MacOS', 'Windows') }}   #maybe not needed but no harm
+  cmd.run:
+    - names:
+      - journalctl -xe -u {{ servicename }} || true
+      - systemctl status {{ servicename }} -l || true
+      - /sbin/lsmod 2>/dev/null || true
+    - onlyif: test -x /usr/bin/systemctl || test -x /bin/systemctl || test -x /sbin/systemctl

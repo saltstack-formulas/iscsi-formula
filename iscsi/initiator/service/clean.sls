@@ -9,17 +9,20 @@
 include:
   - {{ sls_config_clean }}
 
-iscsi-initiator-service-clean-service-dead
+iscsi-initiator-service-clean-service-dead:
   service.dead:
     - name: {{ iscsi.config.servicename[iscsi.initiator.provider] }}
     - enable: False
     - require_in:
       - sls: {{ sls_config_clean }}
 
-iscsi-initiator-service-install-file-line-freebsd:
+    {%- if grains.os_family == 'FreeBSD' %}
+
+iscsi-initiator-service-clean-file-line-freebsd:
   file.line:
-    - onlyif: {{ grains.os_family == 'FreeBSD' }}
     - name: {{ iscsi.config.name.modprobe }}
     - content: 'ctld_env="-u"'
     - mode: delete
     - backup: True
+
+    {%- endif %}
