@@ -33,6 +33,7 @@ CentOS-7:
         - libiscsi
         - libiscsi-utils
   target:
+    loadmodule: True
     pkgs:
       wanted:
         - yum-plugin-versionlock
@@ -52,6 +53,7 @@ CentOS-8:
         - libiscsi
         - libiscsi-utils
   target:
+    loadmodule: True
     pkgs:
       wanted:
         - yum-plugin-versionlock

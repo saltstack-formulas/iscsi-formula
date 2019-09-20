@@ -105,12 +105,17 @@ Arch:
       open-iscsi:
        - iscsi
        - iscsid
+    kmodule:
+      lio:
+        name: 
+        text:
   initiator:
     make:
       gitrepo: https://aur.archlinux.org
       cmd: makepkg -si --noconfirm -f
       wanted: []
   target:
+    loadmodule: True
     pkgs:
       wanted:
         - linux-lts                # For kernel scsi modules
@@ -133,6 +138,7 @@ FreeBSD:
       wanted:
         - net/open-isns
   target:
+    loadmodule: True
     provider: ctld
     pkgs:
       wanted:

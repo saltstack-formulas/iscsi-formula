@@ -8,13 +8,13 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
     {%- set provider = iscsi.initiator.provider %}
-    {%- if provider in iscsi.config.kmodule %}
+    {%- if iscsi.target.loadmodule and iscsi.config.kmodule[provider]['name'] %}
 include:
   - {{ sls_service_clean }}
 
 iscsi-initiator-kernel-clean-cmd-run:
   cmd.run:
-    - name: {{ iscsi.kernel.modunload }} {{ iscsi.config.kmodule[provider]['name'] }}
+    - name: {{ iscsi.kernel.modunload }} {{ iscsi.config.kmodule[provider]['name'] }} || true
     - onlyif: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
     - require:
       - sls: {{ sls_service_clean }}

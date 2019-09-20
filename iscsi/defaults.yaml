@@ -63,13 +63,13 @@ iscsi:
         text: 'cfiscsi_load="YES"'
       ietd:
         name: iscsi_trgt
-        text: iscsi_trgt
+        text:
       lio:
         name: target_core_mod
-        text: target_core_mod
+        text:
       fcoe:
         name: fcoe_target
-        text: fcoe_target
+        text:
       iser:
         name: ('ib_iser', 'ib_isert', 'rdma_ucm', 'rdma_cm', 'ib_cm',)
         text: null
@@ -103,6 +103,7 @@ iscsi:
 
   initiator:
     enabled: True
+    loadmodule: False
     provider: open-iscsi
     pkghold: False
     pkgs:
@@ -114,6 +115,7 @@ iscsi:
 
   target:
     port: 3260
+    loadmodule: False
     enabled: True
     provider: lio
     pkghold: False

@@ -8,40 +8,27 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
     {%- set provider = iscsi.target.provider %}
-    {%- if provider in iscsi.config.kmodule %}
+    {%- if iscsi.target.loadmodule and iscsi.config.kmodule[provider]['name'] %}
 include:
   - {{ sls_service_install }}
 
-iscsi-target-kernel-install-file-line:
-  file.line:
-    - onlyif: {{ iscsi.config.name.modprobe and 'text' in iscsi.config.kmodule[provider] }}
+iscsi-target-kernel-install-file-prepend:
+  file.prepend:
+    - onlyif: {{ iscsi.config.name.modprobe and iscsi.config.kmodule[provider]['text'] }}
     - name: {{ iscsi.config.name.modprobe }}
-    - content: {{ iscsi.config.kmodule[provider]['text'] }}
-    - require_in:
-      - cmd: iscsi-target-kernel-install-file-line
-    - backup: True
+    - text: {{ iscsi.config.kmodule[provider]['text'] }}
+    - makedirs: True
+
+iscsi-target-kernel-install-cmd-run:
         {%- if iscsi.target.enabled %}
-            {%- if grains.os_family in ('FreeBSD',) %}
-    - mode: replace
-    - after: 'autoboot_delay.*'
-            {%- else %}
-    - mode: ensure
-    - create: True
-    - match: None
-            {%- endif %}
   cmd.run:
-    - onlyif: {{ iscsi.config.name.modprobe and iscsi.config.kmodule[provider]['name'] }}
-    - name: {{ iscsi.kernel.modload }} {{ iscsi.config.kmodule[provider]['name'] }}
+    - name: {{ iscsi.kernel.modload }} {{ iscsi.config.kmodule[provider]['name'] }} || true
     - unless: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
         {%- else %}
   cmd.run:
-    - onlyif: {{ iscsi.config.name.modprobe and iscsi.config.kmodule[provider]['name'] }}
-    - name: {{ iscsi.kernel.modunload }} {{ iscsi.config.kmodule[provider]['name'] }}
+    - name: {{ iscsi.kernel.modunload }} {{ iscsi.config.kmodule[provider]['name'] }} || true
     - onlyif: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
-    - mode: delete
         {%- endif %}
-    - require:
-      - file: iscsi-target-kernel-install-file-line
     - require_in:
       - sls: {{ sls_service_install }}
 
