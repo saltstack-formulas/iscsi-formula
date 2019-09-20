@@ -26,5 +26,6 @@ iscsi-target-kernel-clean-file-line:
     - content: {{ iscsi.config.kmodule[provider]['text'] }}
     - backup: True
     - mode: delete
+    - quiet: True
 
   {%- endif %}

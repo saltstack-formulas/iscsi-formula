@@ -24,5 +24,6 @@ iscsi-initiator-service-clean-file-line-freebsd:
     - content: 'ctld_env="-u"'
     - mode: delete
     - backup: True
+    - quiet: True
 
     {%- endif %}

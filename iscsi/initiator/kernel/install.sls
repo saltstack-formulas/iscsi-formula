@@ -26,7 +26,7 @@ iscsi-initiator-kernel-install-file-line:
         {%- else %}
     - create: True
     - mode: ensure
-    - after: autoboot_delay.*$
+    - match: None
   cmd.run:
     - name: {{ iscsi.kernel.modload }} {{ iscsi.config.kmodule[provider]['name'] }}
     - unless: {{ iscsi.kernel.modquery }} {{ iscsi.config.kmodule[provider]['name'] }}
