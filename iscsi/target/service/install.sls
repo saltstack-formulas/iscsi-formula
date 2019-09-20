@@ -45,6 +45,7 @@ iscsi-target-service-install-service-running:
         {%- else %}
     - name: {{ servicename }}
         {%- endif %}
+    - unless: {{ grains.os in ('Amazon', 'MacOS') }}
 
 iscsi-target-service-install-failure-explanation:
   test.show_notification:

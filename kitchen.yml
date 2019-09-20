@@ -47,12 +47,6 @@ platforms:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
       max_ssh_sessions: 1
-  - name: amazonlinux-2-develop-py2
-    driver:
-      image: netmanagers/salt-develop-py2:amazonlinux-2
-      provision_command:
-        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-        - sh bootstrap-salt.sh -XdPbfrq -x python2 git develop
 
   ## SALT `2019.2`
   - name: debian-9-2019-2-py3
@@ -75,9 +69,6 @@ platforms:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
       max_ssh_sessions: 1
-  - name: amazonlinux-2-2019-2-py2
-    driver:
-      image: netmanagers/salt-2019.2-py2:amazonlinux-2
 
   ## SALT `2018.3`
   - name: debian-9-2018-3-py2
@@ -100,9 +91,6 @@ platforms:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
       max_ssh_sessions: 1
-  - name: amazonlinux-2-2018-3-py2
-    driver:
-      image: netmanagers/salt-2018.3-py2:amazonlinux-2
 
   ## SALT `2017.7`
   - name: debian-8-2017-7-py2
@@ -126,9 +114,6 @@ platforms:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
       max_ssh_sessions: 1
-  - name: amazonlinux-2-2017-7-py2
-    driver:
-      image: netmanagers/salt-2017.7-py2:amazonlinux-2
 
 provisioner:
   name: salt_solo

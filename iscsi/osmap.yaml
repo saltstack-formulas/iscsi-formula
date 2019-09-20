@@ -31,6 +31,11 @@ Raspbian: {}
 
 # os_family: RedHat
 Fedora:
+  config:
+    name:
+      tgtd: /etc/tgt/targets.conf
+    servicename:
+      tgtd: tgtd
   isns:
     pkgs:
       wanted:
@@ -45,6 +50,7 @@ Fedora:
         - libiscsi
         - libiscsi-utils
   target:
+    provider: tgtd
     pkgs:
       wanted:
         - device-mapper-persistent-data

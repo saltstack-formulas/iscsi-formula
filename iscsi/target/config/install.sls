@@ -13,6 +13,7 @@ include:
 iscsi-target-config-install-file-managed:
   file.managed:
     - onlyif: {{ iscsi.config.data[iscsi.target.provider|string]|json }}
+    - unless: {{ grains.os in ('Amazon', 'MacOS') }}
     - name: {{ iscsi.config.name[iscsi.target.provider] }}
     - source: {{ files_switch([iscsi.target.provider ~ '.tmpl'],
                               lookup='iscsi-target-config-install-file-managed',

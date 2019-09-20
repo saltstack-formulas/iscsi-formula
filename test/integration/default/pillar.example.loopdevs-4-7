@@ -19,7 +19,7 @@ users:
 lvm:
   pkgs:
     - lvm2
-    - cryptsetup
+    # cryptsetup
   files:
     remove:
       - /tmp/loopdevs/testfile0.img

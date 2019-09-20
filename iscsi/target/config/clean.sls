@@ -11,6 +11,7 @@ include:
 
 iscsi-target-config-clean-file-absent:
   file.absent:
+    - unless: {{ grains.os in ('Amazon', 'MacOS') }}
     - name: {{ iscsi.config.name['target'] }}
     - watch_in:
         - sls: {{ sls_service_clean }}

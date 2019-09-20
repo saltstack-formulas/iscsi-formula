@@ -13,6 +13,7 @@
 # os: CentOS
 CentOS-6:
   target:
+    provider: tgtd
     pkgs:
       wanted:
         - scsi-target-utils

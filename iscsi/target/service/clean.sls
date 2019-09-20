@@ -11,6 +11,7 @@ include:
 
 iscsi-target-service-clean-service-dead
   service.dead:
+    - unless: {{ grains.os in ('Amazon', 'MacOS') }}
     - name: {{ iscsi.config.servicename[iscsi.target.provider] }}
     - enable: False
     - require_in:

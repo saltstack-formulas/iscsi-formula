@@ -75,6 +75,7 @@ The defaults targets are-
 - ctld on FreeBSD
 - LIO on CentOS, OpenSUSE, Arch
 - tgt on Debian
+- Unsupported on Amazon (no packages available)
 
 The default choice is modifable via the `iscsi.target.provider` pillar value.
 New providers can be introduced via pull request.

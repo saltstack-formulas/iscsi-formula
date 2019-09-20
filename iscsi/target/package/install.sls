@@ -25,6 +25,7 @@ iscsi-target-package-install-{{ pkg }}-removed:
 
 iscsi-target-package-install-{{ pkg }}-installed:
   pkg.installed:
+    - unless: {{ grains.os in ('Amazon', 'MacOS') }}
     - name: {{ pkg }}
         {%- if iscsi.target.pkghold %}
     - hold: {{ iscsi.target.pkghold }}
