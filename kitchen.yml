@@ -151,8 +151,7 @@ verifier:
 suites:
   - name: default
     excludes:
-    - default-centos-6-2017-7-py2
-    - default-centos-7-2019-2-py3
+      - default-centos-7-2019-2-py3
     provisioner:
       dependencies:
         - name: lvm
@@ -172,19 +171,18 @@ suites:
             '*':
               - iscsi
       pillars_from_files:
-        iscsi.sls: test/integration/default/pillar.example.loopdevs-4-7
+        iscsi.sls: test/salt/pillar/pillar.example
     verifier:
       inspec_tests:
         - path: test/integration/default
 
   - name: centos7
     excludes:
-    - default-debian-10-develop-py3
-    - default-ubuntu-1804-2019-2-py3
-    - default-opensuse-leap-15-2018-3-py2
-    - default-amazonlinux-2-2018-3-py2
-    - default-centos-6-2017-7-py2
-    - default-fedora-30-develop-py3
+      - default-debian-10-develop-py3
+      - default-ubuntu-1804-2019-2-py3
+      - default-opensuse-leap-15-2018-3-py2
+      - default-amazonlinux-2-2018-3-py2
+      - default-fedora-30-develop-py3
     provisioner:
       dependencies:
         - name: lvm
@@ -194,6 +192,8 @@ suites:
         base:
           '*':
             - lvm.install
+            - lvm.pv.remove
+            - lvm.files.remove
             - lvm.files.create
             - lvm.pv.create
             - iscsi.initiator.clean
@@ -207,19 +207,18 @@ suites:
             '*':
               - iscsi
       pillars_from_files:
-        iscsi.sls: test/integration/default/pillar.example.loopdevs-4-7
+        iscsi.sls: test/salt/pillar/pillar.example
     verifier:
       inspec_tests:
         - path: test/integration/default
 
-  - name: centos6
+  - name: centos     # skip service start state on travis
     excludes:
-    - default-debian-10-develop-py3
-    - default-ubuntu-1804-2019-2-py3
-    - default-opensuse-leap-15-2018-3-py2
-    - default-amazonlinux-2-2018-3-py2
-    - default-centos-7-2019-2-py3
-    - default-fedora-30-develop-py3
+      - default-debian-10-develop-py3
+      - default-ubuntu-1804-2019-2-py3
+      - default-opensuse-leap-15-2018-3-py2
+      - default-amazonlinux-2-2018-3-py2
+      - default-fedora-30-develop-py3
     provisioner:
       dependencies:
         - name: lvm
@@ -229,10 +228,13 @@ suites:
         base:
           '*':
             - lvm.install
+            - lvm.pv.remove
+            - lvm.files.remove
             - lvm.files.create
             - lvm.pv.create
             - iscsi.initiator.clean
             - iscsi.target.clean
+            - iscsi.isns
             - iscsi.target
             - iscsi.initiator
       pillars:
@@ -241,7 +243,7 @@ suites:
             '*':
               - iscsi
       pillars_from_files:
-        iscsi.sls: test/integration/default/pillar.example.loopdevs-4-7
+        iscsi.sls: test/salt/pillar/pillar.travis
     verifier:
       inspec_tests:
         - path: test/integration/default

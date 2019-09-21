@@ -33,7 +33,7 @@ CentOS-7:
         - libiscsi
         - libiscsi-utils
   target:
-    loadmodule: True
+    loadmodule: true
     pkgs:
       wanted:
         - yum-plugin-versionlock
@@ -53,12 +53,12 @@ CentOS-8:
         - libiscsi
         - libiscsi-utils
   target:
-    loadmodule: True
+    loadmodule: true
     pkgs:
       wanted:
         - yum-plugin-versionlock
         - targetcli
         - libvirt-daemon-driver-storage-iscsi
         - libvirt-daemon-driver-storage-iscsi-direct
-        - thin-provisioning-tools
+        # thin-provisioning-tools
         - udisks2-iscsi

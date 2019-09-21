@@ -15,7 +15,7 @@ Debian:
     servicename:
       isns: isnsd
   initiator:
-    enabled: False  #see https://github.com/saltstack-formulas/iscsi-formula/issues/10
+    enabled: false  # see https://github.com/saltstack-formulas/iscsi-formula/issues/10
     pkgs:
       wanted:
         - open-iscsi
@@ -56,7 +56,7 @@ RedHat:
 
 Suse:
   config:
-    servicename: 
+    servicename:
       open-iscsi: iscsid
       lio: targetcli
   isns:
@@ -107,7 +107,7 @@ Arch:
        - iscsid
     kmodule:
       lio:
-        name: 
+        name:
         text:
   initiator:
     make:
@@ -115,7 +115,7 @@ Arch:
       cmd: makepkg -si --noconfirm -f
       wanted: []
   target:
-    loadmodule: True
+    loadmodule: true
     pkgs:
       wanted:
         - linux-lts                # For kernel scsi modules
@@ -138,7 +138,7 @@ FreeBSD:
       wanted:
         - net/open-isns
   target:
-    loadmodule: True
+    loadmodule: true
     provider: ctld
     pkgs:
       wanted:

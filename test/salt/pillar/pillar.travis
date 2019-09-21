@@ -4,22 +4,18 @@
     {% if grains.os_family in ('Arch',) %}
 users:
   iscsimake:
-    sudouser: True
+    sudouser: true
     shell: /bin/bash
-    empty_password: True
+    empty_password: true
     home: /home/iscsimake
-    createhome: True
+    createhome: true
     optional_groups:
       - wheel
       - root
     sudo_rules:
      - 'ALL=(ALL) ALL'
     {% endif %}
-
 lvm:
-  pkgs:
-    - lvm2
-    # cryptsetup
   files:
     remove:
       - /tmp/loopdevs/testfile0.img
@@ -61,6 +57,8 @@ lvm:
       /dev/loop7: {}
 
 iscsi:
+  target:
+    enabled: false  # centos/travis workaround to pass service.running state
   config:
     data:
       open-iscsi:
@@ -639,4 +637,3 @@ iscsi:
                   iser: 0
               tag: 2
             wwn: iqn.1996-04.lx.suse:01:a66aed20e2f3
-

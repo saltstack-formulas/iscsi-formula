@@ -3,20 +3,20 @@
 ---
 iscsi:
   filemode: '0640'
-  user: iscsimake  #archlinux only
+  user: iscsimake  # archlinux only
   rootgroup: root
   subcomponent:
     config: '/etc/iscsi-subcomponent-formula.conf'
   # Just here for testing
   added_in_defaults: defaults_value
   winner: defaults
-  loadkernelmodule: False
+  loadkernelmodule: false
 
   config:
     acl:
       allow:
         ietd: /etc/ietd/initiators.allow
-      deny: 
+      deny:
         ietd: /etc/ietd/initiators.deny
     name:
       modprobe: /etc/modprobe.d/iscsi-modules.conf
@@ -27,21 +27,21 @@ iscsi:
       ietd: /etc/ietd.conf
       lio: /etc/target/saveconfig.json
       isns: /etc/isns/isnsd.conf
-      isnsadm: False
-      isnsdd: False
+      isnsadm: false
+      isnsdd: false
       open-iscsi: /etc/iscsi/iscsid.conf
     servicename:
       iscsi: iscsid
-      fcoe:                   #Fibre-Channel over Ethernet (FCoE) Target
+      fcoe:                   # Fibre-Channel over Ethernet (FCoE) Target
         - fcoe
         - lldpad
         - fcoe-target
-      tgtd: tgt               #TGT Project (userspace) RedHat/Debian/Arch/Gentoo
-      ctld: ctld              #CAM Target Layer/iSCSI target daemon, FreeBSD.
-      ietd: iscsitarget       #iSCSI Enterprise Target (IET) project
-      isns: isnsd             #Open-iSNS implements iSNS protocol (RFC4171)
-      lio: target             #LIO is defacto standard on enterprise linux
-      open-iscsi: open-iscsi  #Open-iSCSI
+      tgtd: tgt               # TGT Project (userspace) RedHat/Debian/Arch/Gentoo
+      ctld: ctld              # CAM Target Layer/iSCSI target daemon, FreeBSD.
+      ietd: iscsitarget       # iSCSI Enterprise Target (IET) project
+      isns: isnsd             # Open-iSNS implements iSNS protocol (RFC4171)
+      lio: target             # LIO is defacto standard on enterprise linux
+      open-iscsi: open-iscsi  # Open-iSCSI
     servicetext:
       iscsi: 'iscsictl_enable="YES"'
       ctld: 'iscsid_enable="YES"'
@@ -91,9 +91,9 @@ iscsi:
     modquery: modinfo
 
   isns:
-    enabled: True
+    enabled: true
     provider: isns
-    pkghold: False
+    pkghold: false
     pkgs:
       wanted:
         - open-isns
@@ -102,10 +102,10 @@ iscsi:
       wanted: []
 
   initiator:
-    enabled: True
-    loadmodule: False
+    enabled: true
+    loadmodule: false
     provider: open-iscsi
-    pkghold: False
+    pkghold: false
     pkgs:
       wanted:
         - open-iscsi
@@ -115,10 +115,10 @@ iscsi:
 
   target:
     port: 3260
-    loadmodule: False
-    enabled: True
+    enabled: true
+    loadmodule: false
     provider: lio
-    pkghold: False
+    pkghold: false
     pkgs:
       wanted: []
       unwanted: []
