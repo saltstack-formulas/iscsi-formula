@@ -47,6 +47,7 @@ iscsi-target-service-install-service-running:
     - name: {{ servicename }}
         {%- endif %}
     - unless: {{ grains.os in ('Amazon', 'MacOS') }}
+    - onlyif: {{ iscsi.target.enabled }}
 
 iscsi-target-service-install-failure-explanation:
   test.show_notification:
@@ -58,6 +59,7 @@ iscsi-target-service-install-failure-explanation:
     - unless: {{ grains.os_family in ('MacOS', 'Windows') }}   #maybe not needed but no harm
   cmd.run:
     - names:
+      - echo "-- {{ iscsi.target.enabled }} --"
       - journalctl -xe -u {{ servicename }} || true
       - systemctl status {{ servicename }} -l || true
       - /sbin/lsmod 2>/dev/null || true

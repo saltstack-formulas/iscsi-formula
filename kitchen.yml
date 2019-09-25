@@ -38,11 +38,15 @@ platforms:
         - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
   - name: opensuse-leap-15-develop-py3
     driver:
-      image: netmanagers/salt-develop-py3:opensuse-leap-15
+      image: opensuse/leap:15
       provision_command:
-        - curl -o bootstrap-salt.sh -L https://bootstrap.saltstack.com
-        - sh bootstrap-salt.sh -XdPbfrq -x python3 git develop
+        # yamllint disable-line rule:line-length
+        - zypper install -y glibc-locale net-tools net-tools-deprecated python-xml python3-pip
+        - systemctl enable sshd.service
       run_command: /usr/lib/systemd/systemd
+    provisioner:
+      salt_bootstrap_options: -XdPfrq -x python3 git develop
+      salt_install: bootstrap
     # Workaround to avoid intermittent failures on `opensuse-leap-15`:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
@@ -76,8 +80,15 @@ platforms:
       image: netmanagers/salt-2019.2-py3:fedora-30
   - name: opensuse-leap-15-2019-2-py3
     driver:
-      image: netmanagers/salt-2019.2-py3:opensuse-leap-15
+      image: opensuse/leap:15
+      provision_command:
+        # yamllint disable-line rule:line-length
+        - zypper install -y glibc-locale net-tools net-tools-deprecated python-xml python3-pip
+        - systemctl enable sshd.service
       run_command: /usr/lib/systemd/systemd
+    provisioner:
+      salt_bootstrap_options: -XdPfrq -x python3 git 2019.2
+      salt_install: bootstrap
     # Workaround to avoid intermittent failures on `opensuse-leap-15`:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
@@ -105,8 +116,15 @@ platforms:
       image: netmanagers/salt-2018.3-py2:fedora-29
   - name: opensuse-leap-15-2018-3-py2
     driver:
-      image: netmanagers/salt-2018.3-py2:opensuse-leap-15
+      image: opensuse/leap:15
+      provision_command:
+        # yamllint disable-line rule:line-length
+        - zypper install -y glibc-locale net-tools net-tools-deprecated python-xml python2-pip
+        - systemctl enable sshd.service
       run_command: /usr/lib/systemd/systemd
+    provisioner:
+      salt_bootstrap_options: -XdPfrq -x python2 git 2018.3
+      salt_install: bootstrap
     # Workaround to avoid intermittent failures on `opensuse-leap-15`:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
@@ -135,8 +153,15 @@ platforms:
       image: netmanagers/salt-2017.7-py2:fedora-29
   - name: opensuse-leap-15-2017-7-py2
     driver:
-      image: netmanagers/salt-2017.7-py2:opensuse-leap-15
+      image: opensuse/leap:15
+      provision_command:
+        # yamllint disable-line rule:line-length
+        - zypper install -y glibc-locale net-tools net-tools-deprecated python-xml python2-pip
+        - systemctl enable sshd.service
       run_command: /usr/lib/systemd/systemd
+    provisioner:
+      salt_bootstrap_options: -XdPfrq -x python2 git 2017.7
+      salt_install: bootstrap
     # Workaround to avoid intermittent failures on `opensuse-leap-15`:
     # => SCP did not finish successfully (255):  (Net::SCP::Error)
     transport:
@@ -151,7 +176,7 @@ platforms:
 
 provisioner:
   name: salt_solo
-  log_level: info
+  log_level: debug
   salt_install: none
   require_chef: false
   formula: iscsi
@@ -170,12 +195,9 @@ verifier:
 suites:
   - name: default
     excludes:
-      - default-centos-7-2019-2-py3
+      - centos-7-2019-2-py3
+      - arch-base-latest-2019-2-py2
     provisioner:
-      dependencies:
-        - name: lvm
-          repo: git
-          source: https://github.com/saltstack-formulas/lvm-formula.git
       state_top:
         base:
           '*':
@@ -195,35 +217,19 @@ suites:
       inspec_tests:
         - path: test/integration/default
 
-  - name: centos     # skip service start state on travis/centos
-    excludes:
-      - default-debian-10-develop-py3
-      - default-ubuntu-1804-2019-2-py3
-      - default-opensuse-leap-15-2018-3-py2
-      - default-amazonlinux-2-2018-3-py2
-      - default-arch-base-latest-2018-3-py2
-      - default-fedora-30-develop-py3
+  - name: target-service-fails-on-travis   # skip 'target' service on travis
+    includes:
+      - centos-7-2019-2-py3
+      - arch-base-latest-2019-2-py2
     provisioner:
-      dependencies:
-        - name: lvm
-          repo: git
-          source: https://github.com/saltstack-formulas/lvm-formula.git
       state_top:
         base:
           '*':
             - lvm.install
-            - lvm.pv.remove
-            - lvm.files.remove
             - lvm.files.create
             - lvm.pv.create
-            - iscsi.initiator.clean
-            - iscsi.target.clean
-            - iscsi.isns
-            - iscsi.target.package
-            - iscsi.target.make
-            - iscsi.target.kernel
-            - iscsi.target.config
-            - iscsi.initiator
+            - iscsi.clean
+            - iscsi
       pillars:
         top.sls:
           base:

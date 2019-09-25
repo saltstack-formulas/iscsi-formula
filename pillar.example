@@ -57,8 +57,6 @@ lvm:
       /dev/loop3: {}
 
 iscsi:
-  #target:
-  #  enabled: true
   config:
     data:
       open-iscsi:

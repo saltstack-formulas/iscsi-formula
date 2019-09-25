@@ -115,6 +115,7 @@ Arch:
       cmd: makepkg -si --noconfirm -f
       wanted: []
   target:
+    enabled: false
     loadmodule: true
     pkgs:
       wanted:
