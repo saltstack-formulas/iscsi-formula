@@ -8,7 +8,7 @@
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
     {%- set provider = iscsi.target.provider %}
-    {%- if iscsi.target.loadmodule and iscsi.config.kmodule[provider]['name'] %}
+    {%- if iscsi.target.loadmodule and provider in iscsi.config.kmodule and iscsi.config.kmodule[provider]['name'] %}
 include:
   - {{ sls_service_install }}
 
