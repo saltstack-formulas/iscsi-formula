@@ -19,6 +19,7 @@ yaml-files:
   - .yamllint
   # SaltStack Formulas additional settings
   - '*.example'
+  - '*.arch'
   - test/**/*.sls
 
 rules:

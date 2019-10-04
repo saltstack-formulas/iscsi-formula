@@ -1,0 +1,43 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+lvm:
+  files:
+    remove:
+      - /tmp/loopdevs/testfile0.img
+      - /tmp/loopdevs/testfile1.img
+      - /tmp/loopdevs/testfile2.img
+      - /tmp/loopdevs/testfile3.img
+    create:
+      dd:
+        /tmp/loopdevs/testfile0.img:
+          options:
+            if: /dev/urandom
+            bs: 1024
+            count: 307200
+        /tmp/loopdevs/testfile1.img:
+          options:
+            if: /dev/urandom
+            bs: 1024
+            count: 307200
+        /tmp/loopdevs/testfile2.img:
+          options:
+            if: /dev/urandom
+            bs: 1024
+            count: 307200
+        /tmp/loopdevs/testfile3.img:
+          options:
+            if: /dev/urandom
+            bs: 1024
+            count: 307200
+      losetup:
+        /tmp/loopdevs/testfile0.img: {}
+        /tmp/loopdevs/testfile1.img: {}
+        /tmp/loopdevs/testfile2.img: {}
+        /tmp/loopdevs/testfile3.img: {}
+  pv:
+    create:
+      /dev/loop4: {}
+      /dev/loop5: {}
+      /dev/loop6: {}
+      /dev/loop7: {}

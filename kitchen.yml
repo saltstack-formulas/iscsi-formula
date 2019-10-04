@@ -197,18 +197,12 @@ suites:
     excludes:
       - centos-7-2019-2-py3
       - arch-base-latest-2019-2-py2
-<<<<<<< HEAD
-=======
       - centos-7-develop-py3
->>>>>>> 863e40c... fix(service): only start service if enabled
     provisioner:
       dependencies:
         - name: lvm
           repo: git
           source: https://github.com/saltstack-formulas/lvm-formula.git
-        - name: users   # for archlinux
-          repo: git
-          source: https://github.com/saltstack-formulas/users-formula.git
       state_top:
         base:
           '*':
@@ -222,8 +216,10 @@ suites:
           base:
             '*':
               - iscsi
+              - lvm
       pillars_from_files:
         iscsi.sls: test/salt/pillar/pillar.example
+        lvm.sls: test/salt/pillar/lvm.example
     verifier:
       inspec_tests:
         - path: test/integration/default
@@ -232,9 +228,6 @@ suites:
     includes:
       - centos-7-2019-2-py3
       - arch-base-latest-2019-2-py2
-<<<<<<< HEAD
-    provisioner:
-=======
       - centos-7-develop-py3
     provisioner:
       dependencies:
@@ -244,7 +237,6 @@ suites:
         - name: users   # for archlinux
           repo: git
           source: https://github.com/saltstack-formulas/users-formula.git
->>>>>>> 863e40c... fix(service): only start service if enabled
       state_top:
         base:
           '*':
@@ -252,22 +244,19 @@ suites:
             - lvm.install
             - lvm.files.create
             - lvm.pv.create
-<<<<<<< HEAD
-            - iscsi.clean
-            - iscsi
-=======
             - iscsi
             - iscsi.clean
->>>>>>> 863e40c... fix(service): only start service if enabled
       pillars:
         top.sls:
           base:
             '*':
               - users
               - iscsi
+              - lvm
       pillars_from_files:
-        users.sls: test/salt/pillar/users.archlinux
+        users.sls: test/salt/pillar/users.arch
         iscsi.sls: test/salt/pillar/pillar.travis
+        lvm.sls: test/salt/pillar/lvm.example
     verifier:
       inspec_tests:
         - path: test/integration/default
