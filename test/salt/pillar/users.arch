@@ -12,4 +12,4 @@ users:
       - wheel
       - root
     sudo_rules:
-     - 'ALL=(ALL) ALL'
+      - 'ALL=(ALL) ALL'

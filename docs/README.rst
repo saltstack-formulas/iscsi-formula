@@ -14,7 +14,7 @@ iscsi-formula
    :scale: 100%
    :target: https://github.com/semantic-release/semantic-release
 
-Configure iSCSI Targets, Initiators, and Name-Services on GNU/Linux and FreeBSD.
+Manage iSCSI Targets, Initiators, Name-Services on GNU/Linux and FreeBSD.
 
 .. contents:: **Table of Contents**
 
