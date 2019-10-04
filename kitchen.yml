@@ -224,10 +224,10 @@ suites:
       inspec_tests:
         - path: test/integration/default
 
-  - name: target-service-fails-on-travis   # skip 'target' service on travis
+  - name: centarch   # skip 'target' service on travis
     includes:
-      - centos-7-2019-2-py3
       - arch-base-latest-2019-2-py2
+      - centos-7-2019-2-py3
       - centos-7-develop-py3
     provisioner:
       dependencies:
