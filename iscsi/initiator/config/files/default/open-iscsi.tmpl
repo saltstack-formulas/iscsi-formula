@@ -1,0 +1,21 @@
+########################################################################
+# File managed by Salt at <{{ source }}>.
+# Your changes will be overwritten.
+########################################################################
+
+{% if data and component -%}
+
+{%- macro readconf(outdict, spaces=0) -%}
+  {%- for key, value in outdict.items() -%}
+{{ openiscsi(key, value, spaces) }}
+  {%- endfor %}
+{%- endmacro -%}
+
+{%- macro openiscsi(key, value, spaces=0) -%}
+  {%- set shift = spaces * ' ' -%}
+{{shift}}{{ key }} = {{"'" if value is not string else ''}}{{ value }}{{"'" if value is not string else ''}}
+{%- endmacro -%}
+
+{{ readconf(data,  0) }}
+
+{% endif %}

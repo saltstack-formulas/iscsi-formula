@@ -1,62 +1,9 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 ---
-# iscsi on Archlinux needs a 'iscsimake' user
-users:
-  iscsimake:
-    sudouser: true
-    shell: /bin/bash
-    empty_password: true
-    home: /home/iscsimake
-    createhome: true
-    optional_groups:
-      - wheel
-      - root
-    sudo_rules:
-      - 'ALL=(ALL) ALL'
-
-lvm:
-  files:
-    remove:
-      - /tmp/loopdevs/testfile0.img
-      - /tmp/loopdevs/testfile1.img
-      - /tmp/loopdevs/testfile2.img
-      - /tmp/loopdevs/testfile3.img
-    create:
-      dd:
-        /tmp/loopdevs/testfile0.img:
-          options:
-            if: /dev/urandom
-            bs: 1024
-            count: 307200
-        /tmp/loopdevs/testfile1.img:
-          options:
-            if: /dev/urandom
-            bs: 1024
-            count: 307200
-        /tmp/loopdevs/testfile2.img:
-          options:
-            if: /dev/urandom
-            bs: 1024
-            count: 307200
-        /tmp/loopdevs/testfile3.img:
-          options:
-            if: /dev/urandom
-            bs: 1024
-            count: 307200
-      losetup:
-        /tmp/loopdevs/testfile0.img: {}
-        /tmp/loopdevs/testfile1.img: {}
-        /tmp/loopdevs/testfile2.img: {}
-        /tmp/loopdevs/testfile3.img: {}
-  pv:
-    create:
-      /dev/loop0: {}
-      /dev/loop1: {}
-      /dev/loop2: {}
-      /dev/loop3: {}
-
 iscsi:
+  target:
+    enabled: false  # centos/travis workaround to pass service.running state
   config:
     data:
       open-iscsi:
@@ -100,7 +47,7 @@ iscsi:
           targetname: 'iqn.1900.com.com:sn.123456'
           initiatorname: 'iqn.2005-01.il.ac.huji.cs:nobody'
           authmethod: CHAP
-          chapiname: 'iqn.2005-01.il.ac.huji.cs:nobody'
+          chapiname : 'iqn.2005-01.il.ac.huji.cs:nobody'
           chapsecret: secretsecret
         example01:
           targetname: 'iqn.2018-07.com.example.iscsi:example01'
@@ -173,17 +120,17 @@ iscsi:
         # iSNSAccessControl: 'Off'
         # iSNS: 'Off'
         'target iqn.2008-09.com.example:server.target1':
-          backing-store: /dev/loop0
+          backing-store: /dev/loop4
         'target iqn.2008-09.com.example:server.target5':
-          'direct-store /dev/loop1':
+          'direct-store /dev/loop5':
             vendor_id: VENDOR1
             removable: 1
             device-type: cd
             lun: 1
-          'direct-store /dev/loop2':
+          'direct-store /dev/loop6':
             vendor_id: VENDOR2
             lun: 2
-          'backing-store /dev/loop3':
+        'backing-store /dev/loop7':
             vendor_id: back1
             scsi_sn: SERIAL
             write-cache: 'on'

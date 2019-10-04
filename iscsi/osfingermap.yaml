@@ -1,0 +1,64 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+#
+# Setup variables using grains['osfinger'] based logic.
+# You just need to add the key:values for an `osfinger` that differ
+# from `defaults.yaml` + `osarch.yaml` + `os_family.yaml` + `osmap.yaml`.
+# Only add an `osfinger` which is/will be supported by the formula.
+#
+# If you do not need to provide defaults via the `os_finger` grain,
+# you will need to provide at least an empty dict in this file, e.g.
+# osfingermap: {}
+---
+# os: CentOS
+CentOS-6:
+  target:
+    provider: tgtd
+    pkgs:
+      wanted:
+        - scsi-target-utils
+        - fcoe-utils
+        - fcoe-target-utils
+  config:
+    name:
+      tgtd: /etc/tgt/targets.conf
+    servicename:
+      tgtd: tgtd
+
+CentOS-7:
+  initiator:
+    pkgs:
+      wanted:
+        - iscsi-initiator-utils-iscsiuio
+        - libiscsi
+        - libiscsi-utils
+  target:
+    loadmodule: true
+    pkgs:
+      wanted:
+        - yum-plugin-versionlock
+        - targetcli
+        - libvirt-daemon-driver-storage-iscsi
+        - udisks2-iscsi
+
+CentOS-8:
+  isns:
+    pkgs:
+      wanted:
+        - target-isns
+  initiator:
+    pkgs:
+      wanted:
+        - iscsi-initiator-utils-iscsiuio
+        - libiscsi
+        - libiscsi-utils
+  target:
+    loadmodule: true
+    pkgs:
+      wanted:
+        - yum-plugin-versionlock
+        - targetcli
+        - libvirt-daemon-driver-storage-iscsi
+        - libvirt-daemon-driver-storage-iscsi-direct
+        # thin-provisioning-tools
+        - udisks2-iscsi

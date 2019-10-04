@@ -1,6 +1,15 @@
+# -*- coding: utf-8 -*-
+# vim: ft=sls
 
 include:
-  - iscsi.target
+         {%- if grains.os_family in ('SArch',) %}
+             {# This sequence avoids /etc/isns/isnsd.conf conflict on Arch #}
   - iscsi.initiator
-  #Putting isns last avoids /etc/isns/isnsd.conf file conflict on Arch
+  - iscsi.target
   - iscsi.isns
+        {%- else %}
+             {# This is the normal sequence #}
+  - iscsi.isns
+  - iscsi.initiator
+  - iscsi.target
+        {%- endif %}

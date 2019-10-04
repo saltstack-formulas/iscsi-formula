@@ -1,20 +1,99 @@
-# vim: sts=2 ts=2 sw= et ai
-#
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
 iscsi:
-  cfgsource: salt://iscsi/man5.jinja
+  filemode: '0640'
+  user: iscsimake  # archlinux only
+  rootgroup: root
+  subcomponent:
+    config: '/etc/iscsi-subcomponent-formula.conf'
+  # Just here for testing
+  added_in_defaults: defaults_value
+  winner: defaults
+  loadkernelmodule: false
+
+  config:
+    acl:
+      allow:
+        ietd: /etc/ietd/initiators.allow
+      deny:
+        ietd: /etc/ietd/initiators.deny
+    name:
+      modprobe: /etc/modprobe.d/iscsi-modules.conf
+      iscsi: /etc/iscsi.conf
+      fcoe: /etc/fcoe/cfg-eth2
+      tgtd: /etc/tgt/conf.d/targets.conf
+      ctld: /etc/ctl.conf
+      ietd: /etc/ietd.conf
+      lio: /etc/target/saveconfig.json
+      isns: /etc/isns/isnsd.conf
+      isnsadm: false
+      isnsdd: false
+      open-iscsi: /etc/iscsi/iscsid.conf
+    servicename:
+      iscsi: iscsid
+      fcoe:                   # Fibre-Channel over Ethernet (FCoE) Target
+        - fcoe
+        - lldpad
+        - fcoe-target
+      tgtd: tgt               # TGT Project (userspace) RedHat/Debian/Arch/Gentoo
+      ctld: ctld              # CAM Target Layer/iSCSI target daemon, FreeBSD.
+      ietd: iscsitarget       # iSCSI Enterprise Target (IET) project
+      isns: isnsd             # Open-iSNS implements iSNS protocol (RFC4171)
+      lio: target             # LIO is defacto standard on enterprise linux
+      open-iscsi: open-iscsi  # Open-iSCSI
+    servicetext:
+      iscsi: 'iscsictl_enable="YES"'
+      ctld: 'iscsid_enable="YES"'
+    serviceload:
+      ctld: /etc/rc.conf
+    manpage:
+      iscsi: iscsi.conf(5)
+      open-iscsi: iscsid.conf(8)
+      tgtd: targets.conf(5)
+      ctld: ctl.conf(5)
+      ietd: ietd.conf(5)
+      isns: isns_config
+    kmodule:
+      iscsi:
+        name: iscsi_initiator
+        text: 'iscsi_initiator_load="YES"'
+      ctld:
+        name: ''
+        text: 'cfiscsi_load="YES"'
+      ietd:
+        name: iscsi_trgt
+        text: ''
+      lio:
+        name: target_core_mod
+        text: ''
+      fcoe:
+        name: fcoe_target
+        text: ''
+      iser:
+        name: ('ib_iser', 'ib_isert', 'rdma_ucm', 'rdma_cm', 'ib_cm',)
+        text: null
+    data:
+      iscsi: {}
+      fcoe: {}
+      lio: {}
+      tgtd: {}
+      ctld: {}
+      ietd: {}
+      isns: {}
+      isnsadm: {}
+      isnsdd: {}
+      open-iscsi: {}
+
   kernel:
-    mess_with_kernel: False
-    modloadfile: /etc/modprobe.d/iscsi-modules.conf
     modload: modprobe
     modunload: modprobe -r
     modquery: modinfo
-  group: root
-  filemode: '0640'
 
   isns:
-    enabled: True
-    provider: isnsd
-    pkghold: False
+    enabled: true
+    provider: isns
+    pkghold: false
     pkgs:
       wanted:
         - open-isns
@@ -22,10 +101,11 @@ iscsi:
     make:
       wanted: []
 
-  client:
-    enabled: True
+  initiator:
+    enabled: true
+    loadmodule: false
     provider: open-iscsi
-    pkghold: False
+    pkghold: false
     pkgs:
       wanted:
         - open-iscsi
@@ -33,18 +113,14 @@ iscsi:
     make:
       wanted: []
 
-  server:
-    enabled: True
+  target:
+    port: 3260
+    enabled: true
+    loadmodule: false
     provider: lio
-    pkghold: False
+    pkghold: false
     pkgs:
       wanted: []
-        # tgt                 #Linux iSCSI target framework user-space tools
-        # iscsitarget
-        # iscsitarget-dkms
-        # fcoe-target-utils
-        # lldpad
-        # fcoe-utils
       unwanted: []
     make:
       wanted: []
