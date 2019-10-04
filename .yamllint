@@ -10,6 +10,7 @@ extends: default
 ignore: |
   node_modules/
   test/**/states/**/*.sls
+  iscsi/oscodename.yaml
 
 yaml-files:
   # Default settings

@@ -7,9 +7,9 @@
 {%- from tplroot ~ "/map.jinja" import iscsi with context %}
 
   {%- if iscsi.initiator.make.wanted %}
-      {%- for pkg in iscsi.initiator.make.wanted %}
 include:
   - {{ sls_service_clean }}
+      {%- for pkg in iscsi.initiator.make.wanted %}
 
 iscsi-initiator-package-make-clean-{{ pkg }}-removed:
   pkg.removed:

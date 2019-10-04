@@ -1,20 +1,6 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 ---
-    {% if grains.os_family in ('Arch',) %}
-users:
-  iscsimake:
-    sudouser: true
-    shell: /bin/bash
-    empty_password: true
-    home: /home/iscsimake
-    createhome: true
-    optional_groups:
-      - wheel
-      - root
-    sudo_rules:
-     - 'ALL=(ALL) ALL'
-    {% endif %}
 lvm:
   files:
     remove:
@@ -60,7 +46,7 @@ iscsi:
   config:
     data:
       open-iscsi:
-        ##https://github.com/open-iscsi/open-iscsi/blob/master/etc/iscsid.conf
+        # https://github.com/open-iscsi/open-iscsi/blob/master/etc/iscsid.conf
         node.startup: manual
         node.leading_login: 'No'
         node.session.timeo.replacement_timeout: 120
@@ -86,10 +72,10 @@ iscsi:
         node.session.iscsi.FastAbort: 'Yes'
         node.session.scan: auto
 
-      iscsi:                         ##freeBSD
-        ##https://www.freebsd.org/cgi/man.cgi?query=iscsi.conf&sektion=5&manpath=FreeBSD+10-current
+      iscsi:                         # freeBSD
+        # https://www.freebsd.org/cgi/man.cgi?query=iscsi.conf&sektion=5&manpath=FreeBSD+10-current
         node.startup: automatic
-        myiscsi:                     ##nickname
+        myiscsi:                     # nickname
           targetaddress: iscsi1
           targetname: 'iqn.1900.com.com:sn.123456'
         myiscsi6:
@@ -100,7 +86,7 @@ iscsi:
           targetname: 'iqn.1900.com.com:sn.123456'
           initiatorname: 'iqn.2005-01.il.ac.huji.cs:nobody'
           authmethod: CHAP
-          chapiname : 'iqn.2005-01.il.ac.huji.cs:nobody'
+          chapiname: 'iqn.2005-01.il.ac.huji.cs:nobody'
           chapsecret: secretsecret
         example01:
           targetname: 'iqn.2018-07.com.example.iscsi:example01'
@@ -118,7 +104,7 @@ iscsi:
           chapSecret: secretsecret
 
       ietd:
-        ##http://manpages.ubuntu.com/manpages/trusty/man5/ietd.conf.5.html
+        # http://manpages.ubuntu.com/manpages/trusty/man5/ietd.conf.5.html
         IncomingUser: joe secret
         OutgoingUser: jack secret2
         'Target iqn.2001-04.com.example:storage.disk2.sys1.xyz':
@@ -149,7 +135,7 @@ iscsi:
       isnsadm: {}
       isnsdd: {}
       isnsd:
-        ##https://manpages.debian.org/testing/open-isns-server/isnsd.conf.5.en.html
+        # https://manpages.debian.org/testing/open-isns-server/isnsd.conf.5.en.html
         Database: /var/lib/isns
         RegistrationPeriod: 10m
         DefaultDiscoveryDomain: 1
@@ -164,14 +150,14 @@ iscsi:
         Auth.TimeStampJitter: 1s
 
       tgtd:
-        ##https://linux.die.net/man/5/targets.conf
-        ##https://github.com/fujita/tgt/blob/master/conf/examples/targets.conf.example
+        # https://linux.die.net/man/5/targets.conf
+        # https://github.com/fujita/tgt/blob/master/conf/examples/targets.conf.example
         include: '/etc/tgt/salt/*.conf'
         default-driver: iscsi
-        #iSNSServerIP: 127.0.0.1
-        #iSNSServerPort: 3205
-        #iSNSAccessControl: Off
-        #iSNS: Off
+        # iSNSServerIP: 127.0.0.1
+        # iSNSServerPort: 3205
+        # iSNSAccessControl: 'Off'
+        # iSNS: 'Off'
         'target iqn.2008-09.com.example:server.target1':
           backing-store: /dev/loop4
         'target iqn.2008-09.com.example:server.target5':
@@ -183,23 +169,23 @@ iscsi:
           'direct-store /dev/loop6':
             vendor_id: VENDOR2
             lun: 2
-        'backing-store /dev/loop7':
+          'backing-store /dev/loop7':
             vendor_id: back1
             scsi_sn: SERIAL
-            write-cache: on
+            write-cache: 'on'
 
       lio:
-        ##https://www.systutorials.com/docs/linux/man/5-saveconfig.json
-        ##https://bugzilla.redhat.com/show_bug.cgi?id=1643673
-        ##https://github.com/open-iscsi/rtslib-fb/issues/5
-        ##----------------------------------------------------------------------
-        ## The sample below is complex because its used for verification.
-        ## You should only use the minimal pillar data for your needs.
-        ## The format is important so review this example carefully.
-        ##
-        ## Multiple objects are supported:
-        ##   See: https://github.com/saltstack-formulas/iscsi-formula/issues/19
-        ##----------------------------------------------------------------------
+        # https://www.systutorials.com/docs/linux/man/5-saveconfig.json
+        # https://bugzilla.redhat.com/show_bug.cgi?id=1643673
+        # https://github.com/open-iscsi/rtslib-fb/issues/5
+        # ----------------------------------------------------------------------
+        #  The sample below is complex because its used for verification.
+        #  You should only use the minimal pillar data for your needs.
+        #  The format is important so review this example carefully.
+        #
+        #  Multiple objects are supported:
+        #    See: https://github.com/saltstack-formulas/iscsi-formula/issues/19
+        # ----------------------------------------------------------------------
         fabric_modules:
           callmewhateveryoulike0:
             discovery_enable_auth: 'true'
@@ -626,7 +612,6 @@ iscsi:
                 callmewhateveryoulike0:
                   attributes:
                     dataout_timeout: 3
-                  #mapped_luns: {}
               parameters:
                 TargetAlias: LIO Target
               portals:

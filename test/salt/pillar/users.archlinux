@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+users:
+  iscsimake:
+    sudouser: true
+    shell: /bin/bash
+    empty_password: true
+    home: /home/iscsimake
+    createhome: true
+    optional_groups:
+      - wheel
+      - root
+    sudo_rules:
+     - 'ALL=(ALL) ALL'

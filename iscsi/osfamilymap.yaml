@@ -32,8 +32,8 @@ Debian:
         - iscsitarget-dkms
         - infiniband-diags
         - ibutils
-        - ibverbs-utils #not suse
-        - rdmacm-utils  #not suse
+        - ibverbs-utils    # not suse
+        - rdmacm-utils     # not suse
         - perftest
 RedHat:
   config:
@@ -103,13 +103,18 @@ Arch:
   config:
     servicename:
       open-iscsi:
-       - iscsi
-       - iscsid
+        - iscsi
+        - iscsid
     kmodule:
       lio:
-        name:
-        text:
+        name: ''
+        text: ''
   initiator:
+    pkgs:
+      wanted:
+        - binutils
+        - fakeroot
+        - open-iscsi
     make:
       gitrepo: https://aur.archlinux.org
       cmd: makepkg -si --noconfirm -f
@@ -119,6 +124,8 @@ Arch:
     loadmodule: true
     pkgs:
       wanted:
+        - binutils
+        - fakeroot
         - linux-lts                # For kernel scsi modules
         - python-pip               # makepkg states needs 'gitpython'.
         - thin-provisioning-tools

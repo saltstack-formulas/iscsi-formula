@@ -59,17 +59,17 @@ iscsi:
         name: iscsi_initiator
         text: 'iscsi_initiator_load="YES"'
       ctld:
-        name:
+        name: ''
         text: 'cfiscsi_load="YES"'
       ietd:
         name: iscsi_trgt
-        text:
+        text: ''
       lio:
         name: target_core_mod
-        text:
+        text: ''
       fcoe:
         name: fcoe_target
-        text:
+        text: ''
       iser:
         name: ('ib_iser', 'ib_isert', 'rdma_ucm', 'rdma_cm', 'ib_cm',)
         text: null

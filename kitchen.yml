@@ -197,15 +197,26 @@ suites:
     excludes:
       - centos-7-2019-2-py3
       - arch-base-latest-2019-2-py2
+<<<<<<< HEAD
+=======
+      - centos-7-develop-py3
+>>>>>>> 863e40c... fix(service): only start service if enabled
     provisioner:
+      dependencies:
+        - name: lvm
+          repo: git
+          source: https://github.com/saltstack-formulas/lvm-formula.git
+        - name: users   # for archlinux
+          repo: git
+          source: https://github.com/saltstack-formulas/users-formula.git
       state_top:
         base:
           '*':
             - lvm.install
             - lvm.files.create
             - lvm.pv.create
-            - iscsi.clean
             - iscsi
+            - iscsi.clean
       pillars:
         top.sls:
           base:
@@ -221,21 +232,41 @@ suites:
     includes:
       - centos-7-2019-2-py3
       - arch-base-latest-2019-2-py2
+<<<<<<< HEAD
     provisioner:
+=======
+      - centos-7-develop-py3
+    provisioner:
+      dependencies:
+        - name: lvm
+          repo: git
+          source: https://github.com/saltstack-formulas/lvm-formula.git
+        - name: users   # for archlinux
+          repo: git
+          source: https://github.com/saltstack-formulas/users-formula.git
+>>>>>>> 863e40c... fix(service): only start service if enabled
       state_top:
         base:
           '*':
+            - users
             - lvm.install
             - lvm.files.create
             - lvm.pv.create
+<<<<<<< HEAD
             - iscsi.clean
             - iscsi
+=======
+            - iscsi
+            - iscsi.clean
+>>>>>>> 863e40c... fix(service): only start service if enabled
       pillars:
         top.sls:
           base:
             '*':
+              - users
               - iscsi
       pillars_from_files:
+        users.sls: test/salt/pillar/users.archlinux
         iscsi.sls: test/salt/pillar/pillar.travis
     verifier:
       inspec_tests:

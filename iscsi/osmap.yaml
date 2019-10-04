@@ -53,7 +53,7 @@ Fedora:
     provider: tgtd
     pkgs:
       wanted:
-        - device-mapper-persistent-data   #aka thin-provisioning-tools
+        - device-mapper-persistent-data   # aka thin-provisioning-tools
         - netbsd-iscsi
         - yum-plugin-versionlock
         - targetcli
