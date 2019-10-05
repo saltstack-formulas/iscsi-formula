@@ -40,8 +40,8 @@ Contributing to this repo
 
 Please see :ref:`How to contribute <CONTRIBUTING>` for more details.
 
-Scope
------
+Scope = Ethernet/Block
+----------------------
 .. image:: link-transport-storage-protocols.png
    :target: https://github.com/saltstack-formulas/iscsi-formula
    :scale: 15 %
