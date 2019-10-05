@@ -36,7 +36,7 @@ iscsi-initiator-service-install-service-running:
     - name: {{ servicename }}
     - enable: True
     - onfail_in:
-      - test: iscsi-initiator-service-install-failure-explanation
+      - test: iscsi-initiator-service-install-check-status
     - watch:
       - file: iscsi-initiator-config-install-file-managed
         {%- endif %}
@@ -48,7 +48,7 @@ iscsi-initiator-service-install-service-running:
     - require:
       - sls: {{ sls_config_install }}
 
-iscsi-initiator-service-install-failure-explanation:
+iscsi-initiator-service-install-check-status:
   test.show_notification:
     - text: |
         In certain circumstances the iscsi initiator service will not start.

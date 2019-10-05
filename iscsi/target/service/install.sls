@@ -35,7 +35,7 @@ iscsi-target-service-install-service-running:
     - name: {{ servicename }}
     - enable: True
     - onfail_in:
-      - test: iscsi-target-service-install-failure-explanation
+      - test: iscsi-target-service-install-check-status
     - require:
       - sls: {{ sls_config_install }}
     - watch:
@@ -49,7 +49,7 @@ iscsi-target-service-install-service-running:
     - unless: {{ grains.os in ('Amazon', 'MacOS') }}
     - onlyif: {{ iscsi.target.enabled }}
 
-iscsi-target-service-install-failure-explanation:
+iscsi-target-service-install-check-status:
   test.show_notification:
     - text: |
         In certain circumstances the iscsi target service will not start.

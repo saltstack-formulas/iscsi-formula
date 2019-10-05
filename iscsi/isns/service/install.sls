@@ -21,7 +21,7 @@ iscsi-isns-service-install-service-running:
     - name: {{ servicename }}
     - enable: True
     - onfail_in:
-      - test: iscsi-isns-service-install-failure-explanation
+      - test: iscsi-isns-service-install-check-status
     - require:
       - sls: {{ sls_config_install }}
     - watch:
@@ -38,7 +38,7 @@ iscsi-isns-service-install-service-running:
             {%- endif %}
         {%- endif %}
 
-iscsi-isns-service-install-failure-explanation:
+iscsi-isns-service-install-check-status:
   test.show_notification:
     - text: |
         In certain circumstances the iscsi isns service will not start.
