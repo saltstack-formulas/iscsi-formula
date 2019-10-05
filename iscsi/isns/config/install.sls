@@ -9,10 +9,10 @@
 
 include:
   - {{ sls_service_install }}
+    {%- if iscsi.config.data[iscsi.isns.provider|string] %}
 
 iscsi-isns-config-install-file-managed-isnsd:
   file.managed:
-    - onlyif: {{ iscsi.config.data[iscsi.isns.provider|string]|json }}
     - name: {{ iscsi.config.name['isns'] }}
     - source: {{ files_switch([iscsi.isns.provider ~ '.tmpl'],
                               lookup='iscsi-isns-config-install-file-managed',
@@ -32,7 +32,9 @@ iscsi-isns-config-install-file-managed-isnsd:
       data: {{ iscsi.config.data[iscsi.isns.provider|string]|json }}
       component: isns
 
-    {%- if 'isnsadm' in iscsi.config.name and iscsi.config.name['isnsadm'] %}
+    {%- endif %}
+    {%- if 'isnsadm' in iscsi.config.data and iscsi.config.data['isnsadm'] %}
+
 iscsi-isns-config-install-file-managed-isnsadm:
   file.managed:
     - name: {{ iscsi.config.name['isnsadm'] }}
@@ -53,9 +55,10 @@ iscsi-isns-config-install-file-managed-isnsadm:
     - context:
       data: {{ iscsi.config.data[iscsi.isns.provider|string]|json }}
       component: isns
-    {%- endif %}
 
-    {%- if 'isnsdd' in iscsi.config.name and iscsi.config.name['isnsdd'] %}
+    {%- endif %}
+    {%- if 'isnsdd' in iscsi.config.data and iscsi.config.data['isnsdd'] %}
+
 iscsi-isns-config-install-file-managed-isnsdd:
   file.managed:
     - onlyif: {{ iscsi.config.name['isnsdd'] }}
@@ -77,4 +80,5 @@ iscsi-isns-config-install-file-managed-isnsdd:
     - context:
       data: {{ iscsi.config.data[iscsi.isns.provider|string]|json }}
       component: isns
+
     {%- endif %}

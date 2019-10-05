@@ -22,10 +22,10 @@ iscsi-isns-service-install-service-running:
     - enable: True
     - onfail_in:
       - test: iscsi-isns-service-install-check-status
-    - require:
-      - sls: {{ sls_config_install }}
+            {%- if iscsi.config.data[iscsi.isns.provider|string] %}
     - watch:
       - file: iscsi-isns-config-install-file-managed-isnsd
+            {%- endif %}
         {%- endif %}
         {%- if servicename is iterable and servicename is not string %}
     - names: {{ servicename|json }}

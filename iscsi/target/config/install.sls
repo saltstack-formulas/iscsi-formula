@@ -7,13 +7,13 @@
 {%- from tplroot ~ "/map.jinja" import iscsi with context %}
 {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
+    {%- if iscsi.config.data[iscsi.target.provider|string] %}
+
 include:
   - {{ sls_service_install }}
 
 iscsi-target-config-install-file-managed:
   file.managed:
-    - onlyif: {{ iscsi.config.data[iscsi.target.provider|string]|json }}
-    - unless: {{ grains.os in ('Amazon', 'MacOS') }}
     - name: {{ iscsi.config.name[iscsi.target.provider] }}
     - source: {{ files_switch([iscsi.target.provider ~ '.tmpl'],
                               lookup='iscsi-target-config-install-file-managed',
@@ -30,3 +30,5 @@ iscsi-target-config-install-file-managed:
     - context:
       data: {{ iscsi.config.data[iscsi.target.provider|string]|json }}
       component: target
+
+    {%- endif %}

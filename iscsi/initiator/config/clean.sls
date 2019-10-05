@@ -6,6 +6,8 @@
 {%- set sls_package_clean = tplroot ~ '.initiator.package.clean' %}
 {%- from tplroot ~ "/map.jinja" import iscsi with context %}
 
+    {%- if iscsi.config.data[iscsi.initiator.provider|string] %}
+
 include:
   - {{ sls_package_clean }}
 
@@ -14,3 +16,5 @@ iscsi-initiator-config-clean-file-absent:
     - name: {{ iscsi.config.name[iscsi.initiator.provider|string] }}
     - watch_in:
         - sls: {{ sls_package_clean }}
+
+    {%- endif %}

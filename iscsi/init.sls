@@ -2,7 +2,7 @@
 # vim: ft=sls
 
 include:
-         {%- if grains.os_family in ('SArch',) %}
+         {%- if grains.os_family in ('Arch',) %}
              {# This sequence avoids /etc/isns/isnsd.conf conflict on Arch #}
   - iscsi.initiator
   - iscsi.target

@@ -4,12 +4,14 @@
 {#- Get the `tplroot` from `tpldir` #}
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- set sls_service_install = tplroot ~ '.isns.service.install' %}
+{%- set sls_config_install = tplroot ~ '.isns.config.install' %}
 {%- from tplroot ~ "/map.jinja" import iscsi with context %}
 
   {%- if iscsi.isns.make.wanted %}
       {%- if salt['cmd.run']("id iscsi.user", output_loglevel='quiet') %}
 include:
   - {{ sls_service_install }}
+  - {{ sls_config_install }}
 
 iscsi-isns-make-file-directory:
   file.directory:
@@ -49,6 +51,7 @@ iscsi-isns-make-{{ pkg }}-cmd-run:
       - git: iscsi-isns-make-{{ pkg }}-git-latest
     - require_in:
       - sls: {{ sls_service_install }}
+      - sls: {{ sls_config_install }}
 
           {% endfor %}
       {%- endif %}
