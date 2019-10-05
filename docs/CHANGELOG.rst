@@ -5,6 +5,16 @@
 Changelog
 ---------
 
+`1.0.1 <https://github.com/saltstack-formulas/iscsi-formula/compare/v1.0.0...v1.0.1>`_ (2019-10-05)
+-------------------------------------------------------------------------------------------------------
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **readme:** fix formatting (\ `40dd6ef <https://github.com/saltstack-formulas/iscsi-formula/commit/40dd6ef>`_\ )
+* **readme:** update scope heading (\ `840b389 <https://github.com/saltstack-formulas/iscsi-formula/commit/840b389>`_\ )
+
 1.0.0 (2019-10-04)
 ------------------
 
