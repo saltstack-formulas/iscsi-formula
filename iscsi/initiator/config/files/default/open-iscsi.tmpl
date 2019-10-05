@@ -13,8 +13,8 @@
 
 {%- macro openiscsi(key, value, spaces=0) -%}
   {%- set shift = spaces * ' ' -%}
-{{shift}}{{ key }} = {{"'" if value is not string else ''}}{{ value }}{{"'" if value is not string else ''}}
-{%- endmacro -%}
+{{shift}}{{ key }} = {{ value ~ '\n' if value is string else '"' ~ value ~ '"\n' }}
+{%- endmacro %}
 
 {{ readconf(data,  0) }}
 
