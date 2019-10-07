@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.2](https://github.com/saltstack-formulas/iscsi-formula/compare/v1.0.1...v1.0.2) (2019-10-07)
+
+
+### Bug Fixes
+
+* **iscsi.conf:** adjust jinja rendering ([98e29d8](https://github.com/saltstack-formulas/iscsi-formula/commit/98e29d8))
+* **jinja:** fix generated iscsi.conf ([1def94b](https://github.com/saltstack-formulas/iscsi-formula/commit/1def94b))
+
+
+### Code Refactoring
+
+* **config:** only create conf-file if pillar  data ([1645c53](https://github.com/saltstack-formulas/iscsi-formula/commit/1645c53))
+
 ## [1.0.1](https://github.com/saltstack-formulas/iscsi-formula/compare/v1.0.0...v1.0.1) (2019-10-05)
 
 
