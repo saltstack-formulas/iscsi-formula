@@ -13,8 +13,10 @@ iscsi-initiator-service-clean-service-dead:
   service.dead:
     - name: {{ iscsi.config.servicename[iscsi.initiator.provider] }}
     - enable: False
-    - require_in:
+        {%- if iscsi.config.data[iscsi.initiator.provider|string] %}
+    - watch_in:
       - sls: {{ sls_config_clean }}
+        {%- endif %}
 
     {%- if grains.os_family == 'FreeBSD' %}
 
@@ -25,5 +27,9 @@ iscsi-initiator-service-clean-file-line-freebsd:
     - mode: delete
     - backup: True
     - quiet: True
+        {%- if iscsi.config.data[iscsi.initiator.provider|string] %}
+    - watch_in:
+      - sls: {{ sls_config_clean }}
+        {%- endif %}
 
     {%- endif %}

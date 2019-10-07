@@ -36,19 +36,21 @@ iscsi-initiator-service-install-service-running:
     - name: {{ servicename }}
     - enable: True
     - onfail_in:
-      - test: iscsi-initiator-service-install-failure-explanation
+      - test: iscsi-initiator-service-install-check-status
+            {%- if iscsi.config.data[iscsi.initiator.provider|string] %}
+    - require:
+      - sls: {{ sls_config_install }}
     - watch:
       - file: iscsi-initiator-config-install-file-managed
+            {%- endif %}
         {%- endif %}
         {%- if servicename is iterable and servicename is not string %}
     - names: {{ servicename|json }}
           {%- else %}
     - name: {{ servicename }}
         {%- endif %}
-    - require:
-      - sls: {{ sls_config_install }}
 
-iscsi-initiator-service-install-failure-explanation:
+iscsi-initiator-service-install-check-status:
   test.show_notification:
     - text: |
         In certain circumstances the iscsi initiator service will not start.

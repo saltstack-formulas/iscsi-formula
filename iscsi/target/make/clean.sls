@@ -3,19 +3,16 @@
 
 {#- Get the `tplroot` from `tpldir` #}
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- set sls_service_clean = tplroot ~ '.target.service.clean' %}
 {%- from tplroot ~ "/map.jinja" import iscsi with context %}
 
-  {%- if iscsi.target.make.wanted %}
-include:
-  - {{ sls_service_clean }}
+  {%- if iscsi.target.make.wanted and grains.os_family not in ('Arch',) %}
       {%- for pkg in iscsi.target.make.wanted %}
+          {%- if pkg %}
 
 iscsi-target-package-make-clean-{{ pkg }}-removed:
   pkg.removed:
     - name: {{ pkg }}
-    - require:
-      - sls: {{ sls_service_clean }}
 
+          {%- endif %}
       {%- endfor %}
   {%- endif %}
