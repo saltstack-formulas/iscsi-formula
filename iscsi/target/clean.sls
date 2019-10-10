@@ -6,4 +6,4 @@ include:
   - .config.clean
   - .kernel.clean
   - .make.clean
-  - .package.clean 
+  - .package.clean
