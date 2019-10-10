@@ -5,4 +5,4 @@ include:
   - .service.clean
   - .config.clean
   - .make.clean
-  - .package.clean 
+  - .package.clean
