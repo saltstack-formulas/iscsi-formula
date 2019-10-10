@@ -154,56 +154,6 @@ An example of that:
    ...
 
    BREAKING CHANGE: With the removal of all of the `.sls` files under
-   `iscsi package`, this formula no longer supports the installation of
+   `template package`, this formula no longer supports the installation of
    packages.
 
-
-Semantic release formulas
--------------------------
-
-These formulas are already compatible with semantic-release:
-
-* `apt-formula <https://github.com/saltstack-formulas/apt-formula>`_
-* `bind-formula <https://github.com/saltstack-formulas/bind-formula>`_
-* `cert-formula <https://github.com/saltstack-formulas/cert-formula>`_
-* `chrony-formula <https://github.com/saltstack-formulas/chrony-formula>`_
-* `collectd-formula <https://github.com/saltstack-formulas/collectd-formula>`_
-* `cron-formula <https://github.com/saltstack-formulas/cron-formula>`_
-* `deepsea-formula <https://github.com/saltstack-formulas/deepsea-formula>`_
-* `dhcpd-formula <https://github.com/saltstack-formulas/dhcpd-formula>`_
-* `fail2ban-formula <https://github.com/saltstack-formulas/fail2ban-formula>`_
-* `golang-formula <https://github.com/saltstack-formulas/golang-formula>`_
-* `grafana-formula <https://github.com/saltstack-formulas/grafana-formula>`_
-* `influxdb-formula <https://github.com/saltstack-formulas/influxdb-formula>`_
-* `iptables-formula <https://github.com/saltstack-formulas/iptables-formula>`_
-* `iscsi-formula <https://github.com/saltstack-formulas/iscsi-formula>`_
-* `keepalived-formula <https://github.com/saltstack-formulas/keepalived-formula>`_
-* `libvirt-formula <https://github.com/saltstack-formulas/libvirt-formula>`_
-* `locale-formula <https://github.com/saltstack-formulas/locale-formula>`_
-* `logrotate-formula <https://github.com/saltstack-formulas/logrotate-formula>`_
-* `mysql-formula <https://github.com/saltstack-formulas/mysql-formula>`_
-* `nginx-formula <https://github.com/saltstack-formulas/nginx-formula>`_
-* `openvpn-formula <https://github.com/saltstack-formulas/openvpn-formula>`_
-* [`WIP <https://github.com/saltstack-formulas/packages-formula/pull/54>`_] `packages-formula <https://github.com/saltstack-formulas/packages-formula>`_
-* `php-formula <https://github.com/saltstack-formulas/php-formula>`_
-* `postfix-formula <https://github.com/saltstack-formulas/postfix-formula>`_
-* `postgres-formula <https://github.com/saltstack-formulas/postgres-formula>`_
-* `prometheus-formula <https://github.com/saltstack-formulas/prometheus-formula>`_
-* `rkhunter-formula <https://github.com/saltstack-formulas/rkhunter-formula>`_
-* `salt-formula <https://github.com/saltstack-formulas/salt-formula>`_
-* `sudoers-formula <https://github.com/saltstack-formulas/sudoers-formula>`_
-* `sysctl-formula <https://github.com/saltstack-formulas/sysctl-formula>`_
-* `syslog-ng-formula <https://github.com/saltstack-formulas/syslog-ng-formula>`_
-* `sysstat-formula <https://github.com/saltstack-formulas/sysstat-formula>`_
-* `systemd-formula <https://github.com/saltstack-formulas/systemd-formula>`_
-* `timezone-formula <https://github.com/saltstack-formulas/timezone-formula>`_
-* `ufw-formula <https://github.com/saltstack-formulas/ufw-formula>`_
-* `users-formula <https://github.com/saltstack-formulas/users-formula>`_
-* `vault-formula <https://github.com/saltstack-formulas/vault-formula>`_
-* `vim-formula <https://github.com/saltstack-formulas/vim-formula>`_
-* `vsftpd-formula <https://github.com/saltstack-formulas/vsftpd-formula>`_
-
-Documentation
--------------
-
-`Documentation contributing guidelines <CONTRIBUTING_DOCS.rst>`_
