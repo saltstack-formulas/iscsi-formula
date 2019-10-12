@@ -13,7 +13,7 @@
 
 {%- macro isns(key, value, spaces=0, last=False) -%}
     {%- set shift = spaces * ' ' -%}
-{{shift}}{{ key }} = {{ value }}
+{{ shift }}{{ key }} = {{ value }}
 {%- endmacro -%}
 
 {{ readconf(data, 0) }}

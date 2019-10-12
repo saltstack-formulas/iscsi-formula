@@ -14,11 +14,11 @@
 {%- macro iscsi_conf(key, value, spaces=0, last=False) -%}
   {%- set shift = spaces * ' ' -%}
 {%- if value is mapping %}
-{{shift}}{{ key }} {  # nickname
+{{ shift }}{{ key }} {  # nickname
 {{ readconf(value, spaces|int+4) }}
 }
 {%- elif value is string or value is number %}
-{{shift}}{{ key }} = {{"'" if value is not string else ''}}{{ value }}{{"'" if value is not string else ''}}
+{{ shift }}{{ key }} = {{ "'" if value is not string else '' }}{{ value }}{{ "'" if value is not string else '' }}
 {% endif %}
 {%- endmacro -%}
 

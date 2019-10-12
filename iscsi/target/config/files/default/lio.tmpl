@@ -1,10 +1,10 @@
-{#######################################################}
+{# ################################################### #}
 {# File managed by Salt at:                            #}
-{#   salt://iscsi/target/config/files/default/lio.tmpl #} 
-{# Your changes may get overwritten.                   #}                      
-{#######################################################}
+{#   salt://iscsi/target/config/files/default/lio.tmpl #}
+{# Your changes may get overwritten.                   #}
+{# ################################################### #}
 
-{% set arrays = ('fabric_modules', 'storage_objects', 'alua_tpgs', 'targets', 'node_acls', 'luns', 'mapped_luns', 'portals')%} 
+{% set arrays = ('fabric_modules', 'storage_objects', 'alua_tpgs', 'targets', 'node_acls', 'luns', 'mapped_luns', 'portals') %}
 
 {%- if data and component -%}
 
@@ -29,7 +29,7 @@
 {{ shift ~ ' }' if last else shift ~ ' },\n' }}
     {%- elif value is string or value is number %}
 {{ shift }}"{{ key }}": {{ '' if value is number else '"' }}{{ value }}{{ '' if value is number else '"' }}{{ '' if last else ',' -}}
-{{ '\n' ~ shift ~ '}' if last and parent|lower in ('tpgs',) else '' -}} 
+{{ '\n' ~ shift ~ '}' if last and parent|lower in ('tpgs',) else '' -}}
     {%- endif %}
 {%- endmacro -%}
 
