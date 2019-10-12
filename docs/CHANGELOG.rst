@@ -5,6 +5,31 @@
 Changelog
 ---------
 
+`1.1.0 <https://github.com/saltstack-formulas/iscsi-formula/compare/v1.0.2...v1.1.0>`_ (2019-10-12)
+-------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **clean.sls:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/f5c57db>`_\ )
+* **clean.sls:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/08f0d08>`_\ )
+* **clean.sls:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/d3e4aa2>`_\ )
+* **ctld.tmpl:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/f2f6f4c>`_\ )
+* **ietd.tmpl:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/36922cc>`_\ )
+* **iscsi.tmpl:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/ba00ccf>`_\ )
+* **isns.tmpl:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/fd87bf8>`_\ )
+* **lio.tmpl:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/94c95f5>`_\ )
+* **open-iscsi.tmpl:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/3b0b12b>`_\ )
+* **rubocop:** add fixes using ``rubocop --safe-auto-correct`` (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/d49d3b8>`_\ )
+* **tgtd.tmpl:** fix ``salt-lint`` errors (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/cf38af1>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **semantic-release:** complete for this formula (\ ` <https://github.com/saltstack-formulas/iscsi-formula/commit/4f27ae9>`_\ )
+
 `1.0.2 <https://github.com/saltstack-formulas/iscsi-formula/compare/v1.0.1...v1.0.2>`_ (2019-10-07)
 -------------------------------------------------------------------------------------------------------
 
