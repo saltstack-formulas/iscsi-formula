@@ -52,7 +52,7 @@ jobs:
     # the `platforms` defined in `kitchen.yml`
     - env: INSTANCE=default-debian-10-master-py3
     # - env: INSTANCE=default-ubuntu-1804-master-py3
-    - env: INSTANCE=centarch-centos-8-master-py3
+    # - env: INSTANCE=centarch-centos-8-master-py3
     # - env: INSTANCE=default-fedora-31-master-py3
     # - env: INSTANCE=default-opensuse-leap-151-master-py3
     # - env: INSTANCE=default-amazonlinux-2-master-py2
@@ -60,7 +60,7 @@ jobs:
     # - env: INSTANCE=default-debian-10-2019-2-py3
     # - env: INSTANCE=default-debian-9-2019-2-py3
     - env: INSTANCE=default-ubuntu-1804-2019-2-py3
-    - env: INSTANCE=centarch-centos-8-2019-2-py3
+    # - env: INSTANCE=centarch-centos-8-2019-2-py3
     # - env: INSTANCE=default-fedora-31-2019-2-py3
     - env: INSTANCE=default-opensuse-leap-151-2019-2-py3
     # - env: INSTANCE=centarch-centos-7-2019-2-py2
