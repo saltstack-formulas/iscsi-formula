@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.1.1](https://github.com/saltstack-formulas/iscsi-formula/compare/v1.1.0...v1.1.1) (2020-01-12)
+
+
+### Bug Fixes
+
+* **jinja:** convert the value type properly to json ([e49e511](https://github.com/saltstack-formulas/iscsi-formula/commit/e49e5116661d17bc250f5b2a9ae273beda05a53f))
+* **release.config.js:** use full commit hash in commit link [skip ci] ([93e410b](https://github.com/saltstack-formulas/iscsi-formula/commit/93e410be3751ed88f99515b1df76ac12a4231efd))
+
+
+### Continuous Integration
+
+* **gemfile:** restrict `train` gem version until upstream fix [skip ci] ([b279161](https://github.com/saltstack-formulas/iscsi-formula/commit/b279161d1a2b70f5818367d4ca09fd34b5af6b60))
+* **kitchen:** use `debian-10-master-py3` instead of `develop` [skip ci] ([d03c6b8](https://github.com/saltstack-formulas/iscsi-formula/commit/d03c6b8eb50777260172144b601ad01697fda8ad))
+* **kitchen:** use `develop` image until `master` is ready (`amazonlinux`) [skip ci] ([bcad2ef](https://github.com/saltstack-formulas/iscsi-formula/commit/bcad2efec4344ccdff3b0bd07ad4d90f991b944c))
+* **kitchen+travis:** upgrade matrix after `2019.2.2` release [skip ci] ([0267684](https://github.com/saltstack-formulas/iscsi-formula/commit/02676842d18d38403255b64b59bf33489d9d9f12))
+* **travis:** apply changes from build config validation [skip ci] ([591cb81](https://github.com/saltstack-formulas/iscsi-formula/commit/591cb81c79a6c97675ca4135a3b42bc5bc23aeeb))
+* **travis:** opt-in to `dpl v2` to complete build config validation [skip ci] ([6472beb](https://github.com/saltstack-formulas/iscsi-formula/commit/6472beb85ad8ea80f5e1a209186ce23fbbe40238))
+* **travis:** quote pathspecs used with `git ls-files` [skip ci] ([ed20ed1](https://github.com/saltstack-formulas/iscsi-formula/commit/ed20ed136b4864c5618aa8c9df26d84f955972e1))
+* **travis:** run `shellcheck` during lint job [skip ci] ([455fe13](https://github.com/saltstack-formulas/iscsi-formula/commit/455fe134e1d52f233f3bf4788b90e64e1820abdc))
+* **travis:** update `salt-lint` config for `v0.0.10` [skip ci] ([48c21d8](https://github.com/saltstack-formulas/iscsi-formula/commit/48c21d8a17ddc3e49941da2d409ac6168a3bccc2))
+* **travis:** use `major.minor` for `semantic-release` version [skip ci] ([b9aaf44](https://github.com/saltstack-formulas/iscsi-formula/commit/b9aaf44e717d5de9e2bc41fa6cfcb013550f1802))
+* **travis:** use build config validation (beta) [skip ci] ([78614cd](https://github.com/saltstack-formulas/iscsi-formula/commit/78614cd370688bbad511ed1340758aed3a37953d))
+
+
+### Documentation
+
+* **contributing:** remove to use org-level file instead [skip ci] ([06dae86](https://github.com/saltstack-formulas/iscsi-formula/commit/06dae861d61dbdc86e3aeec8239557378c8f8101))
+* **readme:** update link to `CONTRIBUTING` [skip ci] ([c1b1316](https://github.com/saltstack-formulas/iscsi-formula/commit/c1b13164d0b244041fc16cff58a8f3b9f3901355))
+
+
+### Performance Improvements
+
+* **travis:** improve `salt-lint` invocation [skip ci] ([a49d419](https://github.com/saltstack-formulas/iscsi-formula/commit/a49d41989afbbd880ed050c19d53ff7ae91115d5))
+
 # [1.1.0](https://github.com/saltstack-formulas/iscsi-formula/compare/v1.0.2...v1.1.0) (2019-10-12)
 
 
