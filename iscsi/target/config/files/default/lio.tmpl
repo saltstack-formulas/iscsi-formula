@@ -28,7 +28,7 @@
 {{ lio(value, spaces|int+4, key) }}
 {{ shift ~ ' }' if last else shift ~ ' },\n' }}
     {%- elif value is string or value is number %}
-{{ shift }}"{{ key }}": {{ '' if value is number else '"' }}{{ value }}{{ '' if value is number else '"' }}{{ '' if last else ',' -}}
+{{ shift }}"{{ key }}": {{ value|json }}{{ '' if last else ',' -}}
 {{ '\n' ~ shift ~ '}' if last and parent|lower in ('tpgs',) else '' -}}
     {%- endif %}
 {%- endmacro -%}
