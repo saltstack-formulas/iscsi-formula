@@ -61,8 +61,6 @@ iscsi-target-service-install-check-status:
         * your configuration file may be incorrect.
         * your kernel was upgraded but not activated by reboot
             'systemctl enable {{ servicename }}' && reboot
-    - unless: {{ grains.os_family in ('MacOS', 'Windows') }}   #maybe not needed but no harm
-  cmd.run:
     - names:
       - echo "-- {{ iscsi.target.enabled }} --"
       - journalctl -xe -u {{ servicename }} || true

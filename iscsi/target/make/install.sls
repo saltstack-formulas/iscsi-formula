@@ -43,6 +43,9 @@ iscsi-target-make-{{ pkg }}-git-latest:
       - file: iscsi-target-make-file-directory
 
 iscsi-target-make-{{ pkg }}-cmd-run:
+  pkg.installed:
+    - name: python-urwid
+    - onlyif: {{ grains.os_family == 'Arch' }}
   cmd.run:
     - cwd: /home/{{ iscsi.user }}/{{ pkg }}
     - name: {{ iscsi.target.make.cmd }}

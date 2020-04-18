@@ -1,0 +1,580 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+iscsi:
+  target:
+    enabled: false   # skip service.running state (for travis)
+  config:
+    data:
+      open-iscsi:
+        # https://github.com/open-iscsi/open-iscsi/blob/master/etc/iscsid.conf
+        node.startup: manual
+        node.leading_login: 'No'
+        node.session.timeo.replacement_timeout: 120
+        node.conn[0].timeo.login_timeout: 15
+        node.conn[0].timeo.logout_timeout: 15
+        node.conn[0].timeo.noop_out_interval: 5
+        node.conn[0].timeo.noop_out_timeout: 5
+        node.session.err_timeo.abort_timeout: 15
+        node.session.err_timeo.lu_reset_timeout: 30
+        node.session.err_timeo.tgt_reset_timeout: 30
+        node.session.initial_login_retry_max: 8
+        node.session.cmds_max: 128
+        node.session.queue_depth: 32
+        node.session.xmit_thread_priority: -20
+        node.session.iscsi.InitialR2T: 'No'
+        node.session.iscsi.ImmediateData: 'Yes'
+        node.session.iscsi.FirstBurstLength: 262144
+        node.session.iscsi.MaxBurstLength: 16776192
+        node.conn[0].iscsi.MaxRecvDataSegmentLength: 262144
+        node.conn[0].iscsi.MaxXmitDataSegmentLength: 0
+        discovery.sendtargets.iscsi.MaxRecvDataSegmentLength: 32768
+        node.session.nr_sessions: 1
+        node.session.iscsi.FastAbort: 'Yes'
+        node.session.scan: auto
+
+      iscsi:                         # freeBSD
+        # https://www.freebsd.org/cgi/man.cgi?query=iscsi.conf&sektion=5&manpath=FreeBSD+10-current
+        node.startup: automatic
+        myiscsi:                     # nickname
+          targetaddress: iscsi1
+          targetname: 'iqn.1900.com.com:sn.123456'
+        myiscsi6:
+          targetaddress: '[2001:db8::de:ef]:3260'
+          targetname: 'iqn.1900.com.com:sn.123456'
+        chaptest:
+          targetaddress: 10.0.0.1
+          targetname: 'iqn.1900.com.com:sn.123456'
+          initiatorname: 'iqn.2005-01.il.ac.huji.cs:nobody'
+          authmethod: CHAP
+          chapiname: 'iqn.2005-01.il.ac.huji.cs:nobody'
+          chapsecret: secretsecret
+        example01:
+          targetname: 'iqn.2018-07.com.example.iscsi:example01'
+          targetAddress: '10.10.10.10'
+        data:
+          targetname: 'naa.50015178f369f092'
+          targetAddress: data1.example.com
+          chapIName: user
+          chapSecret: secretsecret
+        secret:
+          targetname: 'iqn.2018-07.com.example.iscsi:secretdata'
+          targetAddress: creditcards.example.com
+          authMethod: CHAP
+          chapIName: 'iqn.2018-07.com.example.iscsi:trustedguy'
+          chapSecret: secretsecret
+
+      ietd:
+        # http://manpages.ubuntu.com/manpages/trusty/man5/ietd.conf.5.html
+        IncomingUser: joe secret
+        OutgoingUser: jack secret2
+        'Target iqn.2001-04.com.example:storage.disk2.sys1.xyz':
+          IncomingUser: jim othersecret
+          OutgoingUser: james yetanothersecret
+          'Lun 0': Path=/dev/sdc,Type=fileio
+          'Lun 1': Blocks=10000,BlockSize=4096,Type=nullio
+          Alias: Test
+          HeaderDigest: None
+          DataDigest: None
+          MaxConnections: 1
+          MaxSessions: 0
+          InitialR2T: 'Yes'
+          ImmediateData: 'No'
+          MaxRecvDataSegmentLength: 8192
+          MaxXmitDataSegmentLength: 8192
+          MaxBurstLength: 262144
+          FirstBurstLength: 65536
+          DefaultTime2Wait: 2
+          DefaultTime2Retain: 0
+          MaxOutstandingR2T: 8
+          NOPInterval: 0
+          NOPTimeout: 0
+          DataPDUInOrder: 'Yes'
+          DataSequenceInOrder: 'Yes'
+          ErrorRecoveryLevel: 0
+
+      isnsadm: {}
+      isnsdd: {}
+      isnsd:
+        # https://manpages.debian.org/testing/open-isns-server/isnsd.conf.5.en.html
+        Database: /var/lib/isns
+        RegistrationPeriod: 10m
+        DefaultDiscoveryDomain: 1
+        SLPRegister: 1
+        ClientKeyStore: 'DB:'
+        SCNTimeout: 60
+        SCNRetries: 3
+        ESIMinInterval: 1m
+        ESIMaxInterval: 2m
+        ESIRetries: 3
+        Auth.ReplayWindow: 2m
+        Auth.TimeStampJitter: 1s
+
+      tgtd:
+        # https://linux.die.net/man/5/targets.conf
+        # https://github.com/fujita/tgt/blob/master/conf/examples/targets.conf.example
+        include: '/etc/tgt/salt/*.conf'
+        default-driver: iscsi
+        # iSNSServerIP: 127.0.0.1
+        # iSNSServerPort: 3205
+        # iSNSAccessControl: 'Off'
+        # iSNS: 'Off'
+        'target iqn.2008-09.com.example:server.target1':
+          backing-store: /dev/loop5
+        'target iqn.2008-09.com.example:server.target5':
+          'direct-store /dev/loop6':
+            vendor_id: VENDOR1
+            removable: 1
+            device-type: cd
+            lun: 1
+          'backing-store /dev/loop7':
+            vendor_id: back1
+            scsi_sn: SERIAL
+            write-cache: 'on'
+
+      lio:
+        # https://www.systutorials.com/docs/linux/man/5-saveconfig.json
+        # https://bugzilla.redhat.com/show_bug.cgi?id=1643673
+        # https://github.com/open-iscsi/rtslib-fb/issues/5
+        # ----------------------------------------------------------------------
+        #  The sample below is complex because its used for verification.
+        #  You should only use the minimal pillar data for your needs.
+        #  The format is important so review this example carefully.
+        #
+        #  Multiple objects are supported:
+        #    See: https://github.com/saltstack-formulas/iscsi-formula/issues/19
+        # ----------------------------------------------------------------------
+        fabric_modules:
+          callmewhateveryoulike0:
+            discovery_enable_auth: 'true'
+            discovery_mutual_password: itsreallyme
+            discovery_mutual_userid: target
+            discovery_password: letmein
+            discovery_userid: initiator
+            name: iscsi
+          callmewhateveryoulike1:
+            discovery_enable_auth: 'true'
+            discovery_mutual_password: itsreallysticky
+        storage_objects:
+          callmewhateveryoulike_sda:
+            alua_tpgs:
+              callemewhateveryoulike0:
+                alua_access_state: 0
+                alua_access_status: 0
+                alua_access_type: 3
+                alua_support_active_nonoptimized: 1
+                alua_support_active_optimized: 1
+                alua_support_offline: 1
+                alua_support_standby: 1
+                alua_support_transitioning: 1
+                alua_support_unavailable: 1
+                alua_write_metadata: 0
+                implicit_trans_secs: 0
+                name: default_tg_pt_gp
+                nonop_delay_msecs: 100
+                preferred: 0
+                tg_pt_gp_id: 0
+                trans_delay_msecs: 0
+              callemewhateveryoulike1:
+                alua_access_state: 1
+                alua_support_active_nonoptimized: 1
+            attributes:
+              block_size: 512
+              emulate_3pc: 1
+              emulate_caw: 1
+              emulate_dpo: 1
+              emulate_fua_read: 1
+              emulate_fua_write: 1
+              emulate_model_alias: 1
+              emulate_pr: 1
+              emulate_rest_reord: 0
+              emulate_tas: 1
+              emulate_tpu: 0
+              emulate_tpws: 0
+              emulate_ua_intlck_ctrl: 0
+              emulate_write_cache: 0
+              enforce_pr_isids: 1
+              force_pr_aptpl: 0
+              is_nonrot: 1
+              max_unmap_block_desc_count: 0
+              max_unmap_lba_count: 0
+              max_write_same_len: 65535
+              optimal_sectors: 256
+              pi_prot_format: 0
+              pi_prot_type: 0
+              pi_prot_verify: 0
+              queue_depth: 64
+              unmap_granularity: 0
+              unmap_granularity_alignment: 0
+              unmap_zeroes_data: 0
+            dev: /dev/vxdd0
+            name: sda
+            plugin: 'block'
+            readonly: 'false'
+            write_back: 'false'
+            wwn: '9e8d8049-3538-41cb-94e6-6dbd2f1cf090'
+          callmewhateveryoulike_sdb:
+            alua_tpgs:
+              callemewhateveryoulike0:
+                alua_access_state: 0
+                alua_access_status: 0
+                alua_access_type: 3
+                alua_support_active_nonoptimized: 1
+                alua_support_active_optimized: 1
+                alua_support_offline: 1
+                alua_support_standby: 1
+                alua_support_transitioning: 1
+                alua_support_unavailable: 1
+                alua_write_metadata: 0
+                implicit_trans_secs: 0
+                name: default_tg_pt_gp
+                nonop_delay_msecs: 100
+                preferred: 0
+                tg_pt_gp_id: 0
+                trans_delay_msecs: 0
+              callemewhateveryoulike1:
+                alua_access_state: 1
+                alua_support_active_nonoptimized: 1
+            attributes:
+              block_size: 512
+              emulate_3pc: 1
+              emulate_caw: 1
+              emulate_dpo: 1
+              emulate_fua_read: 1
+              emulate_fua_write: 1
+              emulate_model_alias: 1
+              emulate_pr: 1
+              emulate_rest_reord: 0
+              emulate_tas: 1
+              emulate_tpu: 0
+              emulate_tpws: 0
+              emulate_ua_intlck_ctrl: 0
+              emulate_write_cache: 0
+              enforce_pr_isids: 1
+              force_pr_aptpl: 0
+              is_nonrot: 1
+              max_unmap_block_desc_count: 0
+              max_unmap_lba_count: 0
+              max_write_same_len: 65535
+              optimal_sectors: 256
+              pi_prot_format: 0
+              pi_prot_type: 0
+              pi_prot_verify: 0
+              queue_depth: 64
+              unmap_granularity: 0
+              unmap_granularity_alignment: 0
+              unmap_zeroes_data: 0
+            dev: /dev/vxdd1
+            name: sdb
+            plugin: 'block'
+            readonly: 'false'
+            write_back: 'false'
+            wwn: '9e8d8049-3538-41cb-94e6-6dbd2f1cf091'
+          callmewhateveryoulike_sdc:
+            alua_tpgs:
+              callemewhateveryoulike0:
+                alua_access_state: 0
+                alua_access_status: 0
+                alua_access_type: 3
+                alua_support_active_nonoptimized: 1
+                alua_support_active_optimized: 1
+                alua_support_offline: 1
+                alua_support_standby: 1
+                alua_support_transitioning: 1
+                alua_support_unavailable: 1
+                alua_write_metadata: 0
+                implicit_trans_secs: 0
+                name: default_tg_pt_gp
+                nonop_delay_msecs: 100
+                preferred: 0
+                tg_pt_gp_id: 0
+                trans_delay_msecs: 0
+              callemewhateveryoulike1:
+                alua_access_state: 1
+                alua_support_active_nonoptimized: 1
+            attributes:
+              block_size: 512
+              emulate_3pc: 1
+              emulate_caw: 1
+              emulate_dpo: 1
+              emulate_fua_read: 1
+              emulate_fua_write: 1
+              emulate_model_alias: 1
+              emulate_pr: 1
+              emulate_rest_reord: 0
+              emulate_tas: 1
+              emulate_tpu: 0
+              emulate_tpws: 0
+              emulate_ua_intlck_ctrl: 0
+              emulate_write_cache: 0
+              enforce_pr_isids: 1
+              force_pr_aptpl: 0
+              is_nonrot: 1
+              max_unmap_block_desc_count: 0
+              max_unmap_lba_count: 0
+              max_write_same_len: 65535
+              optimal_sectors: 256
+              pi_prot_format: 0
+              pi_prot_type: 0
+              pi_prot_verify: 0
+              queue_depth: 64
+              unmap_granularity: 0
+              unmap_granularity_alignment: 0
+              unmap_zeroes_data: 0
+            dev: /dev/vxdd2
+            name: sdc
+            plugin: 'block'
+            readonly: 'false'
+            write_back: 'false'
+            wwn: '9e8d8049-3538-41cb-94e6-6dbd2f1cf092'
+          callmewhateveryoulike_sdd:
+            alua_tpgs:
+              callemewhateveryoulike0:
+                alua_access_state: 0
+                alua_access_status: 0
+                alua_access_type: 3
+                alua_support_active_nonoptimized: 1
+                alua_support_active_optimized: 1
+                alua_support_offline: 1
+                alua_support_standby: 1
+                alua_support_transitioning: 1
+                alua_support_unavailable: 1
+                alua_write_metadata: 0
+                implicit_trans_secs: 0
+                name: default_tg_pt_gp
+                nonop_delay_msecs: 100
+                preferred: 0
+                tg_pt_gp_id: 0
+                trans_delay_msecs: 0
+              callemewhateveryoulike1:
+                alua_access_state: 1
+                alua_support_active_nonoptimized: 1
+            attributes:
+              block_size: 512
+              emulate_3pc: 1
+              emulate_caw: 1
+              emulate_dpo: 1
+              emulate_fua_read: 1
+              emulate_fua_write: 1
+              emulate_model_alias: 1
+              emulate_pr: 1
+              emulate_rest_reord: 0
+              emulate_tas: 1
+              emulate_tpu: 0
+              emulate_tpws: 0
+              emulate_ua_intlck_ctrl: 0
+              emulate_write_cache: 0
+              enforce_pr_isids: 1
+              force_pr_aptpl: 0
+              is_nonrot: 1
+              max_unmap_block_desc_count: 0
+              max_unmap_lba_count: 0
+              max_write_same_len: 65535
+              optimal_sectors: 256
+              pi_prot_format: 0
+              pi_prot_type: 0
+              pi_prot_verify: 0
+              queue_depth: 64
+              unmap_granularity: 0
+              unmap_granularity_alignment: 0
+              unmap_zeroes_data: 0
+            dev: /dev/vxdd3
+            name: sdd
+            plugin: 'block'
+            readonly: 'false'
+            write_back: 'false'
+            wwn: '9e8d8049-3538-41cb-94e6-6dbd2f1cf093'
+          callmewhateveryoulike_sde:
+            alua_tpgs:
+              callemewhateveryoulike0:
+                alua_access_state: 0
+                alua_access_status: 0
+                alua_access_type: 3
+                alua_support_active_nonoptimized: 1
+                alua_support_active_optimized: 1
+                alua_support_offline: 1
+                alua_support_standby: 1
+                alua_support_transitioning: 1
+                alua_support_unavailable: 1
+                alua_write_metadata: 0
+                implicit_trans_secs: 0
+                name: default_tg_pt_gp
+                nonop_delay_msecs: 100
+                preferred: 0
+                tg_pt_gp_id: 0
+                trans_delay_msecs: 0
+              callemewhateveryoulike1:
+                alua_access_state: 1
+                alua_support_active_nonoptimized: 1
+            attributes:
+              block_size: 512
+              emulate_3pc: 1
+              emulate_caw: 1
+              emulate_dpo: 1
+              emulate_fua_read: 1
+              emulate_fua_write: 1
+              emulate_model_alias: 1
+              emulate_pr: 1
+              emulate_rest_reord: 0
+              emulate_tas: 1
+              emulate_tpu: 0
+              emulate_tpws: 0
+              emulate_ua_intlck_ctrl: 0
+              emulate_write_cache: 0
+              enforce_pr_isids: 1
+              force_pr_aptpl: 0
+              is_nonrot: 1
+              max_unmap_block_desc_count: 0
+              max_unmap_lba_count: 0
+              max_write_same_len: 65535
+              optimal_sectors: 256
+              pi_prot_format: 0
+              pi_prot_type: 0
+              pi_prot_verify: 0
+              queue_depth: 64
+              unmap_granularity: 0
+              unmap_granularity_alignment: 0
+              unmap_zeroes_data: 0
+            dev: /dev/vxdd4
+            name: sde
+            plugin: 'block'
+            readonly: 'false'
+            write_back: 'false'
+            wwn: '9e8d8049-3538-41cb-94e6-6dbd2f1cf094'
+        targets:
+          canada:
+            fabric: iscsi
+            tpgs:
+              attributes:
+                authentication: 0
+                cache_dynamic_acls: 1
+                default_cmdsn_depth: 16
+                default_erl: 0
+                demo_mode_discovery: 1
+                demo_mode_write_protect: 0
+                fabric_prot_type: 0
+                generate_node_acls: 1
+                login_keys_workaround: 1
+                login_timeout: 15
+                netif_timeout: 2
+                prod_mode_write_protect: 0
+                t10_pi: 0
+                tpg_enabled_sendtargets: 1
+              enable: 'true'
+              luns:
+                callmewhateveryoulike0:
+                  alias: 'd6b1e8e70a'
+                  alua_tg_pt_gp_name: default_tg_pt_gp
+                  index: 0
+                  storage_object: /backstores/block/sda
+                callmewhateveryoulike1:
+                  alias: 'd6b1e8e70b'
+                  alua_tg_pt_gp_name: default_tg_pt_gp
+                  index: 1
+                  storage_object: /backstores/block/sdb
+                callmewhateveryoulike2:
+                  alias: 'd6b1e8e70c'
+                  alua_tg_pt_gp_name: default_tg_pt_gp
+                  index: 2
+                  storage_object: /backstores/block/sdc
+                callmewhateveryoulike3:
+                  alias: 'd6b1e8e70d'
+                  alua_tg_pt_gp_name: default_tg_pt_gp
+                  index: 3
+                  storage_object: /backstores/block/sdd
+                callmewhateveryoulike4:
+                  alias: 'd6b1e8e70e'
+                  alua_tg_pt_gp_name: default_tg_pt_gp
+                  index: 4
+                  storage_object: /backstores/block/sde
+              node_acls:
+                callmewhateveryoulike0:
+                  attributes:
+                    dataout_timeout: 3
+                    dataout_timeout_retries: 5
+                    default_erl: 0
+                    nopin_response_timeout: 5
+                    nopin_timeout: 5
+                    random_datain_pdu_offsets: 0
+                    random_datain_seq_offsets: 0
+                    random_r2t_offsets: 0
+                  chap_mutual_password: itsreallyme
+                  chap_mutual_userid: target
+                  chap_password: letmein
+                  chap_userid: station4
+                  mapped_luns:
+                    mappy0:
+                      index: 0
+                      tpg_lun: 0
+                      write_protect: 0
+                    mappy1:
+                      index: 1
+                      tpg_lun: 1
+                      write_protect: 0
+                    mappy2:
+                      index: 2
+                      tpg_lun: 2
+                      write_protect: 0
+                    mappy3:
+                      index: 3
+                      tpg_lun: 3
+                      write_protect: 0
+                    mappy4:
+                      index: 4
+                      tpg_lun: 4
+                      write_protect: 0
+                  node_wwn: 'iqn.1994-05.com.redhat:station4'
+                  tcq_depth: 16
+              parameters:
+                AuthMethod: 'CHAP,None'
+                DataDigest: 'CRC32C,None'
+                DataPDUInOrder: 'Yes'
+                DataSequenceInOrder: 'Yes'
+                DefaultTime2Retain: 20
+                DefaultTime2Wait: 2
+                ErrorRecoveryLevel: 0
+                FirstBurstLength: 65536
+                HeaderDigest: 'CRC32C,None'
+                IFMarkInt: Reject
+                IFMarker: 'No'
+                ImmediateData: 'Yes'
+                InitialR2T: 'Yes'
+          luxembourg:
+            fabric: iscsi
+            tpgs:
+              attributes:
+                authentication: 0
+              enable: 1
+              luns:
+                callmewhateveryoulike0:
+                  alias: 'd6b1e8e70a'
+                  index: 0
+                  storage_object: /backstores/block/sda
+                callmewhateveryoulike1:
+                  alias: 'd6b1e8e70b'
+                  index: 1
+                  storage_object: /backstores/block/sdb
+                callmewhateveryoulike2:
+                  alias: 'd6b1e8e70c'
+                  index: 2
+                  storage_object: /backstores/block/sdc
+                callmewhateveryoulike3:
+                  alias: 'd6b1e8e70d'
+                  index: 3
+                  storage_object: /backstores/block/sdd
+                callmewhateveryoulike4:
+                  alias: 'd6b1e8e70e'
+                  index: 4
+                  storage_object: /backstores/block/sde
+              node_acls:
+                callmewhateveryoulike0:
+                  attributes:
+                    dataout_timeout: 3
+              parameters:
+                TargetAlias: LIO Target
+              portals:
+                callmewhateveryoulike0:
+                  ip_address: 10.0.2.254
+                  iser: 0
+              tag: 2
+            wwn: iqn.1996-04.lx.suse:01:a66aed20e2f3
