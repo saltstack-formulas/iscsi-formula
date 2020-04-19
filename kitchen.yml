@@ -249,7 +249,7 @@ suites:
       pillars_from_files:
         users.sls: test/salt/pillar/users.arch
         lvm.sls: test/salt/pillar/lvm.example
-        iscsi.sls: test/salt/pillar/pillar.travis
+        iscsi.sls: test/salt/pillar/pillar.arch
       dependencies:
         - name: users
           repo: git
