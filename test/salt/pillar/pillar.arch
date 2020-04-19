@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 ---
+
 iscsi:
   target:
     enabled: false  # centos/travis workaround to pass service.running state
