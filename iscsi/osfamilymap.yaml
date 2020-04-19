@@ -125,21 +125,19 @@ Arch:
     pkgs:
       wanted:
         - file
+        - python-urwid
         - binutils
         - fakeroot
         - linux-lts                # For kernel scsi modules
-        # python-pip               # makepkg states needs 'gitpython'.
+        - python-pip               # makepkg states needs 'gitpython'.
         - thin-provisioning-tools
     make:
       gitrepo: https://aur.archlinux.org
       cmd: makepkg -si --noconfirm -f
       wanted:
-        - file
         - python-rtslib-fb
         - python-configshell-fb
         - targetcli-fb
-        - python-dbus
-        - python-gobject
 
 Alpine: {}
 

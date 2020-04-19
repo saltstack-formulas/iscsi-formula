@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 ---
-
 iscsi:
   target:
     enabled: false  # centos/travis workaround to pass service.running state
@@ -48,7 +47,7 @@ iscsi:
           targetname: 'iqn.1900.com.com:sn.123456'
           initiatorname: 'iqn.2005-01.il.ac.huji.cs:nobody'
           authmethod: CHAP
-          chapiname : 'iqn.2005-01.il.ac.huji.cs:nobody'
+          chapiname: 'iqn.2005-01.il.ac.huji.cs:nobody'
           chapsecret: secretsecret
         example01:
           targetname: 'iqn.2018-07.com.example.iscsi:example01'
@@ -131,7 +130,7 @@ iscsi:
           'direct-store /dev/loop6':
             vendor_id: VENDOR2
             lun: 2
-        'backing-store /dev/loop7':
+          'backing-store /dev/loop7':
             vendor_id: back1
             scsi_sn: SERIAL
             write-cache: 'on'
