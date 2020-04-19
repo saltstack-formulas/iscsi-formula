@@ -34,7 +34,6 @@ iscsi-initiator-service-install-service-running:
           {%- else %}
     - name: {{ servicename }}
         {%- endif %}
-    - enable: True
     - enable: False
         {%- else %}
   service.running:

@@ -129,7 +129,7 @@ Arch:
         - binutils
         - fakeroot
         - linux-lts                # For kernel scsi modules
-        - python-pip               # makepkg states needs 'gitpython'.
+        # python-pip               # makepkg states needs 'gitpython'.
         - thin-provisioning-tools
     make:
       gitrepo: https://aur.archlinux.org
