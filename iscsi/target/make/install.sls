@@ -42,13 +42,26 @@ iscsi-target-make-{{ pkg }}-git-latest:
     - require:
       - file: iscsi-target-make-file-directory
 
+      {# workaround https://github.com/saltstack-formulas/iscsi-formula/issues/34 #}
+
+      {%- if pkg == 'python-configshell-fb' %}
+             {%- for file in ('.SRCINFO', 'pkg/python2-configshell-fb/.PKGINFO', 'PKGBUILD') %}
+iscsi-target-make-{{ pkg }}-workaround-{{ file }}:
+  file.replace:
+    - name: /home/{{ iscsi.user }}/{{ pkg }}/{{ file }}
+    - onlyif: test -f /home/{{ iscsi.user }}/{{ pkg }}/{{ file }}
+    - pattern: python2-urwid
+    - repl: python-urwid
+    - require_in:
+      - cmd: iscsi-target-make-{{ pkg }}-cmd-run
+             {%- endfor %}
+      {%- endif %}
+
 iscsi-target-make-{{ pkg }}-cmd-run:
   cmd.run:
     - cwd: /home/{{ iscsi.user }}/{{ pkg }}
     - name: {{ iscsi.target.make.cmd }}
     - runas: {{ iscsi.user }}
-    - onchanges:
-      - git: iscsi-target-make-{{ pkg }}-git-latest
     - require:
       - git: iscsi-target-make-{{ pkg }}-git-latest
     - require_in:

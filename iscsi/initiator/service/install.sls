@@ -29,11 +29,19 @@ iscsi-initiator-service-install-file-line-freebsd:
 iscsi-initiator-service-install-service-running:
         {%- if not iscsi.initiator.enabled %}
   service.dead:
+        {%- if servicename is iterable and servicename is not string %}
+    - names: {{ servicename|json }}
+          {%- else %}
     - name: {{ servicename }}
+        {%- endif %}
     - enable: False
         {%- else %}
   service.running:
+        {%- if servicename is iterable and servicename is not string %}
+    - names: {{ servicename|json }}
+          {%- else %}
     - name: {{ servicename }}
+        {%- endif %}
     - enable: True
     - onfail_in:
       - test: iscsi-initiator-service-install-check-status
@@ -44,11 +52,6 @@ iscsi-initiator-service-install-service-running:
       - file: iscsi-initiator-config-install-file-managed
             {%- endif %}
         {%- endif %}
-        {%- if servicename is iterable and servicename is not string %}
-    - names: {{ servicename|json }}
-          {%- else %}
-    - name: {{ servicename }}
-        {%- endif %}
 
 iscsi-initiator-service-install-check-status:
   test.show_notification:
@@ -56,12 +59,24 @@ iscsi-initiator-service-install-check-status:
         In certain circumstances the iscsi initiator service will not start.
         * your configuration file may be incorrect.
         * your kernel was upgraded but not activated by reboot
+          {%- if servicename is iterable and servicename is not string %}
+                 {%- for svc in servicename %}
+            'systemctl enable {{ svc }}' && reboot
+                 {%- endfor %}
+          {%- else %}
             'systemctl enable {{ servicename }}' && reboot
-    - unless: {{ grains.os_family in ('MacOS', 'Windows') }}   #maybe not needed but no harm
+          {%- endif %}
   cmd.run:
     - names:
+          {%- if servicename is iterable and servicename is not string %}
+                 {%- for svc in servicename %}
+      - journalctl -xe -u {{ svc }} || true
+      - systemctl status {{ svc }} -l || true
+                 {%- endfor %}
+          {%- else %}
       - journalctl -xe -u {{ servicename }} || true
       - systemctl status {{ servicename }} -l || true
+          {%- endif %}
       - /sbin/lsmod 2>/dev/null || true
       - ls /var/lib/iscsi/nodes 2>/dev/null || true
       - ls /sys/class/iscsi_session 2>/dev/null || true

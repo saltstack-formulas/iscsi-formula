@@ -12,6 +12,10 @@
 ---
 # os: CentOS
 CentOS-6:
+  isns:
+    pkgs:
+      wanted:
+        - yum-plugin-versionlock
   target:
     provider: tgtd
     pkgs:
@@ -26,6 +30,10 @@ CentOS-6:
       tgtd: tgtd
 
 CentOS-7:
+  isns:
+    pkgs:
+      wanted:
+        - yum-plugin-versionlock
   initiator:
     pkgs:
       wanted:
@@ -56,7 +64,6 @@ CentOS-8:
     loadmodule: true
     pkgs:
       wanted:
-        - yum-plugin-versionlock
         - targetcli
         - libvirt-daemon-driver-storage-iscsi
         - libvirt-daemon-driver-storage-iscsi-direct

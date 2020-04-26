@@ -68,12 +68,9 @@ CentOS:
     pkgs:
       wanted:
         - device-mapper-persistent-data
-        - netbsd-iscsi
-        - yum-plugin-versionlock
         - targetcli
         - libvirt-daemon-driver-storage-iscsi
         - udisks2-iscsi
-        - scsi-target-utils
         - fcoe-utils
 
 # os_family: Suse
