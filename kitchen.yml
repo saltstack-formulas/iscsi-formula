@@ -35,10 +35,6 @@ platforms:
   - name: amazonlinux-2-master-py3
     driver:
       image: netmanagers/salt-master-py3:amazonlinux-2
-  - name: arch-base-latest-master-py2
-    driver:
-      image: netmanagers/salt-master-py2:arch-base-latest
-      run_command: /usr/lib/systemd/systemd
 
   ## SALT `2019.2`
   - name: debian-10-2019-2-py3
@@ -158,7 +154,6 @@ suites:
   - name: default
     excludes:
       - centos-8-master-py3
-      - arch-base-latest-master-py2
       - centos-8-2019-2-py3
       - centos-7-2019-2-py2
       - arch-base-latest-2019-2-py2
@@ -194,7 +189,6 @@ suites:
   - name: centarch
     includes:
       - centos-8-master-py3
-      - arch-base-latest-master-py2
       - centos-8-2019-2-py3
       - centos-7-2019-2-py2
       - arch-base-latest-2019-2-py2
