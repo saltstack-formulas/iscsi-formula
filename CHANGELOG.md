@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.1.2](https://github.com/saltstack-formulas/iscsi-formula/compare/v1.1.1...v1.1.2) (2020-05-08)
+
+
+### Bug Fixes
+
+* **arch:** python-configshell-fb dependency problem ([914c71e](https://github.com/saltstack-formulas/iscsi-formula/commit/914c71e15ebefbbdb9b5f1216a6138b8a364a4c1))
+* **arch:** update packages yamls ([c0e0e8c](https://github.com/saltstack-formulas/iscsi-formula/commit/c0e0e8c2a793c6aee4e8744f870f7b18e352bdc8))
+* **libtofs:** “files_switch” mess up the variable exported by “map.jinja” [skip ci] ([1433aad](https://github.com/saltstack-formulas/iscsi-formula/commit/1433aad429907ec32c33a966b93a0f92a4662afc))
+
+
+### Code Refactoring
+
+* **kitchen:** rename arch pillar file ([aabba21](https://github.com/saltstack-formulas/iscsi-formula/commit/aabba21f2047b08d41ce570c971bc8fd81fa3841))
+
+
+### Continuous Integration
+
+* **archlinux:** py2 support removed in salt ([f78b48f](https://github.com/saltstack-formulas/iscsi-formula/commit/f78b48fb61f2025c61a873036a47f29071c37c79))
+* **gemfile.lock:** add to repo with updated `Gemfile` [skip ci] ([0a6e18a](https://github.com/saltstack-formulas/iscsi-formula/commit/0a6e18a9f0163cd82b49b02bd5919796f5a8ea63))
+* **kitchen:** avoid using bootstrap for `master` instances [skip ci] ([989f8ed](https://github.com/saltstack-formulas/iscsi-formula/commit/989f8edb6839e712e97ae207c296f15ff0d02511))
+* **kitchen+travis:** remove `master-py2-arch-base-latest` [skip ci] ([cff2909](https://github.com/saltstack-formulas/iscsi-formula/commit/cff2909c264712f71ef6b36d39a1f63db98a6500))
+* **workflows/commitlint:** add to repo [skip ci] ([d470fe1](https://github.com/saltstack-formulas/iscsi-formula/commit/d470fe15ecca0f4c124962aed29a4e7eacbc1761))
+* workaround issues with newly introduced `amazonlinux-1` [skip ci] ([a0c7fec](https://github.com/saltstack-formulas/iscsi-formula/commit/a0c7feca6b882c8b1410ec961f3712796e63e769))
+
+
+### Tests
+
+* **suite:** update travis tests ([29175d3](https://github.com/saltstack-formulas/iscsi-formula/commit/29175d30e8ff74e3c7bab82efdcea04808007317))
+
 ## [1.1.1](https://github.com/saltstack-formulas/iscsi-formula/compare/v1.1.0...v1.1.1) (2020-01-12)
 
 
