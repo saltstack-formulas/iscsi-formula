@@ -186,15 +186,42 @@ suites:
     verifier:
       inspec_tests:
         - path: test/integration/default
-  - name: centarch
+  - name: centos
     includes:
       - centos-8-master-py3
       - centos-8-2019-2-py3
       - centos-7-2019-2-py2
-      - arch-base-latest-2019-2-py2
       - centos-7-2018-3-py2
-      - arch-base-latest-2018-3-py2
       - centos-6-2017-7-py2
+    provisioner:
+      state_top:
+        base:
+          '*':
+            - lvm.install
+            - lvm.files.create
+            - lvm.pv.create
+            - iscsi
+            - iscsi.clean
+      pillars:
+        top.sls:
+          base:
+            '*':
+              - lvm
+              - iscsi
+      pillars_from_files:
+        lvm.sls: test/salt/pillar/lvm.centos
+        iscsi.sls: test/salt/pillar/pillar.centos
+      dependencies:
+        - name: lvm
+          repo: git
+          source: https://github.com/saltstack-formulas/lvm-formula.git
+    verifier:
+      inspec_tests:
+        - path: test/integration/default
+  - name: arch
+    includes:
+      - arch-base-latest-2019-2-py2
+      - arch-base-latest-2018-3-py2
       - arch-base-latest-2017-7-py2
     provisioner:
       state_top:
@@ -216,7 +243,7 @@ suites:
       pillars_from_files:
         users.sls: test/salt/pillar/users.arch
         lvm.sls: test/salt/pillar/lvm.example
-        iscsi.sls: test/salt/pillar/pillar.travis
+        iscsi.sls: test/salt/pillar/pillar.arch
       dependencies:
         - name: users
           repo: git

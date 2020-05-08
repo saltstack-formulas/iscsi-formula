@@ -44,7 +44,6 @@ RedHat:
     pkgs:
       wanted:
         - isns-utils
-        - yum-plugin-versionlock
   initiator:
     pkgs:
       wanted:
@@ -112,6 +111,7 @@ Arch:
   initiator:
     pkgs:
       wanted:
+        - file
         - binutils
         - fakeroot
         - open-iscsi
@@ -124,10 +124,12 @@ Arch:
     loadmodule: true
     pkgs:
       wanted:
+        - file
+        - python-urwid
         - binutils
         - fakeroot
         - linux-lts                # For kernel scsi modules
-        - python-pip               # makepkg states needs 'gitpython'.
+        # python-pip               # makepkg states needs 'gitpython'.
         - thin-provisioning-tools
     make:
       gitrepo: https://aur.archlinux.org

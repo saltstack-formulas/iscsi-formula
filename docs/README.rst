@@ -33,19 +33,22 @@ which contains the currently released version. This formula is versioned accordi
 
 See `Formula Versioning Section <https://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html#versioning>`_ for more details.
 
+Special Nodes
+-------------
+
+The scope of this formula is Ethernet/Block
+
+.. image:: link-transport-storage-protocols.png
+   :target: https://github.com/saltstack-formulas/iscsi-formula
+   :scale: 15 %
+   :alt: Link/Transport and Storage protocol infographic
+
 Contributing to this repo
 -------------------------
 
 **Commit message formatting is significant!!**
 
 Please see `How to contribute <https://github.com/saltstack-formulas/.github/blob/master/CONTRIBUTING.rst>`_ for more details.
-
-Scope = Ethernet/Block
-----------------------
-.. image:: link-transport-storage-protocols.png
-   :target: https://github.com/saltstack-formulas/iscsi-formula
-   :scale: 15 %
-   :alt: Link/Transport and Storage protocol infographic
 
 Available Meta states
 ---------------------

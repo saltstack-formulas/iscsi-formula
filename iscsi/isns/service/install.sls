@@ -44,10 +44,22 @@ iscsi-isns-service-install-check-status:
         In certain circumstances the iscsi isns service will not start.
         * your configuration file may be incorrect.
         * your kernel was upgraded but not activated by reboot
+          {%- if servicename is iterable and servicename is not string %}
+                 {%- for svc in servicename %}
+            'systemctl enable {{ svc }}' && reboot
+                 {%- endfor %}
+          {%- else %}
             'systemctl enable {{ servicename }}' && reboot
-    - unless: {{ grains.os_family in ('MacOS', 'Windows') }}   #maybe not needed but no harm
+          {%- endif %}
   cmd.run:
     - names:
+          {%- if servicename is iterable and servicename is not string %}
+                 {%- for svc in servicename %}
+      - journalctl -xe -u {{ svc }} || true
+      - systemctl status {{ svc }} -l || true
+                 {%- endfor %}
+          {%- else %}
       - journalctl -xe -u {{ servicename }} || true
       - systemctl status {{ servicename }} -l || true
+          {%- endif %}
     - onlyif: test -x /usr/bin/systemctl || test -x /bin/systemctl || test -x /sbin/systemctl
