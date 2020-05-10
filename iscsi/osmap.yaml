@@ -55,7 +55,7 @@ Fedora:
       wanted:
         - device-mapper-persistent-data   # aka thin-provisioning-tools
         - netbsd-iscsi
-        - yum-plugin-versionlock
+        # yum-plugin-versionlock
         - targetcli
         - libvirt-daemon-driver-storage-iscsi
         - udisks2-iscsi
