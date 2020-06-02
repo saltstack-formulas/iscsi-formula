@@ -5,6 +5,41 @@
 Changelog
 ---------
 
+`1.2.0 <https://github.com/saltstack-formulas/iscsi-formula/compare/v1.1.2...v1.2.0>`_ (2020-06-02)
+-------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **arch:** python-configshell-fb dependency problem (\ `a2b566f <https://github.com/saltstack-formulas/iscsi-formula/commit/a2b566ff81e98155ab6edb7022ae1ef65c589342>`_\ )
+* **arch:** update packages yamls (\ `88a4ff5 <https://github.com/saltstack-formulas/iscsi-formula/commit/88a4ff51d4f33c2cabf7d84694f2d4808a3ee3f6>`_\ )
+
+Code Refactoring
+^^^^^^^^^^^^^^^^
+
+
+* **kitchen:** rename arch pillar file (\ `141cd9d <https://github.com/saltstack-formulas/iscsi-formula/commit/141cd9d44c00434d89e59358e9655656f25a7d8d>`_\ )
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **kitchen+travis:** use latest pre-salted images (\ `e10522d <https://github.com/saltstack-formulas/iscsi-formula/commit/e10522d69f55657cf7e7eb0c1f3eb284c799a65f>`_\ )
+* **travis:** add notifications => zulip [skip ci] (\ `fe742d9 <https://github.com/saltstack-formulas/iscsi-formula/commit/fe742d9f03ac53b65699dcd13b2660ac87c54367>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **semantic-release:** standardise for this formula (\ `5bde216 <https://github.com/saltstack-formulas/iscsi-formula/commit/5bde2162bef791648895cfdd46c1f0e76c010c89>`_\ )
+
+Tests
+^^^^^
+
+
+* **suite:** update travis tests (\ `3f34385 <https://github.com/saltstack-formulas/iscsi-formula/commit/3f343853748b2973a41b76862d0b95e379a377cd>`_\ )
+
 `1.1.2 <https://github.com/saltstack-formulas/iscsi-formula/compare/v1.1.1...v1.1.2>`_ (2020-05-08)
 -------------------------------------------------------------------------------------------------------
 
