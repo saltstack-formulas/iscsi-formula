@@ -156,7 +156,7 @@
 * **os:** better os mapping ([55e4cfb](https://github.com/saltstack-formulas/iscsi-formula/commit/55e4cfb))
 * **os:** fix open-iscsi on archlinux ([43b2ad4](https://github.com/saltstack-formulas/iscsi-formula/commit/43b2ad4))
 * **saltbug:** file.line is buggy; use file.prepend ([f72fe9e](https://github.com/saltstack-formulas/iscsi-formula/commit/f72fe9e))
-* **saltbug:** fix for strange 'unless: <url>' bug ([5de113d](https://github.com/saltstack-formulas/iscsi-formula/commit/5de113d))
+* **saltbug:** fix for strange `unless: <url>` bug ([5de113d](https://github.com/saltstack-formulas/iscsi-formula/commit/5de113d))
 * **service:** only start service if enabled ([b8d8b7f](https://github.com/saltstack-formulas/iscsi-formula/commit/b8d8b7f))
 * **suse:** service is called targetcli on Suse15 ([4f37896](https://github.com/saltstack-formulas/iscsi-formula/commit/4f37896))
 * **target:** increase volsize and minor fixes ([9c50ef9](https://github.com/saltstack-formulas/iscsi-formula/commit/9c50ef9))

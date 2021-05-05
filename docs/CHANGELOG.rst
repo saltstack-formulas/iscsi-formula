@@ -1,9 +1,6 @@
-.. role:: raw=html=m2r(raw)
-   :format: html
-
 
 Changelog
----------
+=========
 
 `1.2.0 <https://github.com/saltstack-formulas/iscsi-formula/compare/v1.1.2...v1.2.0>`_ (2020-06-02)
 -------------------------------------------------------------------------------------------------------
@@ -187,7 +184,7 @@ Bug Fixes
 * **os:** better os mapping (\ `55e4cfb <https://github.com/saltstack-formulas/iscsi-formula/commit/55e4cfb>`_\ )
 * **os:** fix open-iscsi on archlinux (\ `43b2ad4 <https://github.com/saltstack-formulas/iscsi-formula/commit/43b2ad4>`_\ )
 * **saltbug:** file.line is buggy; use file.prepend (\ `f72fe9e <https://github.com/saltstack-formulas/iscsi-formula/commit/f72fe9e>`_\ )
-* **saltbug:** fix for strange 'unless: :raw-html-m2r:`<url>`\ ' bug (\ `5de113d <https://github.com/saltstack-formulas/iscsi-formula/commit/5de113d>`_\ )
+* **saltbug:** fix for strange ``unless: <url>`` bug (\ `5de113d <https://github.com/saltstack-formulas/iscsi-formula/commit/5de113d>`_\ )
 * **service:** only start service if enabled (\ `b8d8b7f <https://github.com/saltstack-formulas/iscsi-formula/commit/b8d8b7f>`_\ )
 * **suse:** service is called targetcli on Suse15 (\ `4f37896 <https://github.com/saltstack-formulas/iscsi-formula/commit/4f37896>`_\ )
 * **target:** increase volsize and minor fixes (\ `9c50ef9 <https://github.com/saltstack-formulas/iscsi-formula/commit/9c50ef9>`_\ )
