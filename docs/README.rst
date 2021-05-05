@@ -1,5 +1,3 @@
-.. _readme:
-
 iscsi-formula
 =============
 
@@ -13,7 +11,7 @@ iscsi-formula
    :alt: Semantic Release
    :scale: 100%
    :target: https://github.com/semantic-release/semantic-release
-   
+
 Configure iSCSI targets and initiator on GNU/Linux and FreeBSD.
 
 .. contents:: **Table of Contents**
@@ -57,7 +55,7 @@ Available Meta states
     :local:
 
 ``iscsi``
-^^^^^^^
+^^^^^^^^^
 *Meta-state (This is a state that includes other states)*.
 
 Deploy iSNS, iSCSI initiator, and iSCSI target
@@ -65,7 +63,7 @@ packages, manage configuration files and then
 starts the associated iscsi services.
 
 ``iscsi.target``
-^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 Install and configure the iSCSI Target service. Supported vendor implementations include-
 
 - ``/etc/ctl.conf`` for ``ctld(8)`` on FreeBSD
@@ -84,42 +82,42 @@ The default choice is modifable via the `iscsi.target.provider` pillar value.
 New providers can be introduced via pull request.
 
 ``iscsi.target.clean``
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 *Meta-state (This is a state that includes other states)*.
 
 this state will undo everything performed in the ``iscsi.target`` meta-state
- in reverse order, i.e.
+in reverse order, i.e.
 stops the service,
 removes the configuration files and
 then uninstalls the package.
 
 ``iscsi.initiator``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 Install and configure the iSCSI initiator service-
 
 - ``/etc/iscsi.conf`` for FreeBSD
 - ``/etc/iscsi/iscsid.conf`` or ``~/.iscsid.conf`` for ``Open iSCSI`` on GNU/Linux
 
 ``iscsi.initiator.clean``
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 *Meta-state (This is a state that includes other states)*.
 
 this state will undo everything performed in the ``iscsi.initiator``
- meta-state in reverse order, i.e.
+meta-state in reverse order, i.e.
 stops the service,
 removes the configuration files and
 then uninstalls the package.
 
 ``iscsi.isns``
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 Install and configure iSCSI name service.
 
 ``iscsi.isns.clean``
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 *Meta-state (This is a state that includes other states)*.
 
 this state will undo everything performed in the ``iscsi.isns``
- meta-state in reverse order, i.e.
+meta-state in reverse order, i.e.
 stops the service,
 removes the configuration files and
 then uninstalls the package.
@@ -132,121 +130,121 @@ Available sub-states
    :local:
 
 ``iscsi.target.package``
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 Install iSCSI target related packages.
 
 ``iscsi.target.package.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Remove iSCSI target related packages.
 
 ``iscsi.target.config``
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 Install iSCSI target related configuration files.
 
 ``iscsi.target.config.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Remove iSCSI target related configuration files.
 
 ``iscsi.target.kernel``
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 Load iSCSI target related kernel modules.
 
 ``iscsi.target.kernel.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Unload iSCSI target related kernel modules.
 
 ``iscsi.target.make``
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 Make iSCSI related packages from git source on FreeBSD.
 
 ``iscsi.target.make.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Remove iSCSI related package binaries on FreeBSD.
 
 ``iscsi.target.service``
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 Install iSCSI target services.
 
 ``iscsi.target.service.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Stop and disable SCSI target services.
 
 ``iscsi.initiator.package``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Install iSCSI initiator related packages.
 
 ``iscsi.initiator.package.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Remove iSCSI initiator related packages.
 
 ``iscsi.initiator.config``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 Install iSCSI initiator related configuration files.
 
 ``iscsi.initiator.config.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Remove iSCSI initiator related configuration files.
 
 ``iscsi.initiator.kernel``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 Load iSCSI initiator related kernel modules.
 
 ``iscsi.initiator.kernel.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Unload iSCSI initiator related kernel modules.
 
 ``iscsi.initiator.make``
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 Make iSCSI related packages from git source for FreeBSD.
 
 ``iscsi.initiator.make.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Remove iSCSI related package binaries on FreeBSD.
 
 ``iscsi.initiator.service``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Install iSCSI initiator services.
 
 ``iscsi.initiator.service.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Stop and disable iSCSI initiator services.
 
 ``iscsi.isns.package``
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 Install iSCSI isns packages.
 
 ``iscsi.isns.package.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Remove iSCSI isns packages.
 
 ``iscsi.isns.config``
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 Customises iscsi isns configuration.
 Requires ``iscsi.isns.package`` via include list.
 
 ``iscsi.isns.config.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Remove iSCSI isns configuration files.
 
 ``iscsi.isns.make``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 This state makes iscsi isns services on FreeBSD.
 
 ``iscsi.isns.make.clean``
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 Removes iSCSI isns binaries on FreeBSD.
 
 ``iscsi.isns.service``
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 Start iscsi isns services.
 Requires ``iscsi.isns.config`` via include list.
 
 ``iscsi.isns.service.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 *Meta-state (This is a state that includes other states)*.
 
 this state will undo everything performed in the ``iscsi.isns`` meta-state
- in reverse order, i.e.
+in reverse order, i.e.
 stops the service,
 removes the configuration files and
 then uninstalls the package.
@@ -296,4 +294,3 @@ Runs all of the stages above in one go: i.e. ``destroy`` + ``converge`` + ``veri
 ^^^^^^^^^^^^^^^^^^^^^
 
 Gives you SSH access to the instance for manual testing.
-
